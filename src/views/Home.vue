@@ -2,7 +2,6 @@
   <div class="home content">
     <h1 class="h1 has-text-centered">Campaign Tracker</h1>
     <p class="p has-text-centered">The game master's best friend.</p>
-    <HelloWorld>{{ msg }}</HelloWorld>
     <div v-if="!isLoggedIn">
       <p class="p has-text-centered">Please log in below:</p>
       <form @submit.prevent="doLogin">
@@ -44,14 +43,12 @@
       </form>
     
     </div> <!-- end of script for user that's not logged in-->
-
-
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { HelloWorld } from '@/components/HelloWorld';
+
 export default {
   name: 'home',
   computed: mapGetters(['isLoggedIn']),

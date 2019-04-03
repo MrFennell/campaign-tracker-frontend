@@ -4,6 +4,7 @@
       <div class="container">
         <NavBar></NavBar>
         <router-view></router-view>
+        <AddPc></AddPc>
       </div>
     </section>
   </div>
@@ -11,10 +12,11 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import AddPc from '@/components/AddPc.vue'
 
 export default {
   name: 'app',
-  components: { NavBar },
+  components: { NavBar , AddPc},
   mounted() {
     this.$store.dispatch('loadcurrentuser');
   }

@@ -8,7 +8,9 @@ import axios from 'axios'
 export default new Vuex.Store({
   state: {
     user: null,
-    users: []
+    users: [],
+    pcs: [],
+    pc: ''
   },
   getters: {
     isLoggedIn: state => !!state.user
@@ -20,6 +22,10 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     }
+    // ,
+    // setPcs(state, pcs){
+    //   state.pcs = pcs;
+    // }
   },
   actions: {
     async getUsers({ commit }) {
@@ -29,6 +35,10 @@ export default new Vuex.Store({
     async register({ commit }, payload) {
       const response = await axios.post('/users/register', payload);
       commit('setUser', response.data);
+    },
+    async AddPc({ commit }, payload){
+      const response = await axios.post('/addPc', payload)
+      commit('AddPc', response.data);
     },
     login({ commit }, payload) {
       return axios.post('/users/login', payload)
