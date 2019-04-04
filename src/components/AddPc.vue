@@ -1,6 +1,6 @@
 <template>
     <div>
-    <form>
+    <form @submit.prevent="AddPc" >
         <label for="pcName">Name:</label>
         <input type="input" name="pcName" placeholder="PC Name" v-model="pcName">
         <label for="pcClass">Class:</label>
@@ -9,12 +9,14 @@
         <input type="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
         <label for="pcDescription">Description:</label>
         <input type="input" name="pcDescription" placeholder="PC Description" v-model="pcDescription">
-        <input type="submit" value="Create" @click="AddPc">
+        <input type="submit" value="Create">
     </form>
 
     </div>
 </template>
 <script>
+import axios from 'axios';
+import store from '../store';
     export default {
         name: "AddPc",
         data(){

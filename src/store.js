@@ -16,6 +16,9 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.user
   },
   mutations: {
+    setPc(state, payload) {
+      state.tasks.push(payload);
+    },
     setUsers(state, users) {
       state.users = users;
     },
@@ -25,6 +28,10 @@ export default new Vuex.Store({
     // ,
     // setPcs(state, pcs){
     //   state.pcs = pcs;
+    // }
+    // ,
+    // setPc(state, pc){
+    //   state.pc = pc;
     // }
   },
   actions: {
@@ -38,7 +45,8 @@ export default new Vuex.Store({
     },
     async AddPc({ commit }, payload){
       const response = await axios.post('/addPc', payload)
-      commit('AddPc', response.data);
+      console.log("response: "+payload);
+      commit('setPc', response.data);
     },
     login({ commit }, payload) {
       return axios.post('/users/login', payload)
