@@ -10,14 +10,19 @@ export default new Vuex.Store({
     user: null,
     users: [],
     pcs: [],
-    pc: ''
+    pc: null
   },
   getters: {
     isLoggedIn: state => !!state.user
   },
-  mutations: {
-    setPc(state, payload) {
-      state.tasks.push(payload);
+  mutations: 
+    {
+
+    // setPc(state, payload) {
+    //   state.pc.push(payload);
+    // },
+    setPc(state, pc) {
+      state.pc = pc;
     },
     setUsers(state, users) {
       state.users = users;
@@ -25,14 +30,10 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     }
-    // ,
-    // setPcs(state, pcs){
-    //   state.pcs = pcs;
-    // }
-    // ,
-    // setPc(state, pc){
-    //   state.pc = pc;
-    // }
+    ,
+    setPcs(state, pcs){
+      state.pcs = pcs;
+    }
   },
   actions: {
     async getUsers({ commit }) {
@@ -45,8 +46,11 @@ export default new Vuex.Store({
     },
     async AddPc({ commit }, payload){
       const response = await axios.post('/addPc', payload)
-      console.log("response: "+payload);
       commit('setPc', response.data);
+    },
+    async getPcs({ commit }, payload) {
+      const response = await axios.get('/pcs', payload);
+      commit('setPcs', response.data);
     },
     login({ commit }, payload) {
       return axios.post('/users/login', payload)
@@ -59,6 +63,10 @@ export default new Vuex.Store({
     loadcurrentuser({ commit }) {
       axios.get('/users/current')
         .then(response => commit('setUser', response.data));
-    }
+    },
+    loadPc({ commit }, payload) {
+      axios.get(`/pcs/${payload}`)
+        .then(response => commit('setPc', response.data));
+    },
   }
 })
