@@ -9,6 +9,8 @@ export default new Vuex.Store({
   state: {
     user: null,
     users: [],
+    campaign: null,
+    campaigns: [],
     pcs: [],
     pc: null
   },
@@ -22,6 +24,12 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user;
+    },
+    setCampaign(state, campaign){
+      state.campaign = campaign;
+    },
+    setCampaigns(state, campaigns){
+      state.campaigns = campaigns;
     },
     setPcs(state, pcs){
       state.pcs = pcs;
@@ -51,9 +59,21 @@ export default new Vuex.Store({
       axios.get('/users/current')
         .then(response => commit('setUser', response.data));
     },
+    loadCampaign({ commit }, payload) {
+      axios.get(`/campaigns/${payload}`)
+        .then(response => commit('setCampaign', response.data));
+    },
     loadPc({ commit }, payload) {
       axios.get(`/pcs/${payload}`)
         .then(response => commit('setPc', response.data));
+    },
+    async getCampaigns({ commit }, payload) {
+      const response = await axios.get('/campaigns', payload);
+      commit('setCampaigns', response.data);
+    },
+    async AddCampaign({ commit }, payload){
+      const response = await axios.post('/addCampaign', payload)
+      commit('setCampaign', response.data);
     },
     async AddPc({ commit }, payload){
       const response = await axios.post('/addPc', payload)

@@ -6,6 +6,8 @@ import Users from './views/Users.vue'
 import User from './views/User.vue'
 import Register from './views/Register'
 import Login from './views/Login'
+import campaigns from './views/Campaigns'
+import campaign from './views/Campaign'
 import pcs from './views/pcs'
 import pc from './views/pc'
 
@@ -48,6 +50,16 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/campaigns',
+      name: 'campaigns',
+      component: campaigns
+    },
+    {
+      path: '/campaigns/:id',
+      name: 'campaign',
+      component: campaign
     },
     {
       path: '/pcs',
