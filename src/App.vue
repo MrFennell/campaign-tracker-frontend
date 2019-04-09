@@ -3,9 +3,10 @@
     <section class="section">
       <div class="container">
         <NavBar></NavBar>
+        <router-view></router-view>
         <AddCampaign></AddCampaign>
         <AddPc></AddPc>
-        <router-view></router-view>
+        
       </div>
     </section>
   </div>

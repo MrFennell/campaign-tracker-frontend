@@ -13,8 +13,11 @@
 <script>
 import axios from 'axios';
 import store from '../store';
+import { mapGetters } from 'vuex';
+
     export default {
         name: "AddCampaign",
+        computed: mapGetters(['getUserId']),
         data(){
             return{
                 title: '',
@@ -23,12 +26,14 @@ import store from '../store';
         },
         methods: {
             AddCampaign(){
+
             this.$store.dispatch('AddCampaign', {
                 title:this.title,
-                description:this.description
+                description:this.description,
+                createdBy:this.$store.getters.getUserId
             })
                 .then(() => this.$router.push('/Home'))
-                
+
                 .catch(error => this.error = error.response.data.message);
             }
 

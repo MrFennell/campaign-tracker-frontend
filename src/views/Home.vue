@@ -44,7 +44,7 @@
     
     </div> <!-- end of script for user that's not logged in-->
     <div v-if="isLoggedIn">
-        Welcome back {{username}}
+        Welcome back {{userinfo}}
 
      <!-- <form @submit.prevent="AddPc" >
         <label for="pcName">Name:</label>
@@ -64,6 +64,7 @@
             <p>{{ campaign.description }}</p>
         </li>
     </ul> -->
+    <button class="button" @click="check()">Check</button>
   </div>
 </template>
 
@@ -72,15 +73,20 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn']),
+  computed: mapGetters(['isLoggedIn', 'getUser']),
     data() {
       return {
         username: '',
         password: '',
         error: false
-              };
+        };
     },
     methods: {
+        check(){
+            // let user1 = this.$store.state.user.id;
+            let user1 = this.$store.getters.getUserId;
+            console.log("USER "+ user1);
+        },
         doLogin() {
             this.$store.dispatch('login', {
                 username: this.username,

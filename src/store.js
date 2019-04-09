@@ -15,7 +15,8 @@ export default new Vuex.Store({
     pc: null
   },
   getters: {
-    isLoggedIn: state => !!state.user
+    isLoggedIn: state => !!state.user,
+    getUserId: (state) => { return state.user.id}
   },
   mutations: 
     {
