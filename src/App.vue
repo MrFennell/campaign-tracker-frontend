@@ -3,7 +3,11 @@
     <section class="section">
       <div class="container">
         <NavBar></NavBar>
-        <router-view></router-view>
+        <div class="columns">
+          <div class="column -is-center">
+            <router-view></router-view>
+          </div>
+        </div>
         <div class="columns">
           <div class="column">
             <imageUpload></imageUpload>
