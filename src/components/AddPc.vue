@@ -1,15 +1,35 @@
 <template>
     <div>
-    <form @submit.prevent="AddPc" >
-        <label for="pcName">Name:</label>
-        <input type="input" name="pcName" placeholder="PC Name" v-model="pcName">
-        <label for="pcClass">Class:</label>
-        <input type="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
-        <label for="pcRace">Race:</label>
-        <input type="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
-        <label for="pcDescription">Description:</label>
-        <input type="input" name="pcDescription" placeholder="PC Description" v-model="pcDescription">
-        <input type="submit" value="Create">
+    <p>Add a new Player Character:</p>
+    <form @submit.prevent="sendFile" enctype="multipart/form-data">
+        <div class="field">
+            <label class="label" for="pcName">Name:</label>
+            <div class="control">
+                <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
+            </div>
+        </div>
+        <div class="field">
+            <label for="pcClass" class="label" >Class:</label>
+            <div class="control">
+                <input type="input" class="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="pcRace" class="label">Race:</label>
+            <div class="control">
+                <input type="input" class="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
+            </div>
+        </div>
+        <div class="field">
+            <label for="pcDescription" class="label" >Description:</label>
+            <input type="input" class="input"  name="pcDescription" placeholder="PC Description" v-model="pcDescription">
+        </div>
+        <div class="field">
+            <label for="image" class="image" >Image:</label>
+            <input type="file" class="file"  ref="file" @change="selectFile">
+        </div>
+        <input type="submit" class="button is-primary" value="Create">
     </form>
 
     </div>
@@ -24,7 +44,8 @@ import store from '../store';
                 pcName: '',
                 pcClass: '',
                 pcRace: '',
-                pcDescription: ''
+                pcDescription: '',
+                file: null
             }
         },
         methods: {
@@ -37,6 +58,22 @@ import store from '../store';
             })
                 .then(() => this.$router.push('/Home'))
                 .catch(error => this.error = error.response.data.message);
+            },
+            selectFile(){
+                this.file = this.$refs.file.files[0];
+            },
+            async sendFile(){
+                const formData = new FormData();
+                
+                if (file){
+                formData.append('file', this.file);
+                    try{
+                        await axios.post('/uploadImage', formData)  
+                    }catch(err){
+                        console.log(err);
+                    }
+                }
+                
             }
 
         }

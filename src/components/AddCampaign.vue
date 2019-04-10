@@ -1,11 +1,21 @@
 <template>
     <div>
+    <p>Start a new Campaign:</p>
     <form @submit.prevent="AddCampaign" >
-        <label for="title">Title:</label>
-        <input type="input" name="title" placeholder="Campaign Title" v-model="title">
-        <label for="description">Description:</label>
-        <input type="input" name="description" placeholder="Campaign Description" v-model="description">
-        <input type="submit" value="Create">
+        <div class="field">
+            <label for="title" class="label">Title:</label>
+            <div class="control">
+                <input type="input" name="title" class="input" placeholder="Campaign Title" v-model="title">
+            </div>
+        </div>
+        <div class="field">
+            <label for="description" class="label">Description:</label>
+            <div class="control">
+                <input type="input" name="description" class="input" placeholder="Campaign Description" v-model="description">
+            </div>
+        </div>
+        
+        <input type="submit" value="Create" class="button is-primary">
     </form>
 
     </div>

@@ -4,9 +4,17 @@
       <div class="container">
         <NavBar></NavBar>
         <router-view></router-view>
-        <AddCampaign></AddCampaign>
-        <AddPc></AddPc>
-        
+        <div class="columns">
+          <div class="column">
+            <imageUpload></imageUpload>
+          </div>
+          <div class="column">
+            <AddCampaign></AddCampaign>
+          </div>
+          <div class="column">
+            <AddPc></AddPc>
+          </div>
+        </div>
       </div>
     </section>
   </div>
