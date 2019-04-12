@@ -27,7 +27,6 @@ import { mapGetters } from 'vuex';
 
     export default {
         name: "AddCampaign",
-        computed: mapGetters(['getUserId']),
         data(){
             return{
                 title: '',

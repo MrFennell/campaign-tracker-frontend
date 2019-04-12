@@ -1,7 +1,7 @@
 <template>
     <div>
     <p>Add a new Player Character:</p>
-    <form @submit.prevent="sendFile" enctype="multipart/form-data">
+    <form @submit.prevent="newPc" enctype="multipart/form-data">
         <div class="field">
             <label class="label" for="pcName">Name:</label>
             <div class="control">
@@ -49,30 +49,30 @@ import store from '../store';
             }
         },
         methods: {
-            AddPc(){
-            this.$store.dispatch('AddPc', {
-                pcName:this.pcName,
-                pcClass:this.pcClass,
-                pcRace:this.pcRace,
-                pcDescription:this.pcDescription
-            })
-                .then(() => this.$router.push('/Home'))
-                .catch(error => this.error = error.response.data.message);
-            },
+
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },
-            async sendFile(){
+            async newPc(){ 
+
                 const formData = new FormData();
+            
+                formData.append("pcName", this.pcName);
+                formData.append("pcClass", this.pcClass);
+                formData.append("pcRace", this.pcRace);
+                formData.append("pcDescription", this.pcDescription);
                 
-                if (file){
-                formData.append('file', this.file);
+                if (this.file){
+                    formData.append('file', this.file);
                     try{
-                        await axios.post('/uploadImage', formData)  
+                        await axios.post('/addPcWithImage', formData)  
                     }catch(err){
                         console.log(err);
                     }
                 }
+               else{
+                   await axios.post('/addPc', formData)
+               }
                 
             }
 

@@ -10,11 +10,9 @@
         </div>
         <div class="columns">
           <div class="column">
-            <imageUpload></imageUpload>
-          </div>
-          <div class="column">
             <AddCampaign></AddCampaign>
           </div>
+
           <div class="column">
             <AddPc></AddPc>
           </div>
@@ -28,12 +26,15 @@
 import NavBar from '@/components/NavBar.vue'
 import AddPc from '@/components/AddPc.vue'
 import AddCampaign from '@/components/AddCampaign.vue'
+// import ListCampaigns from '@/components/ListCampaigns.vue'
 
 export default {
   name: 'app',
   components: { NavBar , AddPc, AddCampaign},
+
   mounted() {
     this.$store.dispatch('loadcurrentuser');
+    this.$store.dispatch('getCampaigns');
   }
 };
 </script>

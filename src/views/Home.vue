@@ -44,7 +44,6 @@
     
     </div> <!-- end of script for user that's not logged in-->
     <div v-if="isLoggedIn">
-        Welcome back {{userinfo}}
 
      <!-- <form @submit.prevent="AddPc" >
         <label for="pcName">Name:</label>
@@ -57,36 +56,39 @@
         <input type="input" name="pcDescription" placeholder="PC Description" v-model="pcDescription">
         <input type="submit" value="Create">
     </form> -->
-    </div>
-    <!-- <ul>
+    
+    <ul>
         <li v-for="campaign in campaigns" v-bind:key="campaign.id">
             <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>
             <p>{{ campaign.description }}</p>
         </li>
-    </ul> -->
-    <button class="button" @click="check()">Check</button>
+    </ul>
+
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { ListCampaigns } from '@/components/ListCampaigns';
 
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'getUser']),
+  computed: mapGetters(['isLoggedIn',]),
     data() {
       return {
         username: '',
         password: '',
-        error: false
+        error: false,
+        campaigns: []
         };
     },
     methods: {
-        check(){
-            // let user1 = this.$store.state.user.id;
-            let user1 = this.$store.getters.getUserId;
-            console.log("USER "+ user1);
-        },
+        // check(){
+        //     // let user1 = this.$store.state.user.id;
+        //     let user1 = this.$store.getters.getUserId;
+        //     console.log("USER "+ user1);
+        // },
         doLogin() {
             this.$store.dispatch('login', {
                 username: this.username,
