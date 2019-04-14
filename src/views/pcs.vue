@@ -7,6 +7,8 @@
                 <p>Class: {{ pc.pcClass }}</p>
                 <p>Race: {{ pc.pcRace }}</p>
                 <p>Decription: {{ pc.pcDescription }}</p>
+                <p>Image: {{ pc.imageSrc }}</p>
+
                 <!-- <router-link :to="{ name: 'user', params: { username: user.username }}">{{ user.username }}</router-link> -->
             </li>
         </ul>

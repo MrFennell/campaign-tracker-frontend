@@ -56,7 +56,7 @@
         <input type="input" name="pcDescription" placeholder="PC Description" v-model="pcDescription">
         <input type="submit" value="Create">
     </form> -->
-    
+     <ListCampaigns></ListCampaigns>
     <ul>
         <li v-for="campaign in campaigns" v-bind:key="campaign.id">
             <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>
@@ -80,7 +80,8 @@ export default {
         username: '',
         password: '',
         error: false,
-        campaigns: []
+        campaigns: [],
+        campaign: ''
         };
     },
     methods: {
@@ -108,6 +109,11 @@ export default {
                 .then(() => this.$router.push('/Home'))
                 .catch(error => this.error = error.response.data.message);
             }
-    }
+    },
+    mounted() {
+    this.$store.dispatch('getCampaigns');
+  }
+        
+
 }
 </script>

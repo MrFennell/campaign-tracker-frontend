@@ -26,7 +26,6 @@
 import NavBar from '@/components/NavBar.vue'
 import AddPc from '@/components/AddPc.vue'
 import AddCampaign from '@/components/AddCampaign.vue'
-// import ListCampaigns from '@/components/ListCampaigns.vue'
 
 export default {
   name: 'app',
@@ -34,7 +33,6 @@ export default {
 
   mounted() {
     this.$store.dispatch('loadcurrentuser');
-    this.$store.dispatch('getCampaigns');
   }
 };
 </script>

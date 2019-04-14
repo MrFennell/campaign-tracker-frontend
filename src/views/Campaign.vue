@@ -4,6 +4,7 @@
         <p v-else>Untitled</p>
         <p v-if="campaign.description">Description: {{campaign.description}}</p>
         <p v-else>(no details)</p>
+  
     </div>
 </template>
 
