@@ -57,12 +57,12 @@
         <input type="submit" value="Create">
     </form> -->
      <ListCampaigns></ListCampaigns>
-    <ul>
+    <!-- <ul>
         <li v-for="campaign in campaigns" v-bind:key="campaign.id">
             <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>
             <p>{{ campaign.description }}</p>
         </li>
-    </ul>
+    </ul> -->
 
     </div>
   </div>
@@ -70,18 +70,23 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { ListCampaigns } from '@/components/ListCampaigns';
+// import { ListCampaigns } from '@/components/ListCampaigns';
+// import { campaigns } from '@/views/Campaigns';
 
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn',]),
+  computed: mapGetters(['isLoggedIn']),
+//   components: {campaigns},
+    components: {
+        ListCampaigns: () => import('@/components/ListCampaigns')
+    },
     data() {
       return {
         username: '',
         password: '',
         error: false,
         campaigns: [],
-        campaign: ''
+        campaign: '',
         };
     },
     methods: {
@@ -111,7 +116,7 @@ export default {
             }
     },
     mounted() {
-    this.$store.dispatch('getCampaigns');
+    this.$store.dispatch('loadCampaigns');
   }
         
 

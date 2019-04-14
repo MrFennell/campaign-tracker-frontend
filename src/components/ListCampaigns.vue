@@ -13,9 +13,10 @@
 export default {
 
     name: "ListCampaigns",
+    props: ['campaigns'],
     computed: {
         loadCampaigns(){
-            return this.$store.campaigns;
+            return this.$store.state.campaigns;
         }
     }
 }

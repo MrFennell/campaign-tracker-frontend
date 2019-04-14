@@ -65,9 +65,11 @@ export default new Vuex.Store({
       axios.get(`/campaigns/${payload}`)
         .then(response => commit('setCampaign', response.data));
     },
-    loadCampaigns( {commit} , payload) {
-      axios.get('/campaigns', payload)
-        .then(response => commit('setCampaigns', response.data));
+    loadCampaigns( store ) {
+      axios.get('/campaigns')
+        .then(response => { 
+        store.commit('setCampaigns', response.data);
+      });
     },
     loadPc({ commit }, payload) {
       axios.get(`/pcs/${payload}`)
