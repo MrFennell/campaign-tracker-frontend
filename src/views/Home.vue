@@ -45,18 +45,10 @@
     </div> <!-- end of script for user that's not logged in-->
     <div v-if="isLoggedIn">
 
-     <!-- <form @submit.prevent="AddPc" >
-        <label for="pcName">Name:</label>
-        <input type="input" name="pcName" placeholder="PC Name" v-model="pcName">
-        <label for="pcClass">Class:</label>
-        <input type="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
-        <label for="pcRace">Race:</label>
-        <input type="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
-        <label for="pcDescription">Description:</label>
-        <input type="input" name="pcDescription" placeholder="PC Description" v-model="pcDescription">
-        <input type="submit" value="Create">
-    </form> -->
-     <ListCampaigns></ListCampaigns>
+     <!-- <ListCampaigns></ListCampaigns> -->
+     <ListCampaigns>
+
+     </ListCampaigns>
     <!-- <ul>
         <li v-for="campaign in campaigns" v-bind:key="campaign.id">
             <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>
@@ -103,17 +95,7 @@ export default {
             .then(() => this.$router.push('/'))
             .catch(error => this.error = error.response.data.message);
         }
-        ,
-        AddPc(){
-            this.$store.dispatch('AddPc', {
-                pcName:this.pcName,
-                pcClass:this.pcClass,
-                pcRace:this.pcRace,
-                pcDescription:this.pcDescription
-            })
-                .then(() => this.$router.push('/Home'))
-                .catch(error => this.error = error.response.data.message);
-            }
+
     },
     mounted() {
     this.$store.dispatch('loadCampaigns');

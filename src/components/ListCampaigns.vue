@@ -5,6 +5,7 @@
         <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>
         <p>{{ campaign.description }}</p>
     </li>
+
 </div>
     
 </template>

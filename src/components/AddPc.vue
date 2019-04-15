@@ -8,6 +8,14 @@
                 <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
             </div>
         </div>
+
+        <div class="field">
+            <label for="playerName" class="label" >Player Name:</label>
+            <div class="control">
+                <input type="input" class="input" name="playerName" placeholder="Player Name" v-model="playerName">
+            </div>
+        </div>
+
         <div class="field">
             <label for="pcClass" class="label" >Class:</label>
             <div class="control">
@@ -41,6 +49,7 @@ import axios from 'axios';
         data(){
             return{
                 pcName: '',
+                playerName: '',
                 pcClass: '',
                 pcRace: '',
                 pcDescription: '',
@@ -57,6 +66,7 @@ import axios from 'axios';
                 const formData = new FormData();
             
                 formData.append("pcName", this.pcName);
+                formData.append("playerName", this.playerName);
                 formData.append("pcClass", this.pcClass);
                 formData.append("pcRace", this.pcRace);
                 formData.append("pcDescription", this.pcDescription);

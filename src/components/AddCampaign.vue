@@ -22,8 +22,8 @@
 </template>
 <script>
 import axios from 'axios';
-import store from '../store';
-import { mapGetters } from 'vuex';
+// import store from '../store';
+// import { mapGetters } from 'vuex';
 
     export default {
         name: "AddCampaign",
@@ -41,7 +41,7 @@ import { mapGetters } from 'vuex';
                 description:this.description,
                 createdBy:this.$store.getters.getUserId
             })
-                .then(() => this.$router.push('/Home'))
+                .then(() => this.$router.push('/'))
 
                 .catch(error => this.error = error.response.data.message);
             }

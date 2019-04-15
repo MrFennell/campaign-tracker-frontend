@@ -53,6 +53,14 @@ export default new Vuex.Store({
       return axios.post('/users/login', payload)
         .then(response => commit('setUser', response.data));
     },
+    setCurrentCampaign({ commit }, payload){
+      axios.post('/setCurrentCampaign', payload)
+        .then(response => commit('setCampaign', response.data));
+    },
+    loadCurrentCampaign({ commit }) {
+      return axios.get('/loadCurrentCampaign')
+       .then(response => commit('setCampaign', response.data));
+   },
     logout({ commit }) {
       return axios.post('/users/logout')
         .then(() => commit('setUser', null));
@@ -61,6 +69,7 @@ export default new Vuex.Store({
       axios.get('/users/current')
         .then(response => commit('setUser', response.data));
     },
+    
     loadCampaign({ commit }, payload) {
       axios.get(`/campaigns/${payload}`)
         .then(response => commit('setCampaign', response.data));

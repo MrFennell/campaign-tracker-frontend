@@ -1,17 +1,21 @@
 <template>
     <div class="content">
-        <ul>
-            <li v-for="pc in pcs" v-bind:key="pc.id">
-                <router-link :to="{ name: 'pc', params: { id: pc.id }}">{{ pc.pcName }}</router-link>
-                <p>Name: {{ pc.pcName }}</p>
-                <p>Class: {{ pc.pcClass }}</p>
-                <p>Race: {{ pc.pcRace }}</p>
-                <p>Decription: {{ pc.pcDescription }}</p>
-                <p>Image: {{ pc.imageSrc }}</p>
-
-                <!-- <router-link :to="{ name: 'user', params: { username: user.username }}">{{ user.username }}</router-link> -->
-            </li>
-        </ul>
+        <h2>Player Characters</h2>
+                <ul class="list">
+                
+                    <li v-for="pc in pcs" v-bind:key="pc.id">
+                        <div class="card">
+                                <router-link :to="{ name: 'pc', params: { id: pc.id }}">{{ pc.pcName }}</router-link>
+                                <p>Name: {{ pc.pcName }}</p>
+                                <p>Played by: {{ pc.playerName }}</p>
+                                <p>Class: {{ pc.pcClass }}</p>
+                                <p>Race: {{ pc.pcRace }}</p>
+                                <p>Decription: {{ pc.pcDescription }}</p>
+                                <p>Image: {{ pc.imageSrc }}</p>
+                        </div>
+                    </li>
+                
+                </ul>
     </div>
 </template>
 

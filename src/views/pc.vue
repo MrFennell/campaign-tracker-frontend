@@ -1,15 +1,18 @@
 <template>
     <div class="content">
-        <div>
-            <h1>{{pc.pcName }}</h1>
+        <div v-if="!isEditing">
+            <h2>{{pc.pcName }}</h2>
             <p v-if="pc.pcClass">Class: {{ pc.pcClass }}</p>
             <p v-else>Class Unknown</p>
+            <p v-if="pc.playerName">Class: {{ pc.playerName }}</p>
+            <p v-else>Please enter name of player!</p>
             <p v-if="pc.pcRace">Race: {{pc.pcRace}}</p>
             <p v-else>Race Unknown</p>
             <p v-if="pc.pcDescription">Description: {{ pc.pcDescription }}</p>
             <p v-else>No description.</p>
+            <button @click="edit">Edit</button>
         </div>
-        <button @click="edit">Edit</button>
+        
         <!-- <form @submit.prevent="AddImage" enctype="multipart/form-data">
             <div class="field">
                 <label for="image" class="image" >Image:</label>
@@ -19,11 +22,18 @@
 
         </form> -->
             <div v-if="isEditing">
+                <button @click="edit">Done editing.</button>
                 <form @submit.prevent="sendFile" enctype="multipart/form-data">
                 <div class="field">
                     <label class="label" for="pcName">Name:</label>
                     <div class="control">
                         <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="playerName">Name:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="playerName" placeholder="PC Name" v-model="playerName">
                     </div>
                 </div>
                 <div class="field">
@@ -47,7 +57,11 @@
                     <label for="image" class="image" >Image:</label>
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
+                
                 <input type="submit" class="button is-primary" value="Create">
+                <div class="field">
+                
+                </div>
             </form>
         </div>
 
@@ -65,6 +79,7 @@ export default {
             file: "",
             isEditing: false,
             pcName: '',
+            playerName: '',
             pcClass: '',
             pcRace: '',
             pcDescription: '',
