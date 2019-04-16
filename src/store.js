@@ -27,8 +27,8 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
-    setCampaign(state, campaign){
-      state.campaign = campaign;
+    setCampaign(state, payload){
+      state.campaign = payload;
     },
     setCampaigns(state, payload){
       state.campaigns = payload;

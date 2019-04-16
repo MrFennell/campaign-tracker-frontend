@@ -24,13 +24,8 @@ export default {
     },
     methods:{
         setCurrentCampaign(){
-            // var thiscampaign = this.campaign
             console.log("campaign.vue "+this.campaign); 
-            // axios.post('/setCurrentCampaign',{
-            //     campaign:this.campaign
-            // });
             this.$store.dispatch('setCurrentCampaign', this.campaign);
-            
         }
     }
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="home content">
-    <h1 class="h1 has-text-centered">Campaign Tracker</h1>
-    <p class="p has-text-centered">The game master's best friend.</p>
+
     <div v-if="!isLoggedIn">
       <p class="p has-text-centered">Please log in below:</p>
       <form @submit.prevent="doLogin">
@@ -47,13 +46,6 @@
 
      <ListCampaigns></ListCampaigns>
 
-    <!-- <ul>
-        <li v-for="campaign in campaigns" v-bind:key="campaign.id">
-            <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>
-            <p>{{ campaign.description }}</p>
-        </li>
-    </ul> -->
-
     </div>
   </div>
 </template>
@@ -97,6 +89,7 @@ export default {
     },
     mounted() {
     this.$store.dispatch('loadCampaigns');
+    // this.$store.dispatch('loadCurrentCampaign');
   }
         
 

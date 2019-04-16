@@ -2,6 +2,8 @@
   <div id="app">
     <section class="section">
       <div class="container">
+            <h1 class="h1 has-text-centered">Campaign Tracker</h1>
+            <p class="p has-text-centered">Plan your games accordingly.</p>
         <NavBar></NavBar>
         <div class="columns">
           <div class="column -is-center">
@@ -33,7 +35,7 @@ export default {
 
   mounted() {
     this.$store.dispatch('loadcurrentuser');
-    // this.$store.dispatch('loadCurrentCampaign');
+    this.$store.dispatch('loadCurrentCampaign');
   }
 };
 </script>

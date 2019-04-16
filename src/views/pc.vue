@@ -4,7 +4,7 @@
             <h2>{{pc.pcName }}</h2>
             <p v-if="pc.pcClass">Class: {{ pc.pcClass }}</p>
             <p v-else>Class Unknown</p>
-            <p v-if="pc.playerName">Class: {{ pc.playerName }}</p>
+            <p v-if="pc.playerName">Played by: {{ pc.playerName }}</p>
             <p v-else>Please enter name of player!</p>
             <p v-if="pc.pcRace">Race: {{pc.pcRace}}</p>
             <p v-else>Race Unknown</p>
@@ -22,45 +22,45 @@
 
         </form> -->
             <div v-if="isEditing">
-                <button @click="edit">Done editing.</button>
+                <button @click="edit">Save edits</button>
+                <button>Cancel</button>
                 <form @submit.prevent="sendFile" enctype="multipart/form-data">
                 <div class="field">
-                    <label class="label" for="pcName">Name:</label>
+                    <label class="label" for="pcName" >Name:</label>
                     <div class="control">
-                        <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
+                        <input type="input" class="input" name="pcName" :placeholder="pc.pcName" v-model="pcName">
                     </div>
                 </div>
                 <div class="field">
                     <label class="label" for="playerName">Name:</label>
                     <div class="control">
-                        <input type="input" class="input" name="playerName" placeholder="PC Name" v-model="playerName">
+                        <input type="input" class="input" name="playerName" :placeholder="pc.playerName" v-model="playerName">
                     </div>
                 </div>
                 <div class="field">
                     <label for="pcClass" class="label" >Class:</label>
                     <div class="control">
-                        <input type="input" class="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
+                        <input type="input" class="input" name="pcClass" :placeholder="pc.pcClass" v-model="pcClass">
                     </div>
                 </div>
-
                 <div class="field">
                     <label for="pcRace" class="label">Race:</label>
                     <div class="control">
-                        <input type="input" class="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
+                        <input type="input" class="input" name="pcRace" :placeholder="pc.pcRace" v-model="pcRace">
                     </div>
                 </div>
                 <div class="field">
                     <label for="pcDescription" class="label" >Description:</label>
-                    <input type="input" class="input"  name="pcDescription" placeholder="PC Description" v-model="pcDescription">
+                    <input type="input" class="input"  name="pcDescription" :placeholder="pc.pcDescription" v-model="pcDescription">
                 </div>
                 <div class="field">
                     <label for="image" class="image" >Image:</label>
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
                 
-                <input type="submit" class="button is-primary" value="Create">
+                <input type="submit" class="button is-primary" value="Update">
                 <div class="field">
-                
+
                 </div>
             </form>
         </div>
