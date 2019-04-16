@@ -74,10 +74,12 @@ import axios from 'axios';
                 if (this.file){
                     formData.append('file', this.file);
                     try{
-                        await axios.post('/addPcWithImage', formData)  
+                        await axios.post('/addPcWithImage', formData)
+                        .then(() => this.$router.push('/'))
                     }catch(err){
                         console.log(err);
                     }
+                    // this.$router.push('/pcs')
                 }
                else{
                    await axios.post('/addPc', formData)

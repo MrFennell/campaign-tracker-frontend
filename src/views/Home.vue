@@ -45,10 +45,8 @@
     </div> <!-- end of script for user that's not logged in-->
     <div v-if="isLoggedIn">
 
-     <!-- <ListCampaigns></ListCampaigns> -->
-     <ListCampaigns>
+     <ListCampaigns></ListCampaigns>
 
-     </ListCampaigns>
     <!-- <ul>
         <li v-for="campaign in campaigns" v-bind:key="campaign.id">
             <router-link :to="{ name: 'campaign', params: { id: campaign.id }}">{{ campaign.title }}</router-link>

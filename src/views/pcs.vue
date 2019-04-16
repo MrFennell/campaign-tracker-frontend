@@ -12,6 +12,7 @@
                                 <p>Race: {{ pc.pcRace }}</p>
                                 <p>Decription: {{ pc.pcDescription }}</p>
                                 <p>Image: {{ pc.imageSrc }}</p>
+                                <img :src="pc.imageSrc" />
                         </div>
                     </li>
                 
