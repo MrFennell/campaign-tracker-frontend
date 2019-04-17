@@ -80,14 +80,16 @@ export default new Vuex.Store({
         store.commit('setCampaigns', response.data);
       });
     },
+    loadPcs( store ) {
+      axios.get('/pcs')
+        .then(response => { 
+        store.commit('setPcs', response.data);
+      });
+    },
     loadPc({ commit }, payload) {
       axios.get(`/pcs/${payload}`)
         .then(response => commit('setPc', response.data));
     },
-    // async getCampaigns({ commit }, payload) {
-    //   const response = await axios.get('/campaigns', payload);
-    //   commit('setCampaigns', response.data);
-    // },
     getCampaigns( {commit} , payload) {
       axios.get('/campaigns', payload)
         .then(response => commit('setCampaigns', response.data));
@@ -103,6 +105,14 @@ export default new Vuex.Store({
     async getPcs({ commit }, payload) {
       const response = await axios.get('/pcs', payload);
       commit('setPcs', response.data);
+    },
+    async updatePc({ commit }, payload){
+      const response = await axios.post('/updatePc', payload)
+      commit('setPc', response.data);
+    },
+    async deletePc({ commit }, payload){
+      const response = await axios.post('/deletePc', payload)
+      commit('setPc', response.data);
     }
   }
 })

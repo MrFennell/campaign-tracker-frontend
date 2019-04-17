@@ -45,22 +45,19 @@
     <div v-if="isLoggedIn">
 
      <ListCampaigns></ListCampaigns>
-
+     <ListPcs></ListPcs>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-// import { ListCampaigns } from '@/components/ListCampaigns';
-// import { campaigns } from '@/views/Campaigns';
-
 export default {
   name: 'home',
   computed: mapGetters(['isLoggedIn']),
-//   components: {campaigns},
     components: {
-        ListCampaigns: () => import('@/components/ListCampaigns')
+        ListCampaigns: () => import('@/components/ListCampaigns'),
+        ListPcs: () => import('@/components/ListPcs')
     },
     data() {
       return {
@@ -69,6 +66,8 @@ export default {
         error: false,
         campaigns: [],
         campaign: '',
+        pc: '',
+        pcs: []
         };
     },
     methods: {
@@ -88,7 +87,8 @@ export default {
 
     },
     mounted() {
-    this.$store.dispatch('loadCampaigns');
+        this.$store.dispatch('loadCampaigns');
+        this.$store.dispatch('loadPcs');
     // this.$store.dispatch('loadCurrentCampaign');
   }
         
