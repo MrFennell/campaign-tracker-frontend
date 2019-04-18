@@ -58,7 +58,7 @@
                 </div>
                 
                 <input type="submit" class="button is-primary" value="Update">
-                <input type="submit" class="button is-warning" value="Delete">
+                <input type="submit" class="button is-warning" value="Delete" @click="deletePc">
                 <div class="field">
                 
                 </div>
@@ -111,17 +111,16 @@ export default {
                     (error) => this.error = error.response.data.error
                 )
 
-        }
-        // ,
-        // deletePc(){ 
+        },
+        async deletePc(){ 
             
-        //     this.$store.dispatch('updatePc', this.pc)
-        //         .then(
-        //             () => this.$router.push(`/pcs`),
-        //             (error) => this.error = error.response.data.error
-        //         )
+            this.$store.dispatch('deletePc', this.pc)
+                .then(
+                    () => this.$router.push('/pcs'),
+                    (error) => this.error = error.response.data.error
+                )
 
-        // }
+        }
 
     }
     // ,

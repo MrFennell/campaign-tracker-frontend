@@ -14,10 +14,6 @@
           <div class="column">
             <AddCampaign></AddCampaign>
           </div>
-
-          <div class="column">
-            <AddPc></AddPc>
-          </div>
         </div>
       </div>
     </section>
@@ -26,12 +22,11 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue'
-import AddPc from '@/components/AddPc.vue'
 import AddCampaign from '@/components/AddCampaign.vue'
 
 export default {
   name: 'app',
-  components: { NavBar , AddPc, AddCampaign},
+  components: { NavBar , AddCampaign},
 
   mounted() {
     this.$store.dispatch('loadcurrentuser');

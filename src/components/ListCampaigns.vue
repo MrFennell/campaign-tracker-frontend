@@ -28,7 +28,6 @@ export default {
     },
     methods: {
         async setCurrentCampaign(campaign){
-            console.log("front-end-campaign: "+campaign)
             await this.$store.dispatch('setCurrentCampaign', campaign)
         }
     }

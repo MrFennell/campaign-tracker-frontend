@@ -25,12 +25,12 @@ export default {
     mounted() {
         this.$store.dispatch('getCampaigns');
     }
-    // ,
-    // methods: {
-    //     setCurrentCampaign(campaign){
-    //         this.$store.dispatch('setCurrentCampaign', this.campaign);
-    //     }
-    // }
+    ,
+    methods: {
+        setCurrentCampaign(campaign){
+            this.$store.dispatch('setCurrentCampaign', this.campaign);
+        }
+    }
 
 }
 </script>

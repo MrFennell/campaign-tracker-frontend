@@ -11,14 +11,15 @@ export default new Vuex.Store({
     users: [],
     campaign: null,
     campaigns: [],
+    currentCampaign: null,
     pcs: [],
     pc: null
   },
   getters: {
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
-    currentCampaignName: (state) => { return state.campaign.title},
-    campaignIsSet: state => !!state.campaign
+    // currentCampaignName: (state) => { return state.campaign.title},
+    campaignIsSet: state => !!state.currentCampaign
   },
   mutations: 
     {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setUser(state, user) {
       state.user = user;
+    },
+    setCurrentCampaign(state, currentCampaign){
+      state.currentCampaign = currentCampaign;
     },
     setCampaign(state, campaign){
       state.campaign = campaign;
@@ -56,11 +60,11 @@ export default new Vuex.Store({
     },
     async setCurrentCampaign({ commit }, payload){
       const response = await axios.post('/setCurrentCampaign', payload);
-        commit('setCampaign', response.data);
+        commit('setCurrentCampaign', response.data);
     },
     loadCurrentCampaign({ commit }) {
       return axios.get('/loadCurrentCampaign')
-       .then(response => commit('setCampaign', response.data));
+       .then(response => commit('setCurrentCampaign', response.data));
    },
     logout({ commit }) {
       return axios.post('/users/logout')
@@ -107,11 +111,11 @@ export default new Vuex.Store({
       commit('setPcs', response.data);
     },
     async updatePc({ commit }, payload){
-      const response = await axios.post('/updatePc', payload)
+      const response = await axios.post('/pcs/updatePc', payload)
       commit('setPc', response.data);
     },
     async deletePc({ commit }, payload){
-      const response = await axios.post('/deletePc', payload)
+      const response = await axios.post('/pcs/deletePc', payload)
       commit('setPc', response.data);
     }
   }

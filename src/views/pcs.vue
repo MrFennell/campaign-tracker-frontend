@@ -18,7 +18,6 @@
                                     </div>
                                 </div>
 
-
                                     <div v-if="!isEditing">
                                         <p>Class: {{ pc.pcClass }}</p>
                                         <p>Race: {{ pc.pcRace }}</p>

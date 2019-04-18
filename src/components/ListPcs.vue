@@ -4,6 +4,12 @@
             <div class="container">
 
                 <div class="columns is-multiline">
+                         <div class="column is-one-fifth">
+                             <AddPc></AddPc>
+                        </div>
+                        <!-- <div v-if="!formVisible" class="column is-one-fifth">
+                             <AddPc></AddPc>
+                        </div> -->
                         <div class="column is-one-fifth" v-for="pc in loadPcs" v-bind:key="pc.id">
                                 <router-link class="subtitle" :to="{ name: 'pc', params: { id: pc.id }}">
                                 <div class="card">
@@ -26,13 +32,17 @@
                                 </router-link>
 
                         </div>
+
+                        
                 </div>
             </div>
     </div>
 </template>
 
 <script>
+import AddPc from '@/components/AddPc.vue'
 export default {
+    components: {AddPc},
     name: "ListPcs",
     computed: {
         loadPcs(){
