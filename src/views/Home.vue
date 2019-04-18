@@ -1,6 +1,5 @@
 <template>
   <div class="home content">
-
     <div v-if="!isLoggedIn">
       <p class="p has-text-centered">Please log in below:</p>
       <form @submit.prevent="doLogin">
@@ -43,9 +42,16 @@
     
     </div> <!-- end of script for user that's not logged in-->
     <div v-if="isLoggedIn">
-
-     <ListCampaigns></ListCampaigns>
-     <ListPcs></ListPcs>
+        <!-- <div v-if="!campaignIsSet"> -->
+            <ListCampaigns></ListCampaigns>
+        <!-- </div> -->
+        <div>
+            <p>Campaign loaded: {{currentCampaignName}}</p>
+            <p><a>Change campaign.</a></p>
+        </div>
+        <div v-if="campaignIsSet">
+            <ListPcs></ListPcs>
+        </div>
     </div>
   </div>
 </template>
@@ -54,7 +60,7 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn']),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'currentCampaignName']),
     components: {
         ListCampaigns: () => import('@/components/ListCampaigns'),
         ListPcs: () => import('@/components/ListPcs')
@@ -71,11 +77,11 @@ export default {
         };
     },
     methods: {
-        // check(){
-        //     // let user1 = this.$store.state.user.id;
-        //     let user1 = this.$store.getters.getUserId;
-        //     console.log("USER "+ user1);
-        // },
+        check(){
+            // let user1 = this.$store.state.user.id;
+            let user1 = this.$store.getters.getCampaignName;
+            console.log("Campaign: "+ user1);
+        },
         doLogin() {
             this.$store.dispatch('login', {
                 username: this.username,
@@ -84,12 +90,11 @@ export default {
             .then(() => this.$router.push('/'))
             .catch(error => this.error = error.response.data.message);
         }
-
     },
     mounted() {
         this.$store.dispatch('loadCampaigns');
         this.$store.dispatch('loadPcs');
-    // this.$store.dispatch('loadCurrentCampaign');
+        this.$store.dispatch('loadCurrentCampaign');
   }
         
 

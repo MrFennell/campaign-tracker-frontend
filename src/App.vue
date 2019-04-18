@@ -35,7 +35,6 @@ export default {
 
   mounted() {
     this.$store.dispatch('loadcurrentuser');
-    this.$store.dispatch('loadCurrentCampaign');
   }
 };
 </script>

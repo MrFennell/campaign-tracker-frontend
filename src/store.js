@@ -17,6 +17,7 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
+    currentCampaignName: (state) => { return state.campaign.title},
     campaignIsSet: state => !!state.campaign
   },
   mutations: 
@@ -27,8 +28,8 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
-    setCampaign(state, payload){
-      state.campaign = payload;
+    setCampaign(state, campaign){
+      state.campaign = campaign;
     },
     setCampaigns(state, payload){
       state.campaigns = payload;
@@ -53,9 +54,9 @@ export default new Vuex.Store({
       return axios.post('/users/login', payload)
         .then(response => commit('setUser', response.data));
     },
-    setCurrentCampaign({ commit }, payload){
-      axios.post('/setCurrentCampaign', payload)
-        .then(response => commit('setCampaign', response.data));
+    async setCurrentCampaign({ commit }, payload){
+      const response = await axios.post('/setCurrentCampaign', payload);
+        commit('setCampaign', response.data);
     },
     loadCurrentCampaign({ commit }) {
       return axios.get('/loadCurrentCampaign')
@@ -69,7 +70,6 @@ export default new Vuex.Store({
       axios.get('/users/current')
         .then(response => commit('setUser', response.data));
     },
-    
     loadCampaign({ commit }, payload) {
       axios.get(`/campaigns/${payload}`)
         .then(response => commit('setCampaign', response.data));
