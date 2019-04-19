@@ -107,7 +107,7 @@ import axios from 'axios';
 
                         this.errors = [];                    
                         const formData = new FormData();
-                        const currentCampaign = this.$store.state.currentCampaign.id
+                        const currentCampaign = this.$store.state.campaign.id;        
 
                         formData.append("campaignId", currentCampaign);
                         formData.append("pcName", this.pcName);

@@ -14,16 +14,23 @@
                 <p v-else>Race Unknown</p>
                 <p v-if="pc.pcDescription">Description: {{ pc.pcDescription }}</p>
                 <p v-else>No description.</p>
-                <div class="pc-image">
+                <div>
                     <figure class="image is-4by3">
                         <img :src="pc.imageSrc" />
                     </figure>
+                </div>
+                <div class="field">
+                    <label for="image" class="image" >Image:</label>
+                    <input type="file" class="file"  ref="file" @change="selectFile">
+                    <button class="button" @click="updateImage">Update</button>
                 </div>
             </div>
 
             <!-- <div v-if="isEditing" class="column is-one-fifth"> -->
             <div class="column is-half">    
+
                 <form @submit.prevent="updatePc" enctype="multipart/form-data">
+                <p>{{updateMessage}}</p>
                 <div class="field">
                     <label class="label" for="pcName" >Name:</label>
                     <div class="control">
@@ -52,13 +59,9 @@
                     <label for="pcDescription" class="label" >Description:</label>
                     <input type="input" class="input"  name="pcDescription" :placeholder="pc.pcDescription" v-model="pc.pcDescription">
                 </div>
-                <div class="field">
-                    <label for="image" class="image" >Image:</label>
-                    <input type="file" class="file"  ref="file" @change="selectFile">
-                </div>
-                
+
                 <input type="submit" class="button is-primary" value="Update">
-                <input type="submit" class="button is-warning" value="Delete" @click="deletePc">
+                <input type="button" class="button is-warning" value="Delete" @click="deletePc">
                 <div class="field">
                 
                 </div>
@@ -83,7 +86,8 @@ export default {
             pcRace: '',
             pcDescription: '',
             imageSrc: '',
-            deleteAlert: false
+            deleteAlert: false,
+            updateMessage: null
         };
     },
 
@@ -107,18 +111,28 @@ export default {
         async updatePc(){ 
             this.$store.dispatch('updatePc', this.pc)
                 .then(
+                    
                     () => this.$router.push(`/pcs/${this.$route.params.id}`),
+                    this.updateMessage = "Success!",
                     (error) => this.error = error.response.data.error
                 )
 
         },
         async deletePc(){ 
-            
+
+           if  (confirm('Delete PC?')) {
             this.$store.dispatch('deletePc', this.pc)
                 .then(
                     () => this.$router.push('/pcs'),
                     (error) => this.error = error.response.data.error
+
                 )
+
+           }
+           else{
+            this.updateMessage = "Delete cancelled."
+           }
+
 
         }
 

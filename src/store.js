@@ -11,7 +11,6 @@ export default new Vuex.Store({
     users: [],
     campaign: null,
     campaigns: [],
-    currentCampaign: null,
     pcs: [],
     pc: null
   },
@@ -19,7 +18,7 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
     // currentCampaignName: (state) => { return state.campaign.title},
-    campaignIsSet: state => !!state.currentCampaign
+    campaignIsSet: state => !!state.campaign
   },
   mutations: 
     {
@@ -29,11 +28,8 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
-    setCurrentCampaign(state, currentCampaign){
-      state.currentCampaign = currentCampaign;
-    },
-    setCampaign(state, campaign){
-      state.campaign = campaign;
+    setCampaign(state, payload){
+      state.campaign = payload;
     },
     setCampaigns(state, payload){
       state.campaigns = payload;
@@ -60,11 +56,11 @@ export default new Vuex.Store({
     },
     async setCurrentCampaign({ commit }, payload){
       const response = await axios.post('/setCurrentCampaign', payload);
-        commit('setCurrentCampaign', response.data);
+        commit('setCampaign', response.data);
     },
-    loadCurrentCampaign({ commit }) {
-      return axios.get('/loadCurrentCampaign')
-       .then(response => commit('setCurrentCampaign', response.data));
+    async loadCurrentCampaign({ commit }, payload)  {
+      const response = await axios.get('/loadCurrentCampaign', payload);
+       commit('setCampaign', response.data);
    },
     logout({ commit }) {
       return axios.post('/users/logout')

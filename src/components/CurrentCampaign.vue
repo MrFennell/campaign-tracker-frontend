@@ -17,7 +17,7 @@ export default {
     name: "CurrentCampaign",
     computed: {
         loadCampaign(){
-            return this.$store.state.currentCampaign;
+            return this.$store.state.campaign;
         }
     }
 }

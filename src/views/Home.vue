@@ -95,11 +95,12 @@ export default {
             .catch(error => this.error = error.response.data.message);
         },    
 
+
     },
     mounted() {
         this.$store.dispatch('loadCampaigns');
         this.$store.dispatch('loadPcs');
-        // this.$store.dispatch('loadCurrentCampaign');
+        this.$store.dispatch('loadCurrentCampaign');
     },
     afterUpdate(){
         this.$store.dispatch('loadPcs');
