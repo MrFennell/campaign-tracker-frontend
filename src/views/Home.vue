@@ -41,17 +41,19 @@
       </form>
     
     </div> <!-- end of script for user that's not logged in-->
+
     <div v-if="isLoggedIn">
-        <!-- <div v-if="!campaignIsSet"> -->
-            <ListCampaigns></ListCampaigns>
-        <!-- </div> -->
-            <!-- <p v-if="campaignIsSet">Campaign loaded: {{currentCampaignName}}</p> -->
 
         <div v-if="campaignIsSet">
             <CurrentCampaign></CurrentCampaign>
             <ListPcs :key="componentKey"></ListPcs>
             
         </div>
+        <div v-if="chooseCampaign">
+        <ListCampaigns></ListCampaigns>
+        </div>
+
+        <div v-for="pc in pclist" v-bind:key="pc.id"></div>
     </div>
   </div>
 </template>
@@ -60,7 +62,7 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'campaignIsSet']),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'pclist']),
     components: {
         ListCampaigns: () => import('@/components/ListCampaigns'),
         ListPcs: () => import('@/components/ListPcs'),
@@ -77,14 +79,10 @@ export default {
         pc: '',
         pcs: [],
         componentKey: 0,
+        chooseCampaign: false
         };
     },
     methods: {
-        check(){
-            // let user1 = this.$store.state.user.id;
-            // let campaign1 = this.$store.getters.getCampaignName;
-            // console.log("Campaign: "+ user1);
-        },
         doLogin() {
             this.$store.dispatch('login', {
                 username: this.username,
@@ -93,19 +91,22 @@ export default {
 
             .then(() => this.$router.push('/'))
             .catch(error => this.error = error.response.data.message);
-        },    
-
+        },
+        switchCampaign(){
+            if (!this.chooseCampaign){
+                this.chooseCampaign = true;
+            }
+            else{
+                this.chooseCampaign = false;
+            }
+        }
 
     },
     mounted() {
         this.$store.dispatch('loadCampaigns');
         this.$store.dispatch('loadPcs');
         this.$store.dispatch('loadCurrentCampaign');
-    },
-    afterUpdate(){
-        this.$store.dispatch('loadPcs');
     }
-        
 
 }
 </script>

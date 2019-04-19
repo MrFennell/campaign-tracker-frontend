@@ -1,10 +1,14 @@
 <template>
     <div class="content">
-        <p v-if="campaign.title">Campaign: {{ campaign.title }}</p>
-        <p v-else>Untitled</p>
-        <p v-if="campaign.description">Description: {{campaign.description}}</p>
-        <p v-else>(no details)</p>
-        <button @click="setCurrentCampaign">Set Current Campaign</button>
+        <div class="columns is-multiline">
+            <div class="column is-half">
+                <p v-if="campaign.title">Campaign: {{ campaign.title }}</p>
+                <p v-else>Untitled</p>
+                <p v-if="campaign.description">Description: {{campaign.description}}</p>
+                <p v-else>(no details)</p>
+                <button @click="setCurrentCampaign">Set Current Campaign</button>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -1,7 +1,8 @@
 <template>
     <div>
-    <p>Start a new Campaign:</p>
-    <form @submit.prevent="AddCampaign" >
+    <p>Start a new Campaign</p>
+    
+    <form @submit.prevent="AddCampaign">
         <div class="field">
             <label for="title" class="label">Title:</label>
             <div class="control">
@@ -22,29 +23,24 @@
 </template>
 <script>
 import axios from 'axios';
-// import store from '../store';
-// import { mapGetters } from 'vuex';
-
     export default {
         name: "AddCampaign",
         data(){
             return{
                 title: '',
-                description: ''
+                description: '',
             }
         },
         methods: {
             AddCampaign(){
-
-            this.$store.dispatch('AddCampaign', {
-                title:this.title,
-                description:this.description,
-                createdBy:this.$store.getters.getUserId
-            })
-                .then(() => this.$router.push('/'))
-
-                .catch(error => this.error = error.response.data.message);
-            }
+                this.$store.dispatch('AddCampaign', {
+                    title:this.title,
+                    description:this.description,
+                    createdBy:this.$store.getters.getUserId
+                })
+                    .then(() => this.$router.push('/'))
+                    .catch(error => this.error = error.response.data.message);
+                }
 
         }
     }

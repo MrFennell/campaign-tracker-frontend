@@ -10,11 +10,7 @@
             <router-view></router-view>
           </div>
         </div>
-        <div class="columns">
-          <div class="column">
-            <AddCampaign></AddCampaign>
-          </div>
-        </div>
+
       </div>
     </section>
   </div>
@@ -26,7 +22,7 @@ import AddCampaign from '@/components/AddCampaign.vue'
 
 export default {
   name: 'app',
-  components: { NavBar , AddCampaign},
+  components: { NavBar},
 
   mounted() {
     this.$store.dispatch('loadcurrentuser');

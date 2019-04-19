@@ -22,7 +22,7 @@
                 <div class="field">
                     <label for="image" class="image" >Image:</label>
                     <input type="file" class="file"  ref="file" @change="selectFile">
-                    <button class="button" @click="updateImage">Update</button>
+                    <button class="button" @click="updatePcImage">Update</button>
                 </div>
             </div>
 
@@ -134,6 +134,18 @@ export default {
            }
 
 
+        },
+        async updatePcImage (){
+            const formData = new FormData();
+            formData.append('PcId', this.pc.id);
+            formData.append('file', this.file);
+            try{
+                await axios.post('/pcs/updatePcImage', formData)
+                .then(this.updateMessage = "Image updated.")
+                .then(() => this.$router.push(`/pcs/${this.$route.params.id}`))
+            }catch(err){
+                console.log(err);
+            }
         }
 
     }

@@ -18,7 +18,8 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
     // currentCampaignName: (state) => { return state.campaign.title},
-    campaignIsSet: state => !!state.campaign
+    campaignIsSet: state => !!state.campaign,
+    pclist: state => {return state.pcs}
   },
   mutations: 
     {
@@ -108,6 +109,10 @@ export default new Vuex.Store({
     },
     async updatePc({ commit }, payload){
       const response = await axios.post('/pcs/updatePc', payload)
+      commit('setPc', response.data);
+    },
+    async updatePcImage({ commit }, payload){
+      const response = await axios.post('/pcs/updatePcImage', payload)
       commit('setPc', response.data);
     },
     async deletePc({ commit }, payload){
