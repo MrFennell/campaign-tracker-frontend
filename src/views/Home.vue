@@ -44,16 +44,19 @@
 
     <div v-if="isLoggedIn">
 
+        <div v-if="!campaignIsSet">
+        <p>Welcome back.</p>
+            <ListCampaigns></ListCampaigns>
+        </div>
+
         <div v-if="campaignIsSet">
             <CurrentCampaign></CurrentCampaign>
-            <ListPcs :key="componentKey"></ListPcs>
+            <ListPcs></ListPcs>
             
         </div>
         <div v-if="chooseCampaign">
         <ListCampaigns></ListCampaigns>
         </div>
-
-        <div v-for="pc in pclist" v-bind:key="pc.id"></div>
     </div>
   </div>
 </template>
@@ -62,7 +65,7 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'pclist']),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'getPc']),
     components: {
         ListCampaigns: () => import('@/components/ListCampaigns'),
         ListPcs: () => import('@/components/ListPcs'),

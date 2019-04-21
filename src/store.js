@@ -17,9 +17,11 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
+    getPc: (state) => { return state.pc },
     // currentCampaignName: (state) => { return state.campaign.title},
     campaignIsSet: state => !!state.campaign,
-    pclist: state => {return state.pcs}
+    hasPlayers: state => state.pcs.filter(pc => !!pc.playerName)
+
   },
   mutations: 
     {
@@ -101,6 +103,10 @@ export default new Vuex.Store({
     },
     async AddPc({ commit }, payload){
       const response = await axios.post('/addPc', payload)
+      commit('setPc', response.data);
+    },
+    async setPc({ commit }, payload){
+      const response = await axios.post('/pcs/setPc', payload)
       commit('setPc', response.data);
     },
     async getPcs({ commit }, payload) {
