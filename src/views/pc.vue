@@ -1,8 +1,6 @@
 <template>
     <div class="content">
-        
         <h2>{{pc.pcName }}</h2>
-        
         <div class="columns is-multiline">
             <!-- <div v-if="!isEditing" class="column is-one-fifth"> -->
             <div class="column is-half">

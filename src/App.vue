@@ -2,14 +2,19 @@
   <div id="app">
     <section class="section">
       <div class="container">
-            <h1 class="h1 has-text-centered">Campaign Tracker</h1>
-            <p class="p has-text-centered">Plan your games accordingly.</p>
-        <NavBar></NavBar>
-        <div class="columns">
-          <div class="column -is-center">
-            <router-view></router-view>
+        <div>
+          <div class='header'>
+              <!-- <NavBar></NavBar> -->
+              <img id="logo-img" src="./assets/logo.png" class="image is-128x128" />
+              <h1 class="title has-text-centered">Campaign Tracker</h1>
+              <p class="p has-text-centered">Plan your games accordingly.</p>
+           </div>
           </div>
-        </div>
+           <div class="columns">
+            <div class="column -is-center">
+              <router-view></router-view>
+            </div>
+          </div>
 
       </div>
     </section>
@@ -17,12 +22,11 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
-import AddCampaign from '@/components/AddCampaign.vue'
+// import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'app',
-  components: { NavBar},
+  // components: { NavBar},
 
   mounted() {
     this.$store.dispatch('loadcurrentuser');
@@ -30,12 +34,17 @@ export default {
 };
 </script>
 
-// <style lang="scss">
+<style lang="scss">
 
-// $font-stack: Helvetica, sans-serif;
+  #logo-img{
+    width: 128px;
+    margin:auto;
+  }
+  .header{
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 
-// body {
-//   font: 100% $font-stack;
-// }
+  }
 
-// </style>
+</style>

@@ -4,10 +4,10 @@
         <div class="columns is-multiline">
                     <div class="column is-one-quarter" v-for="pc in pcs" v-bind:key="pc.id">
                         <div>
-                                        <figure class="image is-4by3"> 
-                                        <img :src="pc.imageSrc" />
-                                        
-                                        </figure>
+                                <figure class="image is-4by3"> 
+                                <img :src="pc.imageSrc" />
+                                
+                                </figure>
                                 <div >
                                         <div class="media">
                                             <div class="media-content">
@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapState } from 'vuex';
 export default {
     name: 'pcs',

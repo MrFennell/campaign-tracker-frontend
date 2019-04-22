@@ -42,6 +42,9 @@ export default new Vuex.Store({
     },
     setPc(state, pc) {
       state.pc = pc;
+    },
+    setNull(state, payload){
+      state.payload = payload
     }
   },
   actions: {
@@ -64,7 +67,11 @@ export default new Vuex.Store({
     async loadCurrentCampaign({ commit }, payload)  {
       const response = await axios.get('/loadCurrentCampaign', payload);
        commit('setCampaign', response.data);
-   },
+    },
+    dismiss({ commit }) {
+    return axios.post('/dismiss')
+      .then(() => commit('setNull', ''));
+    },
     logout({ commit }) {
       return axios.post('/users/logout')
         .then(() => commit('setUser', null));

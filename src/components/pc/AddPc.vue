@@ -3,12 +3,12 @@
         <p v-if="errors.length">
             <b>Please correct the following error(s):</b>
             <ul>
-            <li v-for="error in errors">{{ error }}</li>
+                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
             </ul>
         </p>
 
         <div v-if="!formVisible">
-            <div class="box" @click="toggleForm">
+            <div class="tag" @click="toggleForm">
                 <p class="add-new-box">Add a new PC</p>
             </div>
         </div>
@@ -103,6 +103,9 @@ import axios from 'axios';
                     if (!this.pcName){
                         this.errors.push('Please enter a name.');
                     }
+                    else if (!this.playerName){
+                        this.errors.push('Please enter the name of the player.');
+                    }
                     else{
 
                         this.errors = [];                    
@@ -123,9 +126,9 @@ import axios from 'axios';
                             }
                             // this.$router.push('/pcs')
                         }
-                    else{
-                        await axios.post('/pcs/addPc', formData)
-                    }
+                        else{
+                            await axios.post('/pcs/addPc', formData)
+                        }
                 }
             }
 

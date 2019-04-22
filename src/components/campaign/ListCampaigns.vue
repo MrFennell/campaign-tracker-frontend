@@ -41,6 +41,7 @@ export default {
     computed: {
         loadCampaigns(){
             return this.$store.state.campaigns;
+            // return this.$store.getters.hasPlayers;
         }
     },
     data(){
@@ -54,6 +55,10 @@ export default {
     methods: {
         async setCurrentCampaign(campaign){
             await this.$store.dispatch('setCurrentCampaign', campaign)
+            .then(
+                    () => this.$router.go(),
+
+            )
             
         },
         edit(){

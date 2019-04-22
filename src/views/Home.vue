@@ -44,6 +44,10 @@
 
     <div v-if="isLoggedIn">
 
+        <div v-if="chooseCampaign">
+            <ListCampaigns></ListCampaigns>
+        </div>
+
         <div v-if="!campaignIsSet">
         <p>Welcome back.</p>
             <ListCampaigns></ListCampaigns>
@@ -51,12 +55,10 @@
 
         <div v-if="campaignIsSet">
             <CurrentCampaign></CurrentCampaign>
-            <ListPcs></ListPcs>
+            <PcContainer></PcContainer>
             
         </div>
-        <div v-if="chooseCampaign">
-        <ListCampaigns></ListCampaigns>
-        </div>
+
     </div>
   </div>
 </template>
@@ -67,9 +69,10 @@ export default {
   name: 'home',
   computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'getPc']),
     components: {
-        ListCampaigns: () => import('@/components/ListCampaigns'),
-        ListPcs: () => import('@/components/ListPcs'),
-        CurrentCampaign: () => import('@/components/CurrentCampaign')
+        ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
+        // ListPcs: () => import('@/components/pc/ListPcs'),
+        PcContainer: () => import('@/components/pc/PcContainer'),
+        CurrentCampaign: () => import('@/components/campaign/CurrentCampaign')
     },
     data() {
       return {
@@ -107,7 +110,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch('loadCampaigns');
-        this.$store.dispatch('loadPcs');
+        // this.$store.dispatch('loadPcs');
         this.$store.dispatch('loadCurrentCampaign');
     }
 

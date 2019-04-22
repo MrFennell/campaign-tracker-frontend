@@ -1,11 +1,11 @@
 <template>
     <div class="content">
-
-        <h2>{{ loadCampaign.title }}</h2>
-                <p class="tag switch" @click="switchCampaign">Switch Campaign</p>
-
+        <h2 >{{ loadCampaign.title }}</h2>
+   
+            <p class="tag switch" @click="switchCampaign">Switch Campaign</p>
             <p class="tag new" @click="newCampaign">Start New</p>
 
+        <p class="tag logout" data-cy="router-logout"><a @click="doLogout">Logout</a></p>
         <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
         </div>
@@ -32,8 +32,8 @@ export default {
         }
     },
     components: {
-        ListCampaigns: () => import('@/components/ListCampaigns'),
-        AddCampaign: () => import('@/components/AddCampaign')
+        ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
+        AddCampaign: () => import('@/components/campaign/AddCampaign')
     },
     methods: {
         switchCampaign(){
@@ -54,7 +54,16 @@ export default {
                 this.showNewForm = false;
             }
         },
+        doLogout() {
+            if (confirm("Are you sure you want to log out?")){
+                this.$store.dispatch('logout')
+            }
+            
+        }
     }
 }
 
 </script>
+<style lang="scss">
+
+</style>

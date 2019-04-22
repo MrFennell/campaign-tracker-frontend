@@ -18,20 +18,17 @@
 
 <script>
 import { mapState } from 'vuex';
-
 export default {
     name: 'campaigns',
     computed: mapState(['campaigns']),
     mounted() {
         this.$store.dispatch('getCampaigns');
-    }
-    ,
+    },
     methods: {
         setCurrentCampaign(campaign){
             this.$store.dispatch('setCurrentCampaign', this.campaign);
         }
     }
-
 }
 </script>
 
