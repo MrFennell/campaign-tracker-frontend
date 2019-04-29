@@ -23,7 +23,7 @@
                     <button class="button" @click="updatePcImage">Update</button>
                 </div>
             </div>
-
+ 
             <!-- <div v-if="isEditing" class="column is-one-fifth"> -->
             <div class="column is-half">    
 

@@ -25,7 +25,7 @@ export default {
         this.$store.dispatch('getCampaigns');
     },
     methods: {
-        setCurrentCampaign(campaign){
+        setCurrentCampaign(){
             this.$store.dispatch('setCurrentCampaign', this.campaign);
         }
     }

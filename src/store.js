@@ -31,11 +31,11 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user;
     },
-    setCampaign(state, payload){
-      state.campaign = payload;
+    setCampaign(state, campaign){
+      state.campaign = campaign;
     },
-    setCampaigns(state, payload){
-      state.campaigns = payload;
+    setCampaigns(state, campaigns){
+      state.campaigns = campaigns;
     },
     setPcs(state, pcs){
       state.pcs = pcs;

@@ -42,19 +42,23 @@
     
     </div> <!-- end of script for user that's not logged in-->
 
+
+
     <div v-if="isLoggedIn">
 
-        <div v-if="chooseCampaign">
+        <!-- <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
         </div>
 
         <div v-if="!campaignIsSet">
-        <p>Welcome back.</p>
+            <p>Create a campaign below:</p>
             <ListCampaigns></ListCampaigns>
-        </div>
+        </div> -->
 
         <div v-if="campaignIsSet">
-            <CurrentCampaign></CurrentCampaign>
+            <p>Welcome back.</p>
+            <!-- <CurrentCampaign></CurrentCampaign> -->
+            <CampaignContainer></CampaignContainer>
             <PcContainer></PcContainer>
             
         </div>
@@ -67,12 +71,14 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'getPc']),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet']),
     components: {
-        ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
+        // ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
         // ListPcs: () => import('@/components/pc/ListPcs'),
         PcContainer: () => import('@/components/pc/PcContainer'),
-        CurrentCampaign: () => import('@/components/campaign/CurrentCampaign')
+        // CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
+        CampaignContainer: () => import('@/components/campaign/CampaignContainer')
+
     },
     data() {
       return {
@@ -84,8 +90,6 @@ export default {
         campaign: '',
         pc: '',
         pcs: [],
-        componentKey: 0,
-        chooseCampaign: false
         };
     },
     methods: {

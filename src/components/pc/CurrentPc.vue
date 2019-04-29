@@ -8,7 +8,6 @@
             <div v-if="pcVisible"> 
                 <!-- <p class="tag" value="Hide PC" @click="hidePc">Hide PC</p> -->
 
- 
 
                 <div class="columns">
 
