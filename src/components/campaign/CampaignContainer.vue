@@ -1,10 +1,8 @@
 <template>
     <div class="content">
-        <h2 >{{ loadCampaign.title }}</h2>
-    
-            <p class="tag switch" @click="switchCampaign">Switch Campaign</p>
-            <p class="tag new" @click="newCampaign">Start New</p>
-
+        <CurrentCampaign></CurrentCampaign>
+        <p class="tag switch" @click="switchCampaign">Switch Campaign</p>
+        <p class="tag new" @click="newCampaign">Start New</p>
         <p class="tag logout" data-cy="router-logout"><a @click="doLogout">Logout</a></p>
         <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
@@ -20,11 +18,11 @@
 
 export default {
     name: "CampaignContainer",
-    computed: {
-        loadCampaign(){
-            return this.$store.state.campaign;
-        },
-    },
+    // computed: {
+    //     loadCampaign(){
+    //         return this.$store.state.campaign;
+    //     },
+    // },
     data(){
         return{
             chooseCampaign: false,
@@ -33,7 +31,7 @@ export default {
     },
     components: {
         ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
-        // CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
+        CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
         AddCampaign: () => import('@/components/campaign/AddCampaign')
     },
     methods: {

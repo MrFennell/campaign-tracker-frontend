@@ -5,8 +5,12 @@
         <div>
           <div class='header'>
               <!-- <NavBar></NavBar> -->
+
+              <router-link to="/">
               <img id="logo-img" src="./assets/logo.png" class="image is-128x128" />
+              </router-link>
               <h1 class="title has-text-centered">Campaign Tracker</h1>
+              
               <p class="p has-text-centered">Plan your games accordingly.</p>
            </div>
           </div>

@@ -5,18 +5,17 @@
     </div>
     
     <div v-if="isLoggedIn">
-        <!-- <div v-if="chooseCampaign">
+        <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
         </div>
 
         <div v-if="!campaignIsSet">
             <p>Create a campaign below:</p>
             <ListCampaigns></ListCampaigns>
-        </div> -->
+        </div>
 
         <div v-if="campaignIsSet">
             <p>Welcome back.</p>
-            <!-- <CurrentCampaign></CurrentCampaign> -->
             <CampaignContainer></CampaignContainer>
             <PcContainer></PcContainer>
             
@@ -32,10 +31,7 @@ export default {
   name: 'home',
   computed: mapGetters(['isLoggedIn', 'campaignIsSet']),
     components: {
-        // ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
-        // ListPcs: () => import('@/components/pc/ListPcs'),
         PcContainer: () => import('@/components/pc/PcContainer'),
-        // CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
         CampaignContainer: () => import('@/components/campaign/CampaignContainer'),
         Login: () => import('@/components/user/login')
 
@@ -46,6 +42,7 @@ export default {
         password: '',
         error: false,
         currentCampaign: null,
+        chooseCampaign: null,
         campaigns: [],
         campaign: '',
         pc: '',
