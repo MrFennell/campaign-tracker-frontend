@@ -30,8 +30,6 @@
                             <button class="button" @click="updatePcImage">Update</button>
                         </div>   
 
-
-
                     </div>
                     
                     <div class="column is-one-third">

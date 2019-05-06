@@ -108,9 +108,17 @@ export default new Vuex.Store({
       const response = await axios.post('/addCampaign', payload)
       commit('setCampaign', response.data);
     },
+    async updateCampaign({ commit }, payload){
+      const response = await axios.post('/updateCampaign', payload)
+      commit('setCampaign', response.data);
+    },
     async AddPc({ commit }, payload){
       const response = await axios.post('/addPc', payload)
       commit('setPc', response.data);
+    },
+    async deleteCampaign({ commit }, payload){
+      const response = await axios.post('/deleteCampaign', payload)
+      commit('setCampaign', response.data);
     },
     async setPc({ commit }, payload){
       const response = await axios.post('/pcs/setPc', payload)
