@@ -7,8 +7,6 @@
             </div>
             <div v-if="pcVisible"> 
                 <!-- <p class="tag" value="Hide PC" @click="hidePc">Hide PC</p> -->
-
-
                 <div class="columns">
 
                     <div class="column is-one-third">
@@ -40,9 +38,9 @@
                         <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
                         <p v-else>Please enter name of player!</p>
                         <p v-if="loadPc && loadPc.pcClass">Class: {{ loadPc.pcClass }}</p>
-                        <p v-else>Class Unknown</p>
+                        <!-- <p v-else>Class Unknown</p> -->
                         <p v-if="loadPc && loadPc.pcRace">Race: {{loadPc.pcRace}}</p>
-                        <p v-else>Race Unknown</p>
+                        <!-- <p v-else>Race Unknown</p> -->
                         <p v-if="loadPc && loadPc.pcDescription">Description: {{ loadPc.pcDescription }}</p>
                         <p v-else>No description.</p>
 
@@ -176,14 +174,11 @@ export default {
            }
         },
         async updatePcImage (){
-            console.log("hey"+this.loadPc.id);
             const formData = new FormData();
             formData.append('PcId', this.loadPc.id);
             formData.append('file', this.file);
             try{
                 await axios.post('/pcs/updatePcImage', formData)
-                // .then(this.updateMessage = "Image updated.")
-                // .then(() => this.$router.push(`/pcs/${this.$route.params.id}`))
                 .then(() => this.$router.push('/'))
 
             }catch(err){

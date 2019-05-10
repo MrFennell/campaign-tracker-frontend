@@ -3,7 +3,13 @@
     <div v-if="!isLoggedIn">
         <Login></Login>
     </div>
-    
+    <div id="sidebar">
+    <!-- <ul>
+        <li><router-link to="/" exact-active-class="is-active">Campaign</router-link></li>
+        <li><router-link to="ListPcs" exact-active-class="is-active">PCs</router-link></li>
+    </ul> -->
+    </div>
+
     <div v-if="isLoggedIn">
         <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
@@ -15,12 +21,11 @@
         </div>
 
         <div v-if="campaignIsSet">
+            <!-- <router-view></router-view> -->
             <p>Welcome back.</p>
             <CampaignContainer></CampaignContainer>
-            <PcContainer></PcContainer>
-            
+            <PcContainer :list="list"></PcContainer>
         </div>
-
     </div>
   </div>
 </template>
@@ -29,9 +34,10 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'campaignIsSet']),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'pcList']),
     components: {
         PcContainer: () => import('@/components/pc/PcContainer'),
+        ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
         CampaignContainer: () => import('@/components/campaign/CampaignContainer'),
         Login: () => import('@/components/user/login')
 
@@ -47,6 +53,7 @@ export default {
         campaign: '',
         pc: '',
         pcs: [],
+        list: 'full'
         };
     },
     methods: {

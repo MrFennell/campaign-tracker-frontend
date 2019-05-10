@@ -7,8 +7,10 @@ import Register from './views/Register'
 import Login from './views/Login'
 import campaigns from './views/Campaigns'
 import campaign from './views/Campaign'
-import pcs from './views/pcs'
+// import pcs from './views/pcs'
 import pc from './views/pc'
+import PcContainer from './components/pc/PcContainer'
+import ListPcs from './components/pc/ListPcs'
 
 Vue.use(Router)
 
@@ -19,7 +21,22 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+         
+        children: [
+          {path: '/', component: ListPcs, props: {list: 'created'}},
+          // {path: 'pc:id', component: ListPcs, props: {list: 'AtoZ'}}
+        ]
+      },
+    {
+      path: '/pcs',
+      name: 'PcContainer',
+      component: PcContainer,
+      children: [
+        {path: '/', component: ListPcs, props: {list: 'created'}},
+        {path: 'created', component: ListPcs, props: {list: 'created'}},
+        {path: 'alphabetical', component: ListPcs, props: {list: 'alphabetical'}}
+      ]
     },
     {
       path: '/about',
@@ -60,11 +77,15 @@ export default new Router({
       name: 'campaign',
       component: campaign
     },
-    {
-      path: '/pcs',
-      name: 'pcs',
-      component: pcs
-    },
+    // {
+    //   path: '/pcs',
+    //   name: 'pcs',
+    //   component: pcs
+    //   // children: [
+    //   //   {path: '/', component: ListPcs, props: {list: 'AtoZ'}},
+    //   //   {path: 'alphabetical', component: ListPcs, props: {list: 'AtoZ'}}
+    //   // ]
+    // },
     {
       path: '/pcs/:id',
       name: 'pc',

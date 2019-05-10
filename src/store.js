@@ -18,9 +18,10 @@ export default new Vuex.Store({
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
     getPc: (state) => { return state.pc },
-    // currentCampaignName: (state) => { return state.campaign.title},
     campaignIsSet: state => !!state.campaign,
-    hasPlayers: state => state.pcs.filter(pc => !!pc.playerName)
+    pcList: state => state.pcs,
+    userName: (state) => {return state.user.username}
+    // hasClass: state => state.pcs.filter(pc => !!pc.pcClass)
 
   },
   mutations: 
