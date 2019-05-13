@@ -16,8 +16,7 @@
         </div>
 
         <div v-if="!campaignIsSet">
-            <p>Create a campaign below:</p>
-            <ListCampaigns></ListCampaigns>
+            <AddCampaign></AddCampaign>
         </div>
 
         <div v-if="campaignIsSet">
@@ -34,10 +33,11 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'pcList']),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'pcList',]),
     components: {
         PcContainer: () => import('@/components/pc/PcContainer'),
         ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
+        AddCampaign: () => import('@/components/campaign/AddCampaign'),
         CampaignContainer: () => import('@/components/campaign/CampaignContainer'),
         Login: () => import('@/components/user/login')
 

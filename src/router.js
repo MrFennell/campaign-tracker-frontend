@@ -20,20 +20,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      // name: 'home',
       component: Home,
          
         children: [
-          {path: '/', component: ListPcs, props: {list: 'created'}},
+          {path: '', component: ListPcs, props: {list: 'created'}},
           // {path: 'pc:id', component: ListPcs, props: {list: 'AtoZ'}}
         ]
-      },
+    },
     {
       path: '/pcs',
       name: 'PcContainer',
       component: PcContainer,
       children: [
-        {path: '/', component: ListPcs, props: {list: 'created'}},
+        {path: '', component: ListPcs, props: {list: 'created'}},
         {path: 'created', component: ListPcs, props: {list: 'created'}},
         {path: 'alphabetical', component: ListPcs, props: {list: 'alphabetical'}}
       ]

@@ -21,21 +21,18 @@
                         <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
                     </div>
                 </div>
-
                 <div class="field">
                     <label for="playerName" class="label" >Player Name:</label>
                     <div class="control">
                         <input type="input" class="input" name="playerName" placeholder="Player Name" v-model="playerName">
                     </div>
                 </div>
-
                 <div class="field">
                     <label for="pcClass" class="label" >Class:</label>
                     <div class="control">
                         <input type="input" class="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
                     </div>
                 </div>
-
                 <div class="field">
                     <label for="pcRace" class="label">Race:</label>
                     <div class="control">
@@ -43,8 +40,28 @@
                     </div>
                 </div>
                 <div class="field">
+                    <label for="pcLevel" class="label">Level:</label>
+                    <div class="control">
+                        <input type="number" class="input" name="pcLevel" placeholder="Level" v-model="pcLevel">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="pcLifestate" class="label">Life State:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="pcLifestate" placeholder="Dead or alive?" v-model="pcLifestate">
+                    </div>
+                </div>
+                <div class="field">
                     <label for="pcDescription" class="label" >Description:</label>
-                    <input type="input" class="input"  name="pcDescription" placeholder="PC Description" v-model="pcDescription">
+                    <textarea  class="textarea"  name="pcDescription" placeholder="PC Description" v-model="pcDescription"></textarea>
+                </div>
+                <div class="field">
+                    <label for="pcSharedBio" class="label" >Shared Biography:</label>
+                    <textarea  class="textarea"  name="pcSharedBio" placeholder="All players and GMs will see this." v-model="pcSharedBio"></textarea>
+                </div>
+                <div class="field">
+                    <label for="pcPrivateBio" class="label" >Private Biography:</label>
+                    <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="pcPrivateBio"></textarea>
                 </div>
                 <div class="field">
                     <label for="image" class="image" >Image:</label>
@@ -114,6 +131,10 @@ import axios from 'axios';
                         formData.append("playerName", this.playerName);
                         formData.append("pcClass", this.pcClass);
                         formData.append("pcRace", this.pcRace);
+                        formData.append("pcLevel", this.pcLevel);
+                        formData.append("pcLifestate", this.pcLifestate);
+                        formData.append("pcSharedBio", this.pcSharedBio);
+                        formData.append("pcPrivateBio", this.pcPrivateBio);
                         formData.append("pcDescription", this.pcDescription);
                         
                         if (this.file){
@@ -124,7 +145,6 @@ import axios from 'axios';
                             }catch(err){
                                 console.log(err);
                             }
-                            // this.$router.push('/pcs')
                         }
                         else{
                             await axios.post('/pcs/addPc', formData)
