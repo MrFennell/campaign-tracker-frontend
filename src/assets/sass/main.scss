@@ -1,1 +1,15 @@
-@import '~bulma/bulma'
+// @import '~bulma/bulma'
+
+@charset "utf-8";
+@import "./node_modules/bulma/sass/utilities/initial-variables";
+
+
+$beige-lighter: #EFF0EB;
+
+// $family-sans-serif: "Helvetica", "Arial", sans-serif;
+$body-background-color: $beige-lighter;
+
+
+// $family-sans-serif: "Helvetica", "Arial", sans-serif;
+
+@import "./node_modules/bulma/bulma";
