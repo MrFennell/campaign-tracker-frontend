@@ -17,6 +17,7 @@
 
         <div v-if="!campaignIsSet">
             <AddCampaign></AddCampaign>
+            <CampaignContainer></CampaignContainer>
         </div>
 
         <div v-if="campaignIsSet">

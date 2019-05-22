@@ -25,7 +25,7 @@
 
                         <div class="field">
                             <label for="image" class="image" >Image:</label>
-                            <input type="file" class="file"  ref="file" @change="selectFile">
+                            <input type="file" class="file" ref="file" @change="selectFile">
                             <button class="button" @click="updatePcImage">Update</button>
                         </div>   
 
@@ -109,10 +109,10 @@
                                 <label for="pcPrivateBio" class="label" >Private Biography:</label>
                                 <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadPc.pcPrivateBio"></textarea>
                             </div>
-                            <div class="field">
+                            <!-- <div class="field">
                                 <label for="image" class="image" >Image:</label>
                                 <input type="file" class="file"  ref="file" @change="selectFile">
-                            </div>
+                            </div> -->
 
 
                             <input type="submit" class="button is-primary" value="Update">
@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 export default {
     name: "CurrentPc",
     computed: {
@@ -140,7 +140,7 @@ export default {
         return {
             pc: {},
             pcName: '',
-            file: "",
+            file: null,
             isEditing: false,
             playerName: '',
             pcRace: '',
@@ -161,7 +161,7 @@ export default {
     },
     methods:{
         selectFile(){
-        this.file = this.$refs.file.files[0];
+            this.file = this.$refs.file.files[0];
         },
         edit(){
             if (!this.isEditing){
@@ -185,6 +185,7 @@ export default {
                 this.errors.push('Name is required.');
                 
             }else{
+               
                 this.$store.dispatch('updatePc', this.loadPc)
                     .then(
                         // () => this.$router.push('/'),
@@ -213,14 +214,29 @@ export default {
         },
         async updatePcImage (){
             const formData = new FormData();
-            formData.append('PcId', this.loadPc.id);
-            formData.append('file', this.file);
-            try{
-                await axios.post('/pcs/updatePcImage', formData)
-                .then(() => this.$router.push('/'))
 
-            }catch(err){
-                console.log(err);
+            if (this.file){
+                const pcId = this.loadPc.id;
+                const oldImage = this.loadPc.imageSrc;
+
+                formData.append('PcId', pcId);
+                formData.append('oldImage', oldImage);
+                formData.append('file', this.file);
+                try{
+                    // await axios.post('/pcs/updatePcImage', formData)
+                    // .then(() => this.$router.push('/'))
+                    this.$store.dispatch('updatePcImage', formData)
+                        .then(
+                             () => this.$router.go(),
+                            this.updateMessage = "Updated."
+                        
+                        )
+                }catch(err){
+                    this.updateMessage = "Error updating Image."
+                    console.log(err);
+                }
+            }else{
+                this.updateMessage = "No change to image."
             }
         }
 

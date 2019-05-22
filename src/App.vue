@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <div class="container">
+      <div class="container is-fullhd">
         <div>
           <div class='header'>
               <!-- <NavBar></NavBar> -->

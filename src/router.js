@@ -9,7 +9,7 @@ import campaigns from './views/Campaigns'
 import campaign from './views/Campaign'
 // import pcs from './views/pcs'
 import pc from './views/pc'
-import PcContainer from './components/pc/PcContainer'
+// import PcContainer from './components/pc/PcContainer'
 import ListPcs from './components/pc/ListPcs'
 
 Vue.use(Router)
@@ -28,16 +28,16 @@ export default new Router({
           // {path: 'pc:id', component: ListPcs, props: {list: 'AtoZ'}}
         ]
     },
-    {
-      path: '/pcs',
-      name: 'PcContainer',
-      component: PcContainer,
-      children: [
-        {path: '', component: ListPcs, props: {list: 'created'}},
-        {path: 'created', component: ListPcs, props: {list: 'created'}},
-        {path: 'alphabetical', component: ListPcs, props: {list: 'alphabetical'}}
-      ]
-    },
+    // {
+    //   path: '/pcs',
+    //   name: 'PcContainer',
+    //   component: PcContainer,
+    //   children: [
+    //     {path: '', component: ListPcs, props: {list: 'created'}},
+    //     {path: 'created', component: ListPcs, props: {list: 'created'}},
+    //     {path: 'alphabetical', component: ListPcs, props: {list: 'alphabetical'}}
+    //   ]
+    // },
     {
       path: '/about',
       name: 'about',
