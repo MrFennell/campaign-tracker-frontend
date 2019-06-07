@@ -7,13 +7,8 @@
             </ul>
         </p>
 
-        <div v-if="!formVisible">
-            <div class="tag" @click="toggleForm">
-                <p class="add-new-box">Add a new PC</p>
-            </div>
-        </div>
-        <div v-if="formVisible" class="hiddenForm">
-            <p>Add a new Player Character:</p>
+
+        <div>
             <form @submit.prevent="newPc" enctype="multipart/form-data">
                 <div class="field">
                     <label class="label" for="pcName">Name:</label>

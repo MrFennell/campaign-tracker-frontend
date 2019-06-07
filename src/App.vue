@@ -17,14 +17,16 @@
 
             <!-- <div class="columns -is-center"> -->
               <div class="columns" >
-                <div class=" column is-one-fifth">
+                <!-- <div class=" column is-one-fifth">
                   <ul>
                       <li><router-link to="/" exact-active-class="is-active">Campaign</router-link></li>
                       <li><router-link to="/pcs" exact-active-class="is-active">PCs</router-link></li>
                   </ul>
                 </div>
-              
-              <div class="column is-four-fifths">
+
+               -->
+          
+              <!-- <div class="column is-four-fifths"> -->
                 <router-view></router-view>
               </div>
             </div>
@@ -32,7 +34,7 @@
 
           
  
-      </div>
+      <!-- </div> -->
   </div>
 </template>
 

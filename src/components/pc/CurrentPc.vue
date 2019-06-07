@@ -1,15 +1,15 @@
 <template>
         <div v-if="loadPc" class="content" >
             
-            <div v-if="!pcVisible"> 
+            <!-- <div v-if="!pcVisible"> 
                     <p class="tag" value="Hide PC" @click="hidePc"><a>Show PC</a></p>
 
-            </div>
+            </div> -->
             <div v-if="pcVisible"> 
                 <!-- <li v-for="value, propertyName in loadPc">{{propertyName}}:{{value}}</li> -->
                 <!-- <p class="tag" value="Hide PC" @click="hidePc">Hide PC</p> -->
                 <div class="columns">
-
+                    
                     <div class="column is-one-third">
                         <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
                         <h2 v-else>error</h2>
@@ -30,8 +30,7 @@
                         </div>   
 
                     </div>
-                    <div>
-                    </div>
+
                     <div class="column is-one-third">
                         <p>Details:</p>
 
@@ -50,8 +49,10 @@
                         <p v-else>No description.</p>
 
                     </div>
-
-                    <div class="column is-one-third">
+                    <div  class="column is-one-third">
+                    <a v-if="!isEditing" @click="edit">Edit</a>
+                    <div v-if="isEditing">
+                        <a @click="isEditing = false">Quit Editing</a>
                         {{updateMessage}}    
                         <p v-if="errors.length">
                             <b>Please correct the following error(s):</b>
@@ -109,17 +110,18 @@
                                 <label for="pcPrivateBio" class="label" >Private Biography:</label>
                                 <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadPc.pcPrivateBio"></textarea>
                             </div>
+
                             <!-- <div class="field">
                                 <label for="image" class="image" >Image:</label>
                                 <input type="file" class="file"  ref="file" @change="selectFile">
                             </div> -->
-
 
                             <input type="submit" class="button is-primary" value="Update">
                             <input type="button" class="button is-warning" value="Delete" @click="deletePc">
                             <input type="button" class="button" value="Hide PC" @click="hidePc">
 
                         </form>
+                        </div>
                     </div>
 
                 </div>
@@ -142,26 +144,19 @@ export default {
             pcName: '',
             file: null,
             isEditing: false,
-            playerName: '',
-            pcRace: '',
-            pcClass: '',
-            pcDescription: '',
-            pcLevel: '',
-            pcLifestate: '',
-            pcSharedBio: '',
-            pcPrivateBio: '',
-            imageSrc: '',
             deleteAlert: false,
             updateMessage: '',
             pcVisible: true,
             errors: [],
             error: '',
-            defaultThumbnail: "src='./assets/logo.png'"
+            defaultThumbnail: "src='./assets/logo.png'",
+            newImage: false
         }
     },
     methods:{
         selectFile(){
             this.file = this.$refs.file.files[0];
+            this.newImage = true;
         },
         edit(){
             if (!this.isEditing){
@@ -186,14 +181,55 @@ export default {
                 
             }else{
                
-                this.$store.dispatch('updatePc', this.loadPc)
+               if (this.newImage === true){
+                    const formData = new FormData();
+
+                    if (this.file){
+                        const pcId = this.loadPc.id;
+                        const oldImage = this.loadPc.imageSrc;
+
+                        formData.append('PcId', pcId);
+                        formData.append('oldImage', oldImage);
+                        formData.append('file', this.file);
+
+                        formData.append("pcName", this.loadPc.pcName);
+                        formData.append("playerName", this.loadPc.playerName);
+                        formData.append("pcClass", this.loadPc.pcClass);
+                        formData.append("pcRace", this.loadPc.pcRace);
+                        formData.append("pcLevel", this.loadPc.pcLevel);
+                        formData.append("pcLifestate", this.loadPc.pcLifestate);
+                        formData.append("pcSharedBio", this.loadPc.pcSharedBio);
+                        formData.append("pcPrivateBio", this.loadPc.pcPrivateBio);
+                        formData.append("pcDescription", this.loadPc.pcDescription);
+                        try{
+                            // await axios.post('/pcs/updatePcImage', formData)
+                            // .then(() => this.$router.push('/'))
+                            this.$store.dispatch('updatePcImage', formData)
+                                .then(
+                                    // () => this.$router.go(),
+                                    this.updateMessage = "Updated."
+                                
+                                )
+                        }catch(err){
+                            this.updateMessage = "Error updating Image."
+                            console.log(err);
+                        }
+                    }else{
+                        this.updateMessage = "No change to image."
+                    }
+
+               }
+               else{
+                    this.$store.dispatch('updatePc', this.loadPc)
                     .then(
-                        // () => this.$router.push('/'),
-                         () => this.$router.go(),
+                        () => this.$router.push('/'),
+                        //  () => this.$router.go(),
                         this.updateMessage = "Updated.",
                        
                         (error) => this.error = error.response.data.error
                     )
+               }
+
             }
 
         },

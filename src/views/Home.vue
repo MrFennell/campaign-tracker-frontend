@@ -24,7 +24,7 @@
             <!-- <router-view></router-view> -->
             <p>Welcome back.</p>
             <CampaignContainer></CampaignContainer>
-            <PcContainer :list="list"></PcContainer>
+            <PcContainer></PcContainer>
         </div>
     </div>
   </div>

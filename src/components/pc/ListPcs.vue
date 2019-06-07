@@ -1,5 +1,7 @@
 <template>
+    
     <div class="content">
+ 
             <!-- <div class="container"> -->
                 <div class="columns is-multiline">
                     <div class="column is-one-fifth" 
@@ -34,7 +36,14 @@
 import _ from 'lodash';
 export default {
     name: "ListPcs",
-    props: ['list'],
+    props: {
+        showCurrentPc: Boolean
+    },
+    // data (){
+    //     return{
+    //         showCurrentPc: Boolean
+    //     }
+    // },
     computed: {
         loadPcs(){
             if (this.list === 'created'){
@@ -51,7 +60,10 @@ export default {
     },
     methods: {
         async setPc(pc){
-            this.$store.dispatch('setPc', pc)
+            this.$store.dispatch('setPc', pc),
+            this.showCurrentPc = true,
+            this.$emit('showCurrentPc', true)
+           
         }
     }
 }
