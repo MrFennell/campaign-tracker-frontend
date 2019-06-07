@@ -8,6 +8,7 @@
         </p>
 
 
+
         <div>
             <form @submit.prevent="newPc" enctype="multipart/form-data">
                 <div class="field">

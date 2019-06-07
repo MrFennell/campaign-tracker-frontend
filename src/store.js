@@ -70,8 +70,7 @@ export default new Vuex.Store({
        commit('setCampaign', response.data);
     },
     dismiss({ commit }) {
-    return axios.post('/dismiss')
-      .then(() => commit('setNull', ''));
+      () => commit('setNull', '');
     },
     logout({ commit }) {
       return axios.post('/users/logout')
@@ -121,9 +120,15 @@ export default new Vuex.Store({
       const response = await axios.post('/deleteCampaign', payload)
       commit('setCampaign', response.data);
     },
+
     async setPc({ commit }, payload){
       const response = await axios.post('/pcs/setPc', payload)
       commit('setPc', response.data);
+    },
+    
+    async setPcNull({ commit }){
+      const response = null;
+      commit('setPc', response);
     },
     async getPcs({ commit }, payload) {
       const response = await axios.get('/pcs', payload);

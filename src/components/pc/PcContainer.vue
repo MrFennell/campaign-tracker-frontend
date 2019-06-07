@@ -1,17 +1,7 @@
 <template>
     <div class="content">
         <h2>Player Characters:</h2>
-            <!-- <div>
-                <button v-for="tab in tabs" :key="tab" @click="selected = tab;">
-                {{ tab }}
-                </button>
-                <div v-if="selected != ''" class="box">
-                    <div class="is-pulled-right">
-                    <a v-if="selected != ''" class="delete" @click="selected = ''"></a>
-                    </div>
-                    <component :is="selected"></component>
-                </div>
-            </div> -->
+
             <div v-if="!showAddPc">
                 <p><a @click="showAddPc = true">Add a new PC</a></p>
             </div>
@@ -22,18 +12,16 @@
                 <AddPc></AddPc>
             </div>
 
-            <div v-if="showCurrentPc">
-                <div class="is-pulled-right">
-                    <a class="delete" @click="showCurrentPc = false"></a>
-                </div>
-                <CurrentPc v-bind:showCurrentPc="this.showCurrentPc"></CurrentPc>
+            <div>
+                <!-- <div class="is-pulled-right">
+                    <a class="delete" @click="hidePc()"></a>
+                </div> -->
+                <CurrentPc></CurrentPc>
             </div>
         
             <div class="box">
-                
                     <div>
                         <ListPcs ></ListPcs>
-
                     </div>
             </div>
     </div>
@@ -56,7 +44,8 @@ export default {
             tabs: ['AddPc', 'CurrentPc'],
             seen: false,
             showAddPc: false,
-            showCurrentPc: true
+            showCurrentPc: false,
+            loadPc: null
         }
     },
 
@@ -64,10 +53,14 @@ export default {
         async setPc(pc){
             this.$store.dispatch('setPc', pc),
             this.$store.dispatch('loadCampaigns');
+        },
+        async hidePc(){
+            this.$store.dispatch('setPcNull', null)
         }
     },
     mounted() {
-    this.$store.dispatch('loadPcs');
+        this.$store.dispatch('loadPcs')
+        
     }
     
 }

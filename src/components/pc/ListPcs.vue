@@ -60,9 +60,9 @@ export default {
     },
     methods: {
         async setPc(pc){
-            this.$store.dispatch('setPc', pc),
-            this.showCurrentPc = true,
-            this.$emit('showCurrentPc', true)
+            this.$store.dispatch('setPc', pc)
+            // this.showCurrentPc = true,
+            // this.$emit('showCurrentPc', true)
            
         }
     }
