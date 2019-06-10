@@ -2,13 +2,15 @@
     <div class="container is-fullhd">
         <h2>Player Characters:</h2>
 
-        <div v-if="!showAddPc">
+        <!-- <div v-if="!showAddPc">
             <p><a @click="showAddPc = true">Add a new PC</a></p>
-        </div>
-        <div v-if="showAddPc">
+        </div> -->
+        <!-- <div v-if="showAddPc">
             <div class="is-pulled-right">
                 <a class="delete" @click="showAddPc = false"></a>
-            </div>
+            </div> -->
+
+        <div>
             <AddPc></AddPc>
         </div>
 
@@ -37,7 +39,6 @@ export default {
     data() {
         return {
             order: '',
-            showAddPc: false,
         }
     },
     mounted() {

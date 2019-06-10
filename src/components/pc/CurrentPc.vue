@@ -147,7 +147,6 @@ export default {
             isEditing: false,
             deleteAlert: false,
             updateMessage: '',
-            pcVisible: true,
             errors: [],
             error: '',
             defaultThumbnail: "src='./assets/logo.png'",

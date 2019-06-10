@@ -1,13 +1,21 @@
 <template>
     <div>
-        <p v-if="errors.length">
-            <b>Please correct the following error(s):</b>
-            <ul>
-                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-            </ul>
-        </p>
+        <p v-if="successMessage">{{successMessage}}</p>    
+        <div v-if="!showForm">
+            <p><a @click="showForm = true">Add a new PC</a></p>
+        </div>
 
-        <div>
+
+        <div v-if="showForm">
+            <div class="is-pulled-right">
+                <a class="delete" @click="showForm = false"></a>
+            </div>
+            <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                    <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                </ul>
+            </p>
             <form @submit.prevent="newPc" enctype="multipart/form-data">
                 <div class="field">
                     <label class="label" for="pcName">Name:</label>
@@ -62,7 +70,7 @@
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
                 <input type="submit" class="button is-primary" value="Create">
-                <!-- <button class="button" @click="toggleForm">Hide</button> -->
+                
             </form>
         </div>
     </div>
@@ -83,27 +91,21 @@
                 pcSharedBio: '',
                 pcPrivateBio: '',
                 file: null,
-                formVisible: this.showForm,
                 errors: [],
-                error: ''
-            }
-        },
-        computed: {
-            showForm(){
-                return this.formVisible;
+                error: '',
+                showForm: false,
+                successMessage: null
             }
         },
         methods: {
 
             toggleForm(){
-                if (!this.formVisible){
-                    this.formVisible = true;
-                }
-                else{
-                    this.formVisible = false;
-                }
+                    this.successMessage =  "Character created!";
+                    setTimeout(() => this.successMessage = null, 3000);
+                    // setTimeout(function(){
+                    //     this.successMessage = null;
+                    // }, 4000);
             },
-            
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },
@@ -132,15 +134,20 @@
                         if (this.file){
                             formData.append('file', this.file);
                             try{
-                            this.$store.dispatch('addPcWithImage', formData)
-                                // await axios.post('/pcs/addPcWithImage', formData)
-                                // .then(() => this.$router.push('/'))
+                                this.$store.dispatch('addPcWithImage', formData),
+                                this.showForm = false;
+                                this.successMessage =  "Character created!";
+                                setTimeout(() => this.successMessage = null, 3000);
+
                             }catch(err){
                                 console.log(err);
                             }
                         }
                         else{
-                            this.$store.dispatch('addPc', formData)
+                            this.$store.dispatch('addPc', formData),
+                            this.showForm = false;
+                            this.successMessage =  "Character created!";
+                            setTimeout(() => this.successMessage = null, 3000);
                         }
                 }
             }
