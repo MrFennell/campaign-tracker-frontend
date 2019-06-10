@@ -96,10 +96,6 @@ export default new Vuex.Store({
         store.commit('setPcs', response.data);
       });
     },
-    // loadPc({ commit }, payload) {
-    //   axios.get(`/pcs/${payload}`)
-    //     .then(response => commit('setPc', response.data));
-    // },
     getCampaigns( {commit} , payload) {
       axios.get('/campaigns', payload)
         .then(response => commit('setCampaigns', response.data));
@@ -146,7 +142,7 @@ export default new Vuex.Store({
       commit('setPcs', response.data);
     },
     async updatePcWithImage({ commit }, payload){
-      const response = await axios.post('/pcs/updatePcImage', payload)
+      const response = await axios.post('/pcs/updatePcWithImage', payload)
       commit('setPcs', response.data);
     },
     async deletePc({ commit }, payload){

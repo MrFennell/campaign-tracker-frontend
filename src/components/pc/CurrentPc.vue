@@ -1,5 +1,5 @@
 <template>
-        <div v-if="loadPc" class="box" >
+        <div v-if="loadPc" class="box">
             <div class="is-pulled-right">
                 <a class="delete" @click="hidePc()"></a>
             </div>
@@ -7,14 +7,14 @@
                 
                     <div class="column is-one-third">
                         <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
-                        <h2 v-else>error</h2>
+                        <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
                         <div id="image-container">
 
                             <div v-if="loadPc  && loadPc.imageSrc">
-                                <figure v-if="loadPc.imageSrc" id="currentImage" class="image is-4by3">
+                                <div v-if="loadPc.imageSrc" id="currentImage" class="image is-square">
                                     <img :src="loadPc.imageSrc" />
-                                </figure>
+                                </div>
 
                                 <figure v-if="newImage" id="currentImage" class="image is-4by3">
                                     <img v-if="url" :src="url" />
@@ -28,7 +28,7 @@
                                 <input type="file" class="file" ref="file" @change="selectFile">
                                 <button class="button" @click="updatePcImage">Update</button>.
                                 <button class="button is-light" @click="showChangeImageButton = false">Cancel</button>
-                            </div>   
+                            </div>
                         </div>
 
                     </div>
@@ -38,6 +38,7 @@
 
                     <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
                     <p v-else>error - enter Name</p>
+
                     <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
                     <p v-else>Please enter name of player!</p>
                     <p v-if="loadPc && loadPc.pcClass">Class: {{ loadPc.pcClass }}</p>
@@ -58,13 +59,12 @@
                     <a @click="isEditing = false">Quit Editing</a>
                      
                     <p v-if="errors.length">
-                        <b>Please correct the following error(s):</b>
+                        <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
                         <ul>
                             <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
                         </ul>
                     </p>
                     <form @submit.prevent="updatePc" enctype="multipart/form-data">
-                        
                         <div class="field">
                             <label class="label" for="pcName">Name:</label>
                             <div class="control">
@@ -118,11 +118,18 @@
                             <label for="image" class="image" >Image:</label>
                             <input type="file" class="file"  ref="file" @change="selectFile">
                         </div> -->
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <input type="submit" class="button is-primary" value="Update">
+                            </p>
+                            <p class="control">
+                                <input type="button" class="button" value="Discard Changes" @click="hidePc">
+                            </p>
+                            <p class="control">
+                                <input type="button" class="button is-warning" value="Delete" @click="deletePc">
+                            </p>
 
-                        <input type="submit" class="button is-primary" value="Update">
-                        <input type="button" class="button is-warning" value="Delete" @click="deletePc">
-                        <input type="button" class="button" value="Hide PC" @click="hidePc">
-
+                        </div>
                     </form>
                     </div>
                 </div>
@@ -141,8 +148,6 @@ export default {
     },
     data() {
         return {
-            pc: {},
-            pcName: '',
             file: null,
             isEditing: false,
             deleteAlert: false,
@@ -228,6 +233,7 @@ export default {
                     .then(
                         this.isEditing = false,
                         this.updateMessage = "Updated.",
+                        setTimeout(() => this.updateMessage = null, 3000),
                         (error) => this.error = error.response.data.error
                     )
                }
@@ -246,6 +252,8 @@ export default {
            }
            else{
             this.updateMessage = "Delete cancelled."
+            setTimeout(() => this.updateMessage = null, 3000);
+
            }
         },
         async updatePcImage (){

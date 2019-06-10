@@ -1,8 +1,8 @@
 <template>
     <div class="content">
         <CurrentCampaign></CurrentCampaign>
-        <p class="tag switch" @click="switchCampaign">Switch Campaign</p>
-        <p class="tag new" @click="newCampaign">Start New</p>
+        <p class="tag switch" @click="switchCampaign"><a>Switch Campaign</a></p>
+        <p class="tag new" @click="newCampaign"><a>Start New</a></p>
         <p class="tag logout" data-cy="router-logout"><a @click="doLogout">Logout</a></p>
         
         <div v-if="chooseCampaign">
@@ -16,14 +16,8 @@
 </template>
 
 <script>
-
 export default {
     name: "CampaignContainer",
-    // computed: {
-    //     loadCampaign(){
-    //         return this.$store.state.campaign;
-    //     },
-    // },
     data(){
         return{
             chooseCampaign: false,

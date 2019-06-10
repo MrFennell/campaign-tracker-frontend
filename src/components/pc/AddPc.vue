@@ -11,7 +11,7 @@
                 <a class="delete" @click="showForm = false"></a>
             </div>
             <p v-if="errors.length">
-                <b>Please correct the following error(s):</b>
+                <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
                 <ul>
                     <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
                 </ul>
@@ -98,14 +98,6 @@
             }
         },
         methods: {
-
-            toggleForm(){
-                    this.successMessage =  "Character created!";
-                    setTimeout(() => this.successMessage = null, 3000);
-                    // setTimeout(function(){
-                    //     this.successMessage = null;
-                    // }, 4000);
-            },
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },
@@ -137,6 +129,7 @@
                                 this.$store.dispatch('addPcWithImage', formData),
                                 this.showForm = false;
                                 this.successMessage =  "Character created!";
+                                this.errors = [];
                                 setTimeout(() => this.successMessage = null, 3000);
 
                             }catch(err){

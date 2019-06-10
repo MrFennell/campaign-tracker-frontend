@@ -1,32 +1,66 @@
 <template>
     <div class="content">              
         
-                <div id="options" class="content">
-                    <div v-if="!listOptions">
+                <div id="options" class="content" >
+                    <div v-if="!listOptions" class="level-right">
                         <a @click="listOptions = true"><font-awesome-icon icon="cog" /></a> 
                     </div>
-                    <div v-if="listOptions">
-                            <select v-model="selected"  id="list-options">
-                                <option disabled value="">Show maximum:</option>
-                                <option>5</option>
-                                <option>10</option>
-                                <option>20</option>
-                                <option>100</option>
-                            </select>
-                            <span>Show: {{ selected }}</span>
-                            <select v-model="sort" id="list-sort">
-                                <option disabled value="">Sort by:</option>
-                                <option>Default</option>
-                                <option>Ascending</option>
-                                <option>Descending</option>
-                            </select>
-                            <span>Sort by: {{ sort }}</span>
+                    <div v-if="listOptions" class="level-right">
+                            <div class="field">
+                                <label>Show: </label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select v-model="selected"  id="list-options" >
+                                            <option disabled value="">Show maximum:</option>
+                                            <option>5</option>
+                                            <option>10</option>
+                                            <option>20</option>
+                                            <option>100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>Sort by: </label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select v-model="sort" id="list-sort">
+                                            <option disabled value="">Sort by field:</option>
+                                            <option>PC Name</option>
+                                            <option>Player Name</option>
+                                            <option>Created Date</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <a v-if="sortDirection === 'asc' " @click = "sortDirection = 'desc'" class="icon is-large"><font-awesome-icon icon="sort-up" /></a>
+                                <a v-if="sortDirection === 'desc'" @click = "sortDirection = 'asc'" class="icon is-large"><font-awesome-icon icon="sort-down"  /></a>
+                            </div>
+
+                            <div class="field">
+                                <label>Thumbnails per row: </label>
+                                <div class="control">
+                                    <div class="select">
+                                        <select v-model="columnSize" id="list-sort">
+                                            <option disabled value="">Thumbnails per row:</option>
+                                            <option value="column is-one-quarter">4</option>
+                                            <option value="column is-one-fifth">5</option>
+                                            <option value="column is-2">6</option>
+                                            <option value="column is-1">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                         <a @click="listOptions = false">Hide</a>
                     </div>
                 </div>
 
                 <div class="columns is-multiline">
-                    <div class="column is-one-fifth" 
+                                        
+                    <div :class="[columnSize]" 
                         v-for="(pc, index) in loadPcs" 
                         v-bind:key="pc.id">
                         <div v-if="index <= selected-1" class="card" @click="setPc(pc)">
@@ -36,7 +70,7 @@
                                         <img :src="pc.imageSrc" />
                                     </figure>
                                 </div>
-                                <div class="card-content" >
+                                <div class="card-content">
                                     <div class="media-content">
                                         <p class="title is-4">{{ pc.pcName }}</p>
                                         <p class="subtitle is-6" v-if="pc.playerName">{{ pc.playerName }}</p>
@@ -54,29 +88,32 @@
 import _ from 'lodash';
 export default {
     name: "ListPcs",
-    // props: {
-    //     list: null
-    // },
     data(){
         return{
             selected: 10,
-            sort: 'null',
-            listOptions: false
+            sort: 'PC Name',
+            listOptions: false,
+            sortDirection: 'asc',
+            columnSize: 'column is-2'
         }
     },
     computed: {
         loadPcs(){
-            // let pcs = this.$store.state.pcs;
-            
-            if (this.sort === 'Ascending'){
-                return _.orderBy(this.$store.state.pcs, 'pcName', 'asc');
+            let sortDirection = this.sortDirection;
+            let pcs = this.$store.state.pcs;
+
+            if (this.sort === 'PC Name'){
+                return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
             
             }
-            else if (this.sort === 'Descending'){
-                return _.orderBy(this.$store.state.pcs, 'pcName', 'desc');
+            else if (this.sort === 'Player Name'){
+                return _.orderBy(pcs, [pc => pc.playerName.toLowerCase()], sortDirection);
+            }
+            else if (this.sort === 'Created Date'){
+                return _.orderBy(pcs, 'createdAt', sortDirection);
             }
             else{
-                 return this.$store.state.pcs;
+                 return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
             }
         }
     },
@@ -91,6 +128,7 @@ export default {
 <style lang="scss" scoped>
     .card-hover:hover {
         opacity: 0.7;
+        cursor: pointer;
     }
     // #list-options{
     //     height: 40px;
