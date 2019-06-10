@@ -96,10 +96,10 @@ export default new Vuex.Store({
         store.commit('setPcs', response.data);
       });
     },
-    loadPc({ commit }, payload) {
-      axios.get(`/pcs/${payload}`)
-        .then(response => commit('setPc', response.data));
-    },
+    // loadPc({ commit }, payload) {
+    //   axios.get(`/pcs/${payload}`)
+    //     .then(response => commit('setPc', response.data));
+    // },
     getCampaigns( {commit} , payload) {
       axios.get('/campaigns', payload)
         .then(response => commit('setCampaigns', response.data));
@@ -112,15 +112,10 @@ export default new Vuex.Store({
       const response = await axios.post('/updateCampaign', payload)
       commit('setCampaign', response.data);
     },
-    async AddPc({ commit }, payload){
-      const response = await axios.post('/addPc', payload)
-      commit('setPcs', response.data);
-    },
     async deleteCampaign({ commit }, payload){
       const response = await axios.post('/deleteCampaign', payload)
       commit('setCampaign', response.data);
     },
-
     async setPc({ commit }, payload){
       const response = await axios.post('/pcs/setPc', payload)
       commit('setPc', response.data);
@@ -134,21 +129,29 @@ export default new Vuex.Store({
       const response = await axios.get('/pcs', payload);
       commit('setPcs', response.data);
     },
+    async addPc({ commit }, payload){
+      const response = await axios.post('/pcs/addPc', payload)
+      commit('setPcs', response.data);
+    },
+    async addPcWithImage({ commit }, payload){
+      const response = await axios.post('/pcs/addPcWithImage', payload)
+      commit('setPcs', response.data);
+    },
     async updatePc({ commit }, payload){
       const response = await axios.post('/pcs/updatePc', payload)
-      commit('setPc', response.data);
+      commit('setPcs', response.data);
     },
     async updatePcImage({ commit }, payload){
       const response = await axios.post('/pcs/updatePcImage', payload)
-      commit('setPc', response.data);
+      commit('setPcs', response.data);
     },
     async updatePcWithImage({ commit }, payload){
       const response = await axios.post('/pcs/updatePcImage', payload)
-      commit('setPc', response.data);
+      commit('setPcs', response.data);
     },
     async deletePc({ commit }, payload){
       const response = await axios.post('/pcs/deletePc', payload)
-      commit('setPc', response.data);
+      commit('setPcs', response.data);
     }
   }
 })

@@ -1,27 +1,37 @@
 <template>
-        <div v-if="loadPc" class="content" >
+        <div v-if="loadPc" class="box" >
             <div class="is-pulled-right">
-                <!-- <a class="delete" @click="showCurrentPc = false"></a> -->
                 <a class="delete" @click="hidePc()"></a>
             </div>
             <div class="columns">
+                
+                    <div class="column is-one-third">
+                        <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
+                        <h2 v-else>error</h2>
 
-                <div class="column is-one-third">
-                    <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
-                    <h2 v-else>error</h2>
-                    <div v-if="loadPc  && loadPc.imageSrc">
-                        <figure v-if="loadPc.imageSrc" id="currentImage" class="image is-4by3">
-                            <img :src="loadPc.imageSrc" />
-                        </figure>
+                        <div id="image-container">
+
+                            <div v-if="loadPc  && loadPc.imageSrc">
+                                <figure v-if="loadPc.imageSrc" id="currentImage" class="image is-4by3">
+                                    <img :src="loadPc.imageSrc" />
+                                </figure>
+
+                                <figure v-if="newImage" id="currentImage" class="image is-4by3">
+                                    <img v-if="url" :src="url" />
+                                </figure>
+                            </div>
+
+                            <a v-if="!showChangeImageButton" @click="showChangeImageButton = true">Change image</a>
+                            
+                            <div v-if="showChangeImageButton" class="field">
+                                <label for="image" class="image" >Image:</label>
+                                <input type="file" class="file" ref="file" @change="selectFile">
+                                <button class="button" @click="updatePcImage">Update</button>.
+                                <button class="button is-light" @click="showChangeImageButton = false">Cancel</button>
+                            </div>   
+                        </div>
+
                     </div>
-
-                    <div class="field">
-                        <label for="image" class="image" >Image:</label>
-                        <input type="file" class="file" ref="file" @change="selectFile">
-                        <button class="button" @click="updatePcImage">Update</button>
-                    </div>   
-
-                </div>
 
                 <div class="column is-one-third">
                     <p>Details:</p>
@@ -36,16 +46,17 @@
                     <p v-if="loadPc && loadPc.pcLevel">Level: {{ loadPc.pcLevel }}</p>
                     <p v-if="loadPc && loadPc.pcLifestate">Life State: {{ loadPc.pcLifestate }}</p>
                     <p v-if="loadPc && loadPc.pcSharedBio">Shared Bio: {{ loadPc.pcSharedBio }}</p>
-                        <p v-if="loadPc && loadPc.pcPrivateBio">Private Bio: {{ loadPc.pcPrivateBio }}</p>
+                    <p v-if="loadPc && loadPc.pcPrivateBio">Private Bio: {{ loadPc.pcPrivateBio }}</p>
 
                     <p v-else>No description.</p>
 
                 </div>
                 <div  class="column is-one-third">
+                   <p> {{updateMessage}}   </p>
                 <a v-if="!isEditing" @click="edit">Edit</a>
                 <div v-if="isEditing">
                     <a @click="isEditing = false">Quit Editing</a>
-                    {{updateMessage}}    
+                     
                     <p v-if="errors.length">
                         <b>Please correct the following error(s):</b>
                         <ul>
@@ -140,6 +151,7 @@ export default {
             errors: [],
             error: '',
             defaultThumbnail: "src='./assets/logo.png'",
+            showChangeImageButton: false,
             newImage: false
         }
     },
@@ -147,6 +159,8 @@ export default {
         selectFile(){
             this.file = this.$refs.file.files[0];
             this.newImage = true;
+            const file = this.$refs.file.files[0];
+            this.url = URL.createObjectURL(file);
         },
         edit(){
             if (!this.isEditing){
@@ -157,15 +171,23 @@ export default {
             }
         },
         async hidePc(){
-            this.$store.dispatch('setPcNull', null);
+            if (this.isEditing){
+               if (confirm("Discard changes to Player Character?")){
+                   this.isEditing = false,
+                   this.updateMessage = '',
+                   this.$store.dispatch('setPcNull', null);     
+               }
+            }
+            else{
+                this.updateMessage = '',
+                this.$store.dispatch('setPcNull', null);     
+            }
+            
         },
         async updatePc(){ 
-
             if (!this.loadPc.pcName){
                 this.errors.push('Name is required.');
-                
             }else{
-               
                if (this.newImage === true){
                     const formData = new FormData();
 
@@ -176,7 +198,6 @@ export default {
                         formData.append('PcId', pcId);
                         formData.append('oldImage', oldImage);
                         formData.append('file', this.file);
-
                         formData.append("pcName", this.loadPc.pcName);
                         formData.append("playerName", this.loadPc.playerName);
                         formData.append("pcClass", this.loadPc.pcClass);
@@ -187,14 +208,14 @@ export default {
                         formData.append("pcPrivateBio", this.loadPc.pcPrivateBio);
                         formData.append("pcDescription", this.loadPc.pcDescription);
                         try{
-                            // await axios.post('/pcs/updatePcImage', formData)
-                            // .then(() => this.$router.push('/'))
-                            this.$store.dispatch('updatePcImage', formData)
-                                .then(
-                                    // () => this.$router.go(),
-                                    this.updateMessage = "Updated."
-                                
-                                )
+                            this.$store.dispatch('updatePcWithImage', formData)
+                            .then(
+                                this.isEditing = false,
+                                this.updateMessage = '',
+                                this.newImage = false,
+                                (error) => this.error = error.response.data.error
+
+                            )
                         }catch(err){
                             this.updateMessage = "Error updating Image."
                             console.log(err);
@@ -202,31 +223,26 @@ export default {
                     }else{
                         this.updateMessage = "No change to image."
                     }
-
                }
                else{
                     this.$store.dispatch('updatePc', this.loadPc)
                     .then(
-                        () => this.$router.push('/'),
-                        //  () => this.$router.go(),
+                        this.isEditing = false,
                         this.updateMessage = "Updated.",
-                       
                         (error) => this.error = error.response.data.error
                     )
                }
-
             }
-
         },
         async deletePc(){ 
 
            if  (confirm('Delete PC?')) {
             this.$store.dispatch('deletePc', this.loadPc)
                 .then(
-                    // () => this.$router.push('/'),
-                    () => this.$router.go(),
+                    this.isEditing = false,
+                    this.updateMessage = '',
+                    this.$store.dispatch('setPcNull', null),  
                     (error) => this.error = error.response.data.error
-
                 )
            }
            else{
@@ -244,13 +260,12 @@ export default {
                 formData.append('oldImage', oldImage);
                 formData.append('file', this.file);
                 try{
-                    // await axios.post('/pcs/updatePcImage', formData)
-                    // .then(() => this.$router.push('/'))
                     this.$store.dispatch('updatePcImage', formData)
                         .then(
-                             () => this.$router.go(),
-                            this.updateMessage = "Updated."
-                        
+                            this.isEditing = false,
+                            this.updateMessage = '',
+                            this.newImage = false,
+                            (error) => this.error = error.response.data.error
                         )
                 }catch(err){
                     this.updateMessage = "Error updating Image."
@@ -260,7 +275,6 @@ export default {
                 this.updateMessage = "No change to image."
             }
         }
-
     }
 }
 

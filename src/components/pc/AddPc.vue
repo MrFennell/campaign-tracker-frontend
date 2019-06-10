@@ -7,8 +7,6 @@
             </ul>
         </p>
 
-
-
         <div>
             <form @submit.prevent="newPc" enctype="multipart/form-data">
                 <div class="field">
@@ -64,17 +62,15 @@
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
                 <input type="submit" class="button is-primary" value="Create">
-                <button class="button" @click="toggleForm">Hide</button>
+                <!-- <button class="button" @click="toggleForm">Hide</button> -->
             </form>
-            
         </div>
     </div>
 </template>
 <script>
-import axios from 'axios';
+// import axios from 'axios';
     export default {
         name: "AddPc",
-        // props:['showForm'],
         data(){
             return{
                 pcName: '',
@@ -99,10 +95,6 @@ import axios from 'axios';
         },
         methods: {
 
-            // checkStore(){
-            //     let currentCampaign = this.$store.state.currentCampaign
-            //     console.log(currentCampaign);
-            // },
             toggleForm(){
                 if (!this.formVisible){
                     this.formVisible = true;
@@ -140,18 +132,18 @@ import axios from 'axios';
                         if (this.file){
                             formData.append('file', this.file);
                             try{
-                                await axios.post('/pcs/addPcWithImage', formData)
-                                .then(() => this.$router.push('/'))
+                            this.$store.dispatch('addPcWithImage', formData)
+                                // await axios.post('/pcs/addPcWithImage', formData)
+                                // .then(() => this.$router.push('/'))
                             }catch(err){
                                 console.log(err);
                             }
                         }
                         else{
-                            await axios.post('/pcs/addPc', formData)
+                            this.$store.dispatch('addPc', formData)
                         }
                 }
             }
-
         }
     }
 </script>

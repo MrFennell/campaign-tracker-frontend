@@ -1,29 +1,27 @@
 <template>
-    <div class="content">
+    <div class="container is-fullhd">
         <h2>Player Characters:</h2>
 
-            <div v-if="!showAddPc">
-                <p><a @click="showAddPc = true">Add a new PC</a></p>
+        <div v-if="!showAddPc">
+            <p><a @click="showAddPc = true">Add a new PC</a></p>
+        </div>
+        <div v-if="showAddPc">
+            <div class="is-pulled-right">
+                <a class="delete" @click="showAddPc = false"></a>
             </div>
-            <div v-if="showAddPc">
-                <div class="is-pulled-right">
-                    <a class="delete" @click="showAddPc = false"></a>
-                </div>
-                <AddPc></AddPc>
-            </div>
+            <AddPc></AddPc>
+        </div>
+
+        <div>
+            <CurrentPc></CurrentPc>
+        </div>
+    
+        <div class="box">
 
             <div>
-                <!-- <div class="is-pulled-right">
-                    <a class="delete" @click="hidePc()"></a>
-                </div> -->
-                <CurrentPc></CurrentPc>
+                <ListPcs ></ListPcs>
             </div>
-        
-            <div class="box">
-                    <div>
-                        <ListPcs ></ListPcs>
-                    </div>
-            </div>
+        </div>
     </div>
 </template>
 
@@ -36,35 +34,16 @@ import CurrentPc from '@/components/pc/CurrentPc.vue';
 export default {
     components: {AddPc, CurrentPc, ListPcs},
     name: "PcContainer",
-    
     data() {
         return {
-            selected: '',
             order: '',
-            tabs: ['AddPc', 'CurrentPc'],
-            seen: false,
             showAddPc: false,
-            showCurrentPc: false,
-            loadPc: null
-        }
-    },
-
-    methods: {
-        async setPc(pc){
-            this.$store.dispatch('setPc', pc),
-            this.$store.dispatch('loadCampaigns');
-        },
-        async hidePc(){
-            this.$store.dispatch('setPcNull', null)
         }
     },
     mounted() {
         this.$store.dispatch('loadPcs')
-        
     }
-    
 }
-
 </script>
 <style lang="scss" scoped>
     .card-hover:hover {
