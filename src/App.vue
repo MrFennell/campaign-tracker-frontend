@@ -4,7 +4,7 @@
         <div>
           <div class='header'>
               <!-- <NavBar></NavBar> -->
-
+           
               <router-link to="/">
                 <img id="logo-img" src="./assets/logo.png" class="image is-128x128" />
               </router-link>
