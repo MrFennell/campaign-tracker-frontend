@@ -1,10 +1,9 @@
 <template>
-    <div>
+    <div class="container">
         <p v-if="successMessage">{{successMessage}}</p>    
         <div v-if="!showForm">
             <p><a @click="showForm = true">Add a new PC</a></p>
         </div>
-
 
         <div v-if="showForm">
             <div class="is-pulled-right">
@@ -70,7 +69,7 @@
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
                 <input type="submit" class="button is-primary" value="Create">
-                
+                <input type="submit" class="button" value="Hide" @click="showForm = false">
             </form>
         </div>
     </div>
@@ -129,7 +128,7 @@
                                 this.$store.dispatch('addPcWithImage', formData),
                                 this.showForm = false;
                                 this.successMessage =  "Character created!";
-                                this.errors = [];
+
                                 setTimeout(() => this.successMessage = null, 3000);
 
                             }catch(err){

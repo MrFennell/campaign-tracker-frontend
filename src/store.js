@@ -12,7 +12,9 @@ export default new Vuex.Store({
     campaign: null,
     campaigns: [],
     pcs: [],
-    pc: ''
+    pc: '',
+    npcs: [],
+    npc: ''
   },
   getters: {
     isLoggedIn: state => !!state.user,
@@ -20,6 +22,10 @@ export default new Vuex.Store({
     getPcId:(state) => { return state.pc.id },
     getPcById: (state) => (id) =>{ 
       return state.pcs.find(pc => pc.id === id); 
+    },
+    getNpcId:(state) => { return state.npc.id },
+    getNpcById: (state) => (id) =>{ 
+      return state.npcs.find(npc => npc.id === id); 
     },
     campaignIsSet: state => !!state.campaign,
     userName: (state) => {return state.user.username}
@@ -44,6 +50,12 @@ export default new Vuex.Store({
     },
     setPc(state, pc) {
       state.pc = pc;
+    },
+    setNpcs(state, npcs){
+      state.npcs = npcs;
+    },
+    setNpc(state, npc) {
+      state.npc = npc;
     },
     setNull(state, payload){
       state.payload = payload
@@ -120,7 +132,6 @@ export default new Vuex.Store({
     //   const response = await axios.post('/pcs/setPc', payload)
     //   commit('setPc', response.data);
     // },
-    
     async setPcNull({ commit }){
       const response = '';
       commit('setPc', response);
@@ -152,6 +163,48 @@ export default new Vuex.Store({
     async deletePc({ commit }, payload){
       const response = await axios.post('/pcs/deletePc', payload)
       commit('setPcs', response.data);
+    },
+    loadNpcs( store ) {
+      axios.get('/npcs')
+        .then(response => { 
+        store.commit('setNpcs', response.data);
+      });
+    },
+    async setNpc({ commit }, payload){
+      commit('setNpc', payload);
+    },
+    async setNpcNull({ commit }){
+      const response = '';
+      commit('setNpc', response);
+    },
+    async getNpcs({ commit }, payload) {
+      const response = await axios.get('/npcs', payload);
+      commit('setNpcs', response.data);
+    },
+    async addNpc({ commit }, payload){
+      const response = await axios.post('/npcs/addNpc', payload)
+      commit('setNpcs', response.data);
+    },
+    async addNpcWithImage({ commit }, payload){
+      const response = await axios.post('/npcs/addNpcWithImage', payload)
+      commit('setNpcs', response.data);
+    },
+    async updateNpc({ commit }, payload){
+      const response = await axios.post('/npcs/updateNpc', payload)
+      commit('setNpcs', response.data);
+    },
+    async updateNpcImage({ commit }, payload){
+      const response = await axios.post('/npcs/updateNpcImage', payload)
+      commit('setNpcs', response.data);
+    },
+    async updateNpcWithImage({ commit }, payload){
+      const response = await axios.post('/npcs/updateNpcWithImage', payload)
+      commit('setNpcs', response.data);
+    },
+    async deleteNpc({ commit }, payload){
+      const response = await axios.post('/npcs/deleteNpc', payload)
+      commit('setNpcs', response.data);
     }
+    
   }
 })

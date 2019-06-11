@@ -1,0 +1,128 @@
+<template>
+    <div>
+        <p v-if="successMessage">{{successMessage}}</p>    
+        <div v-if="!showForm">
+            <p><a @click="showForm = true">Add a new NPC</a></p>
+        </div>
+
+        <div v-if="showForm">
+            <div class="is-pulled-right">
+                <a class="delete" @click="showForm = false"></a>
+            </div>
+            <p v-if="errors.length">
+                <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
+                <ul>
+                    <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                </ul>
+            </p>
+            <form @submit.prevent="newNpc" enctype="multipart/form-data">
+                <div class="field">
+                    <label class="label" for="name">Name:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="pcName" placeholder="NPC Name" v-model="name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="race" class="label">Race:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="race" placeholder="NPC Race" v-model="race">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="description" class="label" >Description:</label>
+                    <textarea  class="textarea"  name="description" placeholder="Physical Description" v-model="description"></textarea>
+                </div>
+                <div class="field">
+                    <label for="lifestate" class="label">Life State:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="lifeState" placeholder="Dead or alive? Somewhere in between?" v-model="lifeState">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="sharedBio" class="label" >Shared Biography:</label>
+                    <textarea  class="textarea"  name="sharedBio" placeholder="All players and GMs will see this." v-model="sharedBio"></textarea>
+                </div>
+                <div class="field">
+                    <label for="privateBio" class="label" >Private Biography:</label>
+                    <textarea  class="textarea"  name="privateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="privateBio"></textarea>
+                </div>
+                <div class="field">
+                    <label for="image" class="image" >Image:</label>
+                    <input type="file" class="file"  ref="file" @change="selectFile">
+                </div>
+                <input type="submit" class="button is-primary" value="Create">
+                
+            </form>
+        </div>
+    </div>
+</template>
+<script>
+// import axios from 'axios';
+    export default {
+        name: "AddNpc",
+        data(){
+            return{
+                name: '',
+                race: '',
+                profession: '',
+                description: '',
+                lifeState: '',
+                sharedBio: '',
+                privateBio: '',
+                file: null,
+                errors: [],
+                error: '',
+                showForm: false,
+                successMessage: null
+            }
+        },
+        methods: {
+            selectFile(){
+                this.file = this.$refs.file.files[0];
+            },
+            async newNpc(){ 
+                
+                    if (!this.name){
+                        this.errors.push('Please enter a name.');
+                    }
+                    else{
+
+                        this.errors = [];                    
+                        const formData = new FormData();
+                        formData.append("name", this.name);
+                        formData.append("race", this.race);
+                        formData.append("profession", this.profession);
+                        formData.append("description", this.lifeState);
+                        formData.append("sharedBio", this.sharedBio);
+                        formData.append("privateBio", this.privateBio);
+                        
+                        if (this.file){
+                            formData.append('file', this.file);
+                            try{
+                                this.$store.dispatch('addNpcWithImage', formData),
+                                this.showForm = false;
+                                this.successMessage =  "Character created!";
+                                this.errors = [];
+                                setTimeout(() => this.successMessage = null, 3000);
+
+                            }catch(err){
+                                console.log(err);
+                            }
+                        }
+                        else{
+                            this.$store.dispatch('addNpc', formData),
+                            this.showForm = false;
+                            this.successMessage =  "Character created!";
+                            setTimeout(() => this.successMessage = null, 3000);
+                        }
+                }
+            }
+        }
+    }
+</script>
+
+// <style lang="scss">
+
+
+
+// </style>
