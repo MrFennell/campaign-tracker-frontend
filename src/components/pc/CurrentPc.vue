@@ -11,14 +11,14 @@
 
                         <div id="image-container">
 
-                            <div v-if="loadPc  && loadPc.imageSrc">
+                            <div v-if="loadPc && loadPc.imageSrc">
                                 <div v-if="loadPc.imageSrc" id="currentImage" class="image is-square">
                                     <img :src="loadPc.imageSrc" />
                                 </div>
 
-                                <figure v-if="newImage" id="currentImage" class="image is-4by3">
+                                <div v-if="newImage" id="currentImage" class="image is-4by3">
                                     <img v-if="url" :src="url" />
-                                </figure>
+                                </div>
                             </div>
 
                             <a v-if="!showChangeImageButton" @click="showChangeImageButton = true">Change image</a>
@@ -138,12 +138,19 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import { mapGetters } from 'vuex'
 export default {
     name: "CurrentPc",
     computed: {
+        ...mapGetters([
+            'getPcById',
+            'getPcId'
+        ]),
         loadPc(){
-            return this.$store.state.pc;
+
+            const id = this.$store.getters.getPcId;
+            // return this.$store.state.pc;
+            return this.$store.getters.getPcById(id);
         }
     },
     data() {
@@ -179,7 +186,8 @@ export default {
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
                    this.updateMessage = '',
-                   this.$store.dispatch('setPcNull', null);     
+                   this.$store.dispatch('setPcNull', null);  
+                      
                }
             }
             else{
@@ -217,6 +225,7 @@ export default {
                                 this.isEditing = false,
                                 this.updateMessage = '',
                                 this.newImage = false,
+                               
                                 (error) => this.error = error.response.data.error
 
                             )

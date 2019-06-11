@@ -1,7 +1,6 @@
 <template>
     <div class="content">              
-        
-                <div id="options" class="content" >
+                <div id="options">
                     <div v-if="!listOptions" class="level-right">
                         <a @click="listOptions = true"><font-awesome-icon icon="cog" /></a> 
                     </div>
@@ -54,12 +53,11 @@
                                 </div>
                             </div>
 
-                        <a @click="listOptions = false">Hide</a>
+                        <a  @click="listOptions = false"><font-awesome-icon icon="cog" /></a>
                     </div>
                 </div>
 
                 <div class="columns is-multiline">
-                                        
                     <div :class="[columnSize]" 
                         v-for="(pc, index) in loadPcs" 
                         v-bind:key="pc.id">
@@ -101,10 +99,8 @@ export default {
         loadPcs(){
             let sortDirection = this.sortDirection;
             let pcs = this.$store.state.pcs;
-
             if (this.sort === 'PC Name'){
                 return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
-            
             }
             else if (this.sort === 'Player Name'){
                 return _.orderBy(pcs, [pc => pc.playerName.toLowerCase()], sortDirection);

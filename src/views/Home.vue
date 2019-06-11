@@ -34,7 +34,7 @@
 import { mapGetters } from 'vuex';
 export default {
   name: 'home',
-  computed: mapGetters(['isLoggedIn', 'campaignIsSet', 'pcList',]),
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet',]),
     components: {
         PcContainer: () => import('@/components/pc/PcContainer'),
         ListCampaigns: () => import('@/components/campaign/ListCampaigns'),

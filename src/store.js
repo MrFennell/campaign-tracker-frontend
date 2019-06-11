@@ -12,16 +12,17 @@ export default new Vuex.Store({
     campaign: null,
     campaigns: [],
     pcs: [],
-    pc: null
+    pc: ''
   },
   getters: {
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
-    getPc: (state) => { return state.pc },
+    getPcId:(state) => { return state.pc.id },
+    getPcById: (state) => (id) =>{ 
+      return state.pcs.find(pc => pc.id === id); 
+    },
     campaignIsSet: state => !!state.campaign,
-    pcList: state => state.pcs,
     userName: (state) => {return state.user.username}
-    // hasClass: state => state.pcs.filter(pc => !!pc.pcClass)
 
   },
   mutations: 
@@ -113,12 +114,15 @@ export default new Vuex.Store({
       commit('setCampaign', response.data);
     },
     async setPc({ commit }, payload){
-      const response = await axios.post('/pcs/setPc', payload)
-      commit('setPc', response.data);
+      commit('setPc', payload);
     },
+    // async setPc({ commit }, payload){
+    //   const response = await axios.post('/pcs/setPc', payload)
+    //   commit('setPc', response.data);
+    // },
     
     async setPcNull({ commit }){
-      const response = null;
+      const response = '';
       commit('setPc', response);
     },
     async getPcs({ commit }, payload) {
