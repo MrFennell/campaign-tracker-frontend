@@ -1,5 +1,5 @@
 <template>
-    <div class="content" ref="topCurrentNpc">     
+    <div class="content" ref="topCurrentNpc" id="list-npcs-container">     
                 <div >
                     <CurrentNpc/>
                 </div>
@@ -124,6 +124,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    #list-npcs-container{
+        margin-top:5px;
+    }
     .card-hover:hover {
         opacity: 0.7;
         cursor: pointer;
@@ -131,5 +134,6 @@ export default {
     #options{
         min-height: 40px;
     }
+
 </style>
  

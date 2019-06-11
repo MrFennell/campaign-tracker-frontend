@@ -1,5 +1,5 @@
 <template>
-    <div class="content" ref="topCurrentPc">
+    <div class="content" id="list-pcs-container" ref="topCurrentPc">
             <div>
                 <CurrentPc/>   
             </div>                   
@@ -131,6 +131,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    #list-pcs-container{
+        margin-top:10px;
+    }
     .card-hover:hover {
         opacity: 0.7;
         cursor: pointer;
@@ -138,5 +141,6 @@ export default {
     #options{
         min-height: 40px;
     }
+    
 </style>
  
