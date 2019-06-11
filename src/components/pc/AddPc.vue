@@ -2,10 +2,12 @@
     <div class="container">
         <p v-if="successMessage">{{successMessage}}</p>    
         <div v-if="!showForm">
-            <p><a @click="showForm = true">Add a new PC</a></p>
+            <p><a @click.prevent="formToggle">Add a new PC</a></p>
         </div>
 
         <div v-if="showForm">
+            <p ref="formTop">Add a new player character below.</p >
+
             <div class="is-pulled-right">
                 <a class="delete" @click="showForm = false"></a>
             </div>
@@ -15,7 +17,7 @@
                     <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
                 </ul>
             </p>
-            <form @submit.prevent="newPc" enctype="multipart/form-data">
+            <form @submit.prevent="newPc" enctype="multipart/form-data" >
                 <div class="field">
                     <label class="label" for="pcName">Name:</label>
                     <div class="control">
@@ -97,6 +99,16 @@
             }
         },
         methods: {
+            formToggle(){
+                if (this.showForm === true){
+                    this.showForm = false;
+                }else{
+                    this.showForm = true;
+                    this.$nextTick(() => {
+                        this.$refs.formTop.scrollIntoView();
+                    });
+                }
+            },
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },

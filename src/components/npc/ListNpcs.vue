@@ -1,5 +1,8 @@
 <template>
-    <div class="content">              
+    <div class="content" ref="topCurrentNpc">     
+                <div >
+                    <CurrentNpc/>
+                </div>
                 <div id="options">
                     <div v-if="!listOptions" class="level-right">
                         <a @click="listOptions = true"><font-awesome-icon icon="cog" /></a> 
@@ -81,8 +84,10 @@
 
 <script>
 import _ from 'lodash';
+import CurrentNpc from '@/components/npc/CurrentNpc.vue';
 export default {
     name: "ListNpcs",
+    components: {CurrentNpc},
     data(){
         return{
             selected: 10,
@@ -110,7 +115,10 @@ export default {
     methods: {
         async setNpc(npc){
             this.$store.dispatch('setNpc', npc)
-           
+            this.listOptions = false
+            this.$nextTick(() => {
+                this.$refs.topCurrentNpc.scrollIntoView();
+            });
         }
     }
 }
@@ -120,8 +128,8 @@ export default {
         opacity: 0.7;
         cursor: pointer;
     }
-    // #list-options{
-    //     height: 40px;
-    // }
+    #options{
+        min-height: 40px;
+    }
 </style>
  

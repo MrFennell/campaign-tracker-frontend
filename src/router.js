@@ -22,23 +22,7 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
-      // ,
-         
-      //   children: [
-      //     {path: '', component: ListPcs, props: {list: 'created'}},
-      //     // {path: 'pc:id', component: ListPcs, props: {list: 'AtoZ'}}
-      //   ]
     },
-    // {
-    //   path: '/pcs',
-    //   name: 'PcContainer',
-    //   component: PcContainer,
-    //   children: [
-    //     {path: '', component: ListPcs, props: {list: 'created'}},
-    //     {path: 'created', component: ListPcs, props: {list: 'created'}},
-    //     {path: 'alphabetical', component: ListPcs, props: {list: 'alphabetical'}}
-    //   ]
-    // },
     {
       path: '/about',
       name: 'about',
@@ -78,15 +62,6 @@ export default new Router({
       name: 'campaign',
       component: campaign
     },
-    // {
-    //   path: '/pcs',
-    //   name: 'pcs',
-    //   component: pcs
-    //   // children: [
-    //   //   {path: '/', component: ListPcs, props: {list: 'AtoZ'}},
-    //   //   {path: 'alphabetical', component: ListPcs, props: {list: 'AtoZ'}}
-    //   // ]
-    // },
     {
       path: '/pcs/:id',
       name: 'pc',

@@ -2,13 +2,16 @@
     <div>
         <p v-if="successMessage">{{successMessage}}</p>    
         <div v-if="!showForm">
-            <p><a @click="showForm = true">Add a new NPC</a></p>
+            <p><a @click="formToggle">Add a new NPC</a></p>
         </div>
 
         <div v-if="showForm">
+            <p ref="formTop">Create a new Non-Player Character below."</p>
             <div class="is-pulled-right">
                 <a class="delete" @click="showForm = false"></a>
             </div>
+            
+
             <p v-if="errors.length">
                 <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
                 <ul>
@@ -77,6 +80,16 @@
             }
         },
         methods: {
+            formToggle(){
+                if (this.showForm === true){
+                    this.showForm = false;
+                }else{
+                    this.showForm = true;
+                    this.$nextTick(() => {
+                        this.$refs.formTop.scrollIntoView();
+                    });
+                }
+            },
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },

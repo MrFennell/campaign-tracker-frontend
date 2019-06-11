@@ -107,8 +107,6 @@ export default {
             updateMessage: '',
             errors: [],
             error: '',
-            defaultThumbnail: "src='./assets/logo.png'",
-            showChangeImageButton: false,
             newImage: false
         }
     },
@@ -210,32 +208,6 @@ export default {
             setTimeout(() => this.updateMessage = null, 3000);
 
            }
-        },
-        async updatePcImage (){
-            const formData = new FormData();
-
-            if (this.file){
-                const pcId = this.loadPc.id;
-                const oldImage = this.loadPc.imageSrc;
-
-                formData.append('PcId', pcId);
-                formData.append('oldImage', oldImage);
-                formData.append('file', this.file);
-                try{
-                    this.$store.dispatch('updatePcImage', formData)
-                        .then(
-                            this.isEditing = false,
-                            this.updateMessage = '',
-                            this.newImage = false,
-                            (error) => this.error = error.response.data.error
-                        )
-                }catch(err){
-                    this.updateMessage = "Error updating Image."
-                    console.log(err);
-                }
-            }else{
-                this.updateMessage = "No change to image."
-            }
         }
     }
 }

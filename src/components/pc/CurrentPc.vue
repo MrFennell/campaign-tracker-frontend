@@ -54,7 +54,7 @@
                 </div>
                 <div  class="column is-one-third">
                     <CurrentPcForm></CurrentPcForm>
-                    <component v-bind:is="CurrentPcForm"></component>   
+                    <!-- <component v-bind:is="CurrentPcForm"></component>    -->
                 </div>
             </div>
         </div>

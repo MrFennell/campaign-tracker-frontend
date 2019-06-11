@@ -2,11 +2,9 @@
     <div class="container is-fullhd">
         <h2>Non-Player Characters:</h2>
         <AddNpc></AddNpc>
-        <CurrentNpc></CurrentNpc>
+        <!-- <CurrentNpc></CurrentNpc> -->
 
-        <div class="box">
-            <ListNpcs ></ListNpcs>
-        </div>
+        <ListNpcs ></ListNpcs>
     </div>
 </template>
 
@@ -14,10 +12,10 @@
 // import _ from 'lodash';
 import AddNpc from '@/components/npc/AddNpc.vue';
 import ListNpcs from '@/components/npc/ListNpcs.vue';
-import CurrentNpc from '@/components/npc/CurrentNpc.vue';
+// import CurrentNpc from '@/components/npc/CurrentNpc.vue';
 
 export default {
-    components: {AddNpc, CurrentNpc, ListNpcs},
+    components: {AddNpc,  ListNpcs},
     name: "NpcContainer",
     data() {
         return {

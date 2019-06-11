@@ -2,9 +2,9 @@
     <div class="container is-fullhd">
         <h2>Player Characters:</h2>
         <AddPc></AddPc>
-        <CurrentPc></CurrentPc>
+        <!-- <CurrentPc></CurrentPc> -->
 
-        <div class="box">
+        <div>
             <ListPcs ></ListPcs>
         </div>
     </div>
