@@ -67,7 +67,8 @@
                             <div class="card-hover">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img :src="npc.imageSrc" />
+                                        <img v-if="npc.imageSrc" :src="npc.imageSrc" />
+                                        <img v-else src='../../assets/images/thumbnail-default.png'/>
                                     </figure>
                                 </div>
                                 <div class="card-content">

@@ -10,16 +10,13 @@
                         <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
                         <div id="image-container">
-
-                            <div v-if="loadNpc && loadNpc.imageSrc">
-                                <div v-if="loadNpc.imageSrc" id="currentImage" class="image is-square">
-                                    <img :src="loadNpc.imageSrc" />
+                                <div id="currentImage" class="image is-square">
+                                    <img v-if="loadNpc.imageSrc" :src="loadNpc.imageSrc" />
+                                    <img v-else src='../../assets/images/image-default.png'/>
                                 </div>
-
                                 <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
                                     <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
                                 </div>
-                            </div>
 
                             <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
                             
@@ -30,7 +27,7 @@
                                 <button class="button is-light" @click="hideNewImage()">Cancel</button>
                             </div>
                         </div>
-
+                        <p>{{updateMessage}}</p>
                     </div>
 
                 <div class="column is-one-third">
@@ -67,7 +64,6 @@ export default {
             'getNpcId'
         ]),
         loadNpc(){
-
             const id = this.$store.getters.getNpcId;
             return this.$store.getters.getNpcById(id);
         }
@@ -92,6 +88,7 @@ export default {
             this.newImage = true;
             const imagePreview = this.$refs.file.files[0];  //setting up image preview
             this.imagePreviewUrl = URL.createObjectURL(imagePreview);
+            this.updateMessage = '';
         },
         edit(){
             if (!this.isEditing){
@@ -105,18 +102,17 @@ export default {
             this.imagePreviewUrl = null;
             this.showChangeImageForm = false;
             this.file = null;
+            this.updateMessage = '';
         },
         async hideNpc(){
             if (this.isEditing){
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
-                   this.updateMessage = '',
                    this.$store.dispatch('setNpcNull', null);  
                       
                }
             }
             else{
-                this.updateMessage = '',
                 this.$store.dispatch('setNpcNull', null);     
             }
             
@@ -124,7 +120,6 @@ export default {
 
         async updateNpcImage (){
             const formData = new FormData();
-
             if (this.file){
                 const npcId = this.loadNpc.id;
                 const oldImage = this.loadNpc.imageSrc;
@@ -148,7 +143,7 @@ export default {
                     console.log(err);
                 }
             }else{
-                this.updateMessage = "No change to image."
+                this.updateMessage = "No new image."
             }
         }
     }

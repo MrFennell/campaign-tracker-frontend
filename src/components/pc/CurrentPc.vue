@@ -5,19 +5,17 @@
             </div>
             <div class="columns">
              
-                    <div class="column is-one-third">
+                    <div id="image-container" class="column is-one-third">
                         <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
                         <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
                         <div id="image-container">
-                            <div v-if="loadPc && loadPc.imageSrc">
-                                <div v-if="loadPc.imageSrc" id="currentImage" class="image is-square">
-                                    <img :src="loadPc.imageSrc" />
-                                </div>
-
-                                <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
-                                    <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
-                                </div>
+                            <div id="currentImage" class="image is-square">
+                                <img v-if="loadPc.imageSrc" :src="loadPc.imageSrc" />
+                                <img v-else src='../../assets/images/image-default.png'/>
+                            </div>
+                            <div v-if="imagePreviewUrl" class="image is-4by3">
+                                <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
                             </div>
 
                             <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
@@ -29,6 +27,7 @@
                                 <button class="button is-light" @click="hideNewImage()">Cancel</button>
                             </div>
                         </div>
+                        <p>{{updateMessage}}</p>
 
                     </div>
 
@@ -94,11 +93,13 @@ export default {
             this.newImage = true;
             const imagePreview = this.$refs.file.files[0]; //setting up image preview
             this.imagePreviewUrl = URL.createObjectURL(imagePreview);
+            this.updateMessage = '';
         },
         hideNewImage(){
             this.imagePreviewUrl = null;
             this.showChangeImageForm = false;
             this.file = null;
+            this.updateMessage = '';
         },
         edit(){
             if (!this.isEditing){
@@ -112,13 +113,11 @@ export default {
             if (this.isEditing){
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
-                   this.updateMessage = '',
                    this.$store.dispatch('setPcNull', null);  
                       
                }
             }
             else{
-                this.updateMessage = '',
                 this.$store.dispatch('setPcNull', null);     
             }
         },
@@ -132,7 +131,6 @@ export default {
                 }
                 formData.append('PcId', pcId);
                 formData.append('file', this.file);
-
                 try{
                     this.$store.dispatch('updatePcImage', formData)
                         .then(
@@ -148,7 +146,7 @@ export default {
                     console.log(err);
                 }
             }else{
-                this.updateMessage = "No change to image."
+                this.updateMessage = "No new image."
             }
         }
     }
