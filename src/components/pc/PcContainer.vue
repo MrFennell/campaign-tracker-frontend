@@ -14,10 +14,9 @@
 // import _ from 'lodash';
 import AddPc from '@/components/pc/AddPc.vue';
 import ListPcs from '@/components/pc/ListPcs.vue';
-import CurrentPc from '@/components/pc/CurrentPc.vue';
 
 export default {
-    components: {AddPc, CurrentPc, ListPcs},
+    components: {AddPc, ListPcs},
     name: "PcContainer",
     data() {
         return {

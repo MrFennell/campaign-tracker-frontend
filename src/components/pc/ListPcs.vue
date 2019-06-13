@@ -2,7 +2,8 @@
     <div class="content" id="list-pcs-container" ref="topCurrentPc">
             <div>
                 <CurrentPc/>   
-            </div>                   
+            </div>           
+
             <div id="options">
                 <div v-if="!listOptions" class="level-right">
                     <a @click="listOptions = true"><font-awesome-icon icon="cog" /></a> 
@@ -99,7 +100,9 @@ export default {
             sort: 'PC Name',
             listOptions: false,
             sortDirection: 'asc',
-            columnSize: 'column is-2'
+            columnSize: 'column is-2',
+            showChangeImageButton: false,
+            newImage: false,
         }
     },
     computed: {
@@ -123,6 +126,9 @@ export default {
     methods: {
         async setPc(pc){
             this.$store.dispatch('setPc', pc)
+            this.listOptions = false
+            this.showChangeImageButton = false
+             this.isEditing = false,
             this.$nextTick(() => {
                 this.$refs.topCurrentPc.scrollIntoView();
             });
@@ -132,7 +138,7 @@ export default {
 </script>
 <style lang="scss" scoped>
     #list-pcs-container{
-        margin-top:10px;
+        margin-top:5px;
     }
     .card-hover:hover {
         opacity: 0.7;

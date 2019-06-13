@@ -4,64 +4,64 @@
             <div class="columns">
                 <div>
                    <p> {{updateMessage}}   </p>
-                <a v-if="!isEditing" @click="edit">Edit</a>
-                <div v-if="isEditing">
-                    <a @click="isEditing = false">Quit Editing</a>
-                     
-                    <p v-if="errors.length">
-                        <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
-                        <ul>
-                            <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                        </ul>
-                    </p>
-                    <form @submit.prevent="updateNpc" enctype="multipart/form-data">
-                        <div class="field">
-                            <label class="label" for="name">Name:</label>
-                            <div class="control">
-                                <input type="input" class="input" name="name" placeholder="NPC Name" v-model="loadNpc.name">
+                    <a v-if="!isEditing" @click="edit">Edit</a>
+                    <div v-if="isEditing">
+                        <a @click="isEditing = false">Quit Editing</a>
+                        
+                        <p v-if="errors.length">
+                            <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
+                            <ul>
+                                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                            </ul>
+                        </p>
+                        <form @submit.prevent="updateNpc" enctype="multipart/form-data">
+                            <div class="field">
+                                <label class="label" for="name">Name:</label>
+                                <div class="control">
+                                    <input type="input" class="input" name="name" placeholder="NPC Name" v-model="loadNpc.name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label for="race" class="label">Race:</label>
-                            <div class="control">
-                                <input type="input" class="input" name="race" placeholder="NPC Race" v-model="loadNpc.race">
+                            <div class="field">
+                                <label for="race" class="label">Race:</label>
+                                <div class="control">
+                                    <input type="input" class="input" name="race" placeholder="NPC Race" v-model="loadNpc.race">
+                                </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label for="description" class="label" >Description:</label>
-                            <textarea  class="textarea"  name="description" placeholder="Physical Description" v-model="loadNpc.description"></textarea>
-                        </div>
-                        <div class="field">
-                            <label for="lifestate" class="label">Life State:</label>
-                            <div class="control">
-                                <input type="input" class="input" name="lifeState" placeholder="Dead or alive? Somewhere in between?" v-model="loadNpc.lifeState">
+                            <div class="field">
+                                <label for="description" class="label" >Description:</label>
+                                <textarea  class="textarea"  name="description" placeholder="Physical Description" v-model="loadNpc.description"></textarea>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label for="sharedBio" class="label" >Shared Biography:</label>
-                            <textarea  class="textarea"  name="sharedBio" placeholder="All players and GMs will see this." v-model="loadNpc.sharedBio"></textarea>
-                        </div>
-                        <div class="field">
-                            <label for="privateBio" class="label" >Private Biography:</label>
-                            <textarea  class="textarea"  name="privateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadNpc.privateBio"></textarea>
-                        </div>
-                        <div class="field">
-                            <label for="image" class="image" >Image:</label>
-                            <input type="file" class="file"  ref="file" @change="selectFile">
-                        </div>
+                            <div class="field">
+                                <label for="lifestate" class="label">Life State:</label>
+                                <div class="control">
+                                    <input type="input" class="input" name="lifeState" placeholder="Dead or alive? Somewhere in between?" v-model="loadNpc.lifeState">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="sharedBio" class="label" >Shared Biography:</label>
+                                <textarea  class="textarea"  name="sharedBio" placeholder="All players and GMs will see this." v-model="loadNpc.sharedBio"></textarea>
+                            </div>
+                            <div class="field">
+                                <label for="privateBio" class="label" >Private Biography:</label>
+                                <textarea  class="textarea"  name="privateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadNpc.privateBio"></textarea>
+                            </div>
+                            <div class="field">
+                                <label for="image" class="image" >Image:</label>
+                                <input type="file" class="file"  ref="file" @change="selectFile">
+                            </div>
 
-                        <div class="field is-grouped">
-                            <p class="control">
-                                <input type="submit" class="button is-primary" value="Update">
-                            </p>
-                            <p class="control">
-                                <input type="button" class="button" value="Discard Changes" @click="hideNpc">
-                            </p>
-                            <p class="control">
-                                <input type="button" class="button is-warning" value="Delete" @click="deleteNpc">
-                            </p>
-                        </div>
-                    </form>
+                            <div class="field is-grouped">
+                                <p class="control">
+                                    <input type="submit" class="button is-primary" value="Update">
+                                </p>
+                                <p class="control">
+                                    <!-- <input type="button" class="button" value="Discard Changes" @click="hideNpc"> -->
+                                </p>
+                                <p class="control">
+                                    <input type="button" class="button is-warning" value="Delete" @click="deleteNpc">
+                                </p>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,8 @@ export default {
             error: '',
             defaultThumbnail: "src='./assets/logo.png'",
             showChangeImageButton: false,
-            newImage: false
+            newImage: false,
+            
         }
     },
     methods:{

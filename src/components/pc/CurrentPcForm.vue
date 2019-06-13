@@ -62,11 +62,6 @@
                             <label for="pcPrivateBio" class="label" >Private Biography:</label>
                             <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadPc.pcPrivateBio"></textarea>
                         </div>
-
-                        <!-- <div class="field">
-                            <label for="image" class="image" >Image:</label>
-                            <input type="file" class="file"  ref="file" @change="selectFile">
-                        </div> -->
                         <div class="field is-grouped">
                             <p class="control">
                                 <input type="submit" class="button is-primary" value="Update">
@@ -80,7 +75,7 @@
 
                         </div>
                     </form>
-                    </div>
+                </div>
             </div>
         </div>
 </template>
@@ -114,8 +109,6 @@ export default {
         selectFile(){
             this.file = this.$refs.file.files[0];
             this.newImage = true;
-            const file = this.$refs.file.files[0];
-            this.url = URL.createObjectURL(file);
         },
         edit(){
             if (!this.isEditing){

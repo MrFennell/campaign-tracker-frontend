@@ -16,18 +16,18 @@
                                     <img :src="loadNpc.imageSrc" />
                                 </div>
 
-                                <div v-if="newImage" id="currentImage" class="image is-4by3">
-                                    <img v-if="url" :src="url" />
+                                <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
+                                    <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
                                 </div>
                             </div>
 
-                            <a v-if="!showChangeImageButton" @click="showChangeImageButton = true">Change image</a>
+                            <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
                             
-                            <div v-if="showChangeImageButton" class="field">
+                            <div v-if="showChangeImageForm" class="field">
                                 <label for="image" class="image" >Image:</label>
-                                <input type="file" class="file" ref="file" @change="selectFile">
+                                <input type="file" class="file" ref="file" @change="selectNewImage">
                                 <button class="button" @click="updateNpcImage">Update</button>.
-                                <button class="button is-light" @click="showChangeImageButton = false">Cancel</button>
+                                <button class="button is-light" @click="hideNewImage()">Cancel</button>
                             </div>
                         </div>
 
@@ -48,8 +48,8 @@
                     <p v-else>No description.</p>
 
                 </div>
-                <div  class="column is-one-third">
-                    <currentNpcForm />
+                <div class="column is-one-third">
+                    <currentNpcForm></currentNpcForm>
                 </div>
                 </div>
             </div>
@@ -69,7 +69,6 @@ export default {
         loadNpc(){
 
             const id = this.$store.getters.getNpcId;
-            // return this.$store.state.pc;
             return this.$store.getters.getNpcById(id);
         }
     },
@@ -82,16 +81,17 @@ export default {
             errors: [],
             error: '',
             defaultThumbnail: "src='./assets/logo.png'",
-            showChangeImageButton: false,
-            newImage: false
+            showChangeImageForm: false,
+            newImage: false,
+            imagePreviewUrl: null
         }
     },
     methods:{
-        selectFile(){
+        selectNewImage(){
             this.file = this.$refs.file.files[0];
             this.newImage = true;
-            const file = this.$refs.file.files[0];
-            this.url = URL.createObjectURL(file);
+            const imagePreview = this.$refs.file.files[0];  //setting up image preview
+            this.imagePreviewUrl = URL.createObjectURL(imagePreview);
         },
         edit(){
             if (!this.isEditing){
@@ -100,6 +100,11 @@ export default {
             else{
                 this.isEditing = false;
             }
+        },
+        hideNewImage(){
+            this.imagePreviewUrl = null;
+            this.showChangeImageForm = false;
+            this.file = null;
         },
         async hideNpc(){
             if (this.isEditing){
@@ -123,16 +128,19 @@ export default {
             if (this.file){
                 const npcId = this.loadNpc.id;
                 const oldImage = this.loadNpc.imageSrc;
-
+                if(oldImage != null){
+                    formData.append('oldImage', oldImage);
+                }
                 formData.append('NpcId', npcId);
-                formData.append('oldImage', oldImage);
                 formData.append('file', this.file);
                 try{
                     this.$store.dispatch('updateNpcImage', formData)
                         .then(
                             this.isEditing = false,
                             this.updateMessage = '',
-                            this.newImage = false,
+                            this.imagePreviewUrl = null,
+                            this.showChangeImageForm = false,
+                            this.file = null,
                             (error) => this.error = error.response.data.error
                         )
                 }catch(err){

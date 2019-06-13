@@ -6,7 +6,7 @@
         </div>
 
         <div v-if="showForm">
-            <p ref="formTop">Create a new Non-Player Character below."</p>
+            <p ref="formTop">Create a new Non-Player Character below.</p>
             <div class="is-pulled-right">
                 <a class="delete" @click="showForm = false"></a>
             </div>

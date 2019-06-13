@@ -10,24 +10,23 @@
                         <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
                         <div id="image-container">
-
                             <div v-if="loadPc && loadPc.imageSrc">
                                 <div v-if="loadPc.imageSrc" id="currentImage" class="image is-square">
                                     <img :src="loadPc.imageSrc" />
                                 </div>
 
-                                <div v-if="newImage" id="currentImage" class="image is-4by3">
-                                    <img v-if="url" :src="url" />
+                                <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
+                                    <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
                                 </div>
                             </div>
 
-                            <a v-if="!showChangeImageButton" @click="showChangeImageButton = true">Change image</a>
+                            <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
                             
-                            <div v-if="showChangeImageButton" class="field">
+                            <div v-if="showChangeImageForm" class="field">
                                 <label for="image" class="image" >Image:</label>
-                                <input type="file" class="file" ref="file" @change="selectFile">
+                                <input type="file" class="file" ref="file" @change="selectNewImage">
                                 <button class="button" @click="updatePcImage">Update</button>.
-                                <button class="button is-light" @click="showChangeImageButton = false">Cancel</button>
+                                <button class="button is-light" @click="hideNewImage()">Cancel</button>
                             </div>
                         </div>
 
@@ -38,7 +37,6 @@
 
                     <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
                     <p v-else>error - enter Name</p>
-
                     <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
                     <p v-else>Please enter name of player!</p>
                     <p v-if="loadPc && loadPc.pcClass">Class: {{ loadPc.pcClass }}</p>
@@ -54,7 +52,6 @@
                 </div>
                 <div  class="column is-one-third">
                     <CurrentPcForm></CurrentPcForm>
-                    <!-- <component v-bind:is="CurrentPcForm"></component>    -->
                 </div>
             </div>
         </div>
@@ -62,7 +59,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import CurrentPcForm from '@/components/pc/CurrentPcForm.vue';
+import CurrentPcForm from '@/components/pc/CurrentPcForm.vue'
 
 export default {
     components: {CurrentPcForm},
@@ -86,16 +83,22 @@ export default {
             errors: [],
             error: '',
             defaultThumbnail: "src='./assets/logo.png'",
-            showChangeImageButton: false,
-            newImage: false
+            showChangeImageForm: false,
+            imagePreviewUrl: null
         }
     },
+
     methods:{
-        selectFile(){
+        selectNewImage(){
             this.file = this.$refs.file.files[0];
             this.newImage = true;
-            const file = this.$refs.file.files[0];
-            this.url = URL.createObjectURL(file);
+            const imagePreview = this.$refs.file.files[0]; //setting up image preview
+            this.imagePreviewUrl = URL.createObjectURL(imagePreview);
+        },
+        hideNewImage(){
+            this.imagePreviewUrl = null;
+            this.showChangeImageForm = false;
+            this.file = null;
         },
         edit(){
             if (!this.isEditing){
@@ -118,24 +121,26 @@ export default {
                 this.updateMessage = '',
                 this.$store.dispatch('setPcNull', null);     
             }
-            
         },
         async updatePcImage (){
             const formData = new FormData();
-
             if (this.file){
                 const pcId = this.loadPc.id;
                 const oldImage = this.loadPc.imageSrc;
-
+                if(oldImage != null){
+                    formData.append('oldImage', oldImage);
+                }
                 formData.append('PcId', pcId);
-                formData.append('oldImage', oldImage);
                 formData.append('file', this.file);
+
                 try{
                     this.$store.dispatch('updatePcImage', formData)
                         .then(
                             this.isEditing = false,
                             this.updateMessage = '',
-                            this.newImage = false,
+                            this.imagePreviewUrl = null,
+                            this.showChangeImageForm = false,
+                            this.file = null,
                             (error) => this.error = error.response.data.error
                         )
                 }catch(err){
