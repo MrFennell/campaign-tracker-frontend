@@ -27,7 +27,7 @@ export default {
     components: {
         ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
         CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
-        AddCampaign: () => import('@/components/campaign/AddCampaign')
+        AddCampaign: () => import('@/components/campaign/AddCampaign'),
     },
     methods: {
         switchCampaign(){

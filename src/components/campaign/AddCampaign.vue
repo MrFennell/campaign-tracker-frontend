@@ -15,7 +15,6 @@
                 <input type="input" name="description" class="input" placeholder="Campaign Description" v-model="description">
             </div>
         </div>
-        
         <input type="submit" value="Create" class="button is-primary">
     </form>
 

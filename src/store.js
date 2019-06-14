@@ -19,6 +19,10 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn: state => !!state.user,
     getUserId: (state) => { return state.user.id},
+    getCampaignId:(state) => { return state.campaign.id },
+    getCampaignById: (state) => (id) =>{ 
+      return state.campaigns.find(campaign => campaign.id === id); 
+    },
     getPcId:(state) => { return state.pc.id },
     getPcById: (state) => (id) =>{ 
       return state.pcs.find(pc => pc.id === id); 

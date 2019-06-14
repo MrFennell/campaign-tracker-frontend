@@ -1,9 +1,8 @@
 <template>
         <div v-if="loadNpc">
-
             <div class="columns">
                 <div>
-                   <p> {{updateMessage}}   </p>
+                   <p class="update-message">{{updateMessage}}</p>
                     <a v-if="!isEditing" @click="edit">Edit</a>
                     <div v-if="isEditing">
                         <a @click="isEditing = false">Quit Editing</a>

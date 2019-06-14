@@ -2,8 +2,6 @@
     <div class="container is-fullhd">
         <h2>Player Characters:</h2>
         <AddPc></AddPc>
-        <!-- <CurrentPc></CurrentPc> -->
-
         <div>
             <ListPcs ></ListPcs>
         </div>
@@ -14,9 +12,12 @@
 // import _ from 'lodash';
 import AddPc from '@/components/pc/AddPc.vue';
 import ListPcs from '@/components/pc/ListPcs.vue';
+// import CurrentPc from '@/components/pc/CurrentPc.vue';
 
 export default {
-    components: {AddPc, ListPcs},
+    components: {AddPc, 
+    ListPcs, 
+    },
     name: "PcContainer",
     data() {
         return {
