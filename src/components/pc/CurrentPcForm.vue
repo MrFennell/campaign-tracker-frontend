@@ -6,7 +6,6 @@
                 <a v-if="!isEditing" @click="edit" >Edit</a>
                 <div v-if="isEditing">
                     <a @click="isEditing = false">Quit Editing</a>
-                     
                     <p v-if="errors.length">
                         <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
                         <ul>

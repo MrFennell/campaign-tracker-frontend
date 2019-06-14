@@ -1,9 +1,10 @@
 <template>
-<div>
-    <p class="update-message">{{updateMessage}}</p>
-    <a v-if="!isEditing" @click="edit">Edit</a>
-    <div v-if="isEditing">
-        <a @click="isEditing = false">Quit Editing</a>
+<div id="current-campaign-form">
+    <p v-if="updateMessage" class="update-message">{{updateMessage}}</p>
+    <!-- <a v-if="!isEditing" @click="edit"><font-awesome-icon icon="edit"/></a> -->
+    <!-- <div v-if="isEditing"> -->
+    <div>
+        <!-- <a @click="isEditing = false">Quit Editing</a> -->
         
         <p v-if="errors.length">
             <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
@@ -71,7 +72,11 @@ export default {
                  (error) => this.error = error.response.data.error
             )
         },
-
     }
 }
 </script>
+<style lang="scss">
+// #current-campaign-form{
+//     text-align: center;
+// }
+</style>

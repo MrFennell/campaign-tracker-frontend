@@ -15,9 +15,10 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import { faSortUp } from '@fortawesome/free-solid-svg-icons'
 import { faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faCog, faExclamationTriangle, faSortUp, faSortDown)
+library.add(faCog, faExclamationTriangle, faSortUp, faSortDown, faEdit)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

@@ -60,8 +60,8 @@ export default {
     name: "CurrentNpc",
     computed: {
         ...mapGetters([
-            'getNpcById',
-            'getNpcId'
+            'getNpcId',
+            'getNpcById'
         ]),
         loadNpc(){
             const id = this.$store.getters.getNpcId;

@@ -85,16 +85,15 @@ export default {
     },
     mounted() {
         this.$store.dispatch('loadCampaigns');
-        // this.$store.dispatch('loadPcs');
         this.$store.dispatch('loadCurrentCampaign');
     }
 
 }
 </script>
 <style lang="scss" scoped>
-   #campaign-header{
-       text-align: center;
-       margin-top: 15px;
-   }
+//    #campaign-header{
+//        text-align: center;
+//        margin-top: 15px;
+//    }
 </style>
  
