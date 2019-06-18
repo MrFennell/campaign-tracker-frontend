@@ -81,7 +81,7 @@ export default {
             this.showChangeImageButton = false
              this.isEditing = false,
             this.$nextTick(() => {
-                this.$refs.topCurrentPc.scrollIntoView();
+                this.$refs.topCurrentPc.scrollIntoView({behavior: "smooth"});
             });
         }
     }

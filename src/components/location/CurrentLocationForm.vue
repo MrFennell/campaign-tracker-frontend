@@ -1,5 +1,5 @@
 <template>
-        <div v-if="loadNpc">
+        <div v-if="loadLocation">
             <div class="columns">
                 <div>
                    <p class="update-message">{{updateMessage}}</p>
@@ -13,36 +13,18 @@
                                 <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
                             </ul>
                         </p>
-                        <form @submit.prevent="updateNpc" enctype="multipart/form-data">
+                        <form @submit.prevent="updateLocation" enctype="multipart/form-data">
                             <div class="field">
                                 <label class="label" for="name">Name:</label>
                                 <div class="control">
-                                    <input type="input" class="input" name="name" placeholder="NPC Name" v-model="loadNpc.name">
+                                    <input type="input" class="input" name="name" placeholder="Name of the location." v-model="loadLocation.name">
                                 </div>
                             </div>
                             <div class="field">
-                                <label for="race" class="label">Race:</label>
+                                <label for="region" class="label">Region:</label>
                                 <div class="control">
-                                    <input type="input" class="input" name="race" placeholder="NPC Race" v-model="loadNpc.race">
+                                    <input type="input" class="input" name="region" placeholder="Region or area of the location." v-model="loadLocation.region">
                                 </div>
-                            </div>
-                            <div class="field">
-                                <label for="description" class="label" >Description:</label>
-                                <textarea  class="textarea"  name="description" placeholder="Physical Description" v-model="loadNpc.description"></textarea>
-                            </div>
-                            <div class="field">
-                                <label for="lifestate" class="label">Life State:</label>
-                                <div class="control">
-                                    <input type="input" class="input" name="lifeState" placeholder="Dead or alive? Somewhere in between?" v-model="loadNpc.lifeState">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="sharedBio" class="label" >Shared Biography:</label>
-                                <textarea  class="textarea"  name="sharedBio" placeholder="All players and GMs will see this." v-model="loadNpc.sharedBio"></textarea>
-                            </div>
-                            <div class="field">
-                                <label for="privateBio" class="label" >Private Biography:</label>
-                                <textarea  class="textarea"  name="privateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadNpc.privateBio"></textarea>
                             </div>
                             <div class="field">
                                 <label for="image" class="image" >Image:</label>
@@ -54,10 +36,10 @@
                                     <input type="submit" class="button is-primary" value="Update">
                                 </p>
                                 <p class="control">
-                                    <!-- <input type="button" class="button" value="Discard Changes" @click="hideNpc"> -->
+                                    <!-- <input type="button" class="button" value="Discard Changes" @click="hideLocation"> -->
                                 </p>
                                 <p class="control">
-                                    <input type="button" class="button is-warning" value="Delete" @click="deleteNpc">
+                                    <input type="button" class="button is-warning" value="Delete" @click="deleteLocation">
                                 </p>
                             </div>
                         </form>
@@ -70,15 +52,15 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    name: "CurrentNpcForm",
+    name: "CurrentLocation",
     computed: {
         ...mapGetters([
-            'getNpcById',
-            'getNpcId'
+            'getLocationById',
+            'getLocationId'
         ]),
-        loadNpc(){
-            const id = this.$store.getters.getNpcId;
-            return this.$store.getters.getNpcById(id);
+        loadLocation(){
+            const id = this.$store.getters.getLocationId;
+            return this.$store.getters.getLocationById(id);
         }
     },
     data() {
@@ -110,28 +92,24 @@ export default {
                 this.isEditing = false;
             }
         },
-        async updateNpc(){ 
-            if (!this.loadNpc.name){
+        async updateLocation(){ 
+            if (!this.loadLocation.name){
                 this.errors.push('Name is required.');
             }else{
                if (this.newImage === true){
                     const formData = new FormData();
 
                     if (this.file){
-                        const npcId = this.loadNpc.id;
-                        const oldImage = this.loadNpc.imageSrc;
+                        const locationId = this.loadLocation.id;
+                        const oldImage = this.loadLocation.imageSrc;
 
-                        formData.append('NpcId', npcId);
+                        formData.append('LocationId', locationId);
                         formData.append('oldImage', oldImage);
                         formData.append('file', this.file);
-                        formData.append("name", this.loadNpc.name);
-                        formData.append("race", this.loadNpc.race);
-                        formData.append("profession", this.loadNpc.profession);
-                        formData.append("description", this.loadNpc.lifeState);
-                        formData.append("sharedBio", this.loadNpc.sharedBio);
-                        formData.append("privateBio", this.loadNpc.privateBio);
+                        formData.append("name", this.loadLocation.name);
+                        formData.append("region", this.loadLocation.region);
                         try{
-                            this.$store.dispatch('updateNpcWithImage', formData)
+                            this.$store.dispatch('updateLocationWithImage', formData)
                             .then(
                                 this.isEditing = false,
                                 this.updateMessage = '',
@@ -149,7 +127,7 @@ export default {
                     }
                }
                else{
-                    this.$store.dispatch('updateNpc', this.loadNpc)
+                    this.$store.dispatch('updateLocation', this.loadLocation)
                     .then(
                         this.isEditing = false,
                         this.updateMessage = "Updated.",
@@ -159,14 +137,14 @@ export default {
                }
             }
         },
-        async deleteNpc(){ 
+        async deleteLocation(){ 
 
-           if  (confirm('Delete PC?')) {
-            this.$store.dispatch('deleteNpc', this.loadNpc)
+           if  (confirm('Delete Location?')) {
+            this.$store.dispatch('deleteLocation', this.loadLocation)
                 .then(
                     this.isEditing = false,
                     this.updateMessage = '',
-                    this.$store.dispatch('setNpcNull', null),  
+                    this.$store.dispatch('setLocationNull', null),  
                     (error) => this.error = error.response.data.error
                 )
            }

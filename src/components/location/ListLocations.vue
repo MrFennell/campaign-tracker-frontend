@@ -1,7 +1,7 @@
 <template>
-    <div class="content" ref="topCurrentNpc" id="list-npcs-container">     
+    <div class="content" ref="topCurrentLocation" id="list-locations-container">     
                 <div >
-                    <CurrentNpc/>
+                    <CurrentLocation/>
                 </div>
                 <div id="options">
                     <div v-if="!listOptions" class="level-right">
@@ -29,7 +29,7 @@
                                     <div class="select">
                                         <select v-model="sort" id="list-sort">
                                             <option disabled value="">Sort by field:</option>
-                                            <option>NPC Name</option>
+                                            <option>Location Name</option>
                                             <option>Created Date</option>
                                         </select>
                                     </div>
@@ -61,19 +61,19 @@
 
                 <div class="columns is-multiline">
                     <div :class="[columnSize]" 
-                        v-for="(npc, index) in loadNpcs" 
-                        v-bind:key="npc.id">
-                        <div v-if="index <= selected-1" class="card" @click="setNpc(npc)">
+                        v-for="(location, index) in loadLocations" 
+                        v-bind:key="location.id">
+                        <div v-if="index <= selected-1" class="card" @click="setLocation(location)">
                             <div class="card-hover">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
-                                        <img v-if="npc.imageSrc" :src="npc.imageSrc" />
+                                        <img v-if="location.imageSrc" :src="location.imageSrc" />
                                         <img v-else src='../../assets/images/thumbnail-default.png'/>
                                     </figure>
                                 </div>
                                 <div class="card-content">
                                     <div class="media-content">
-                                        <p class="title is-4">{{ npc.name }}</p>
+                                        <p class="title is-4">{{ location.name }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -85,47 +85,47 @@
 
 <script>
 import _ from 'lodash';
-import CurrentNpc from '@/components/npc/CurrentNpc.vue';
+import CurrentLocation from '@/components/location/CurrentLocation.vue';
 export default {
-    name: "ListNpcs",
-    components: {CurrentNpc},
+    name: "ListLocations",
+    components: {CurrentLocation},
     data(){
         return{
             selected: 10,
-            sort: 'NPC Name',
+            sort: 'Location Name',
             listOptions: false,
             sortDirection: 'asc',
             columnSize: 'column is-2'
         }
     },
     computed: {
-        loadNpcs(){
+        loadLocations(){
             let sortDirection = this.sortDirection;
-            let npcs = this.$store.state.npcs;
-            if (this.sort === 'NPC Name'){
-                return _.orderBy(npcs, [npc => npc.name.toLowerCase()], sortDirection);
+            let locations = this.$store.state.locations;
+            if (this.sort === 'Location Name'){
+                return _.orderBy(locations, [location => location.name.toLowerCase()], sortDirection);
             }
             else if (this.sort === 'Created Date'){
-                return _.orderBy(npcs, 'createdAt', sortDirection);
+                return _.orderBy(locations, 'createdAt', sortDirection);
             }
             else{
-                 return _.orderBy(npcs, [npc => npc.name.toLowerCase()], sortDirection);
+                 return _.orderBy(locations, [location => location.name.toLowerCase()], sortDirection);
             }
         }
     },
     methods: {
-        async setNpc(npc){
-            this.$store.dispatch('setNpc', npc)
+        async setLocation(location){
+            this.$store.dispatch('setLocation', location)
             this.listOptions = false
             this.$nextTick(() => {
-                this.$refs.topCurrentNpc.scrollIntoView({behavior: "smooth"});
+                this.$refs.topCurrentLocation.scrollIntoView({behavior: "smooth"});
             });
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-    #list-npcs-container{
+    #list-locations-container{
         margin-top:5px;
     }
     .card-hover:hover {

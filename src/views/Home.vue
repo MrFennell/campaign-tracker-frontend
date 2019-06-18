@@ -18,11 +18,12 @@
 
         <div v-if="!campaignIsSet" >
             <AddCampaign></AddCampaign>
-            <CampaignContainer></CampaignContainer>
+            <ListCampaigns></ListCampaigns>
         </div>
 
         <div v-if="campaignIsSet">
-            <div id="campaign-header">
+
+            <div class="section">
                 <CampaignContainer></CampaignContainer>
             </div>
             <div class="section">
@@ -30,6 +31,9 @@
             </div>
             <div class="section">
                 <NpcContainer></NpcContainer>
+            </div>
+            <div class="section">
+                <LocationContainer></LocationContainer>
             </div>
         </div>
     </div>
@@ -47,6 +51,7 @@ export default {
         AddCampaign: () => import('@/components/campaign/AddCampaign'),
         NpcContainer: () => import('@/components/npc/NpcContainer'),
         CampaignContainer: () => import('@/components/campaign/CampaignContainer'),
+        LocationContainer: () => import('@/components/location/LocationContainer'),
         Login: () => import('@/components/user/login')
     },
     data() {

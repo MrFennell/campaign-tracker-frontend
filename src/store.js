@@ -9,12 +9,14 @@ export default new Vuex.Store({
   state: {
     user: null,
     users: [],
-    campaign: null,
+    campaign: '',
     campaigns: [],
     pcs: [],
     pc: '',
     npcs: [],
-    npc: ''
+    npc: '',
+    location: '',
+    locations: []
   },
   getters: {
     isLoggedIn: state => !!state.user,
@@ -30,6 +32,10 @@ export default new Vuex.Store({
     getNpcId:(state) => { return state.npc.id },
     getNpcById: (state) => (id) =>{ 
       return state.npcs.find(npc => npc.id === id); 
+    },
+    getLocationId:(state) => { return state.location.id },
+    getLocationById: (state) => (id) =>{ 
+      return state.locations.find(location => location.id === id); 
     },
     campaignIsSet: state => !!state.campaign,
     userName: (state) => {return state.user.username}
@@ -61,6 +67,12 @@ export default new Vuex.Store({
     setNpc(state, npc) {
       state.npc = npc;
     },
+    setLocations(state, locations){
+      state.locations = locations;
+    },
+    setLocation(state, location) {
+      state.location = location;
+    },
     setNull(state, payload){
       state.payload = payload
     }
@@ -81,6 +93,10 @@ export default new Vuex.Store({
     async setCurrentCampaign({ commit }, payload){
       const response = await axios.post('/setCurrentCampaign', payload);
         commit('setCampaign', response.data);
+    },
+    async setCampaignNull({ commit }){
+      const response = '';
+      commit('setCampaignNull', response);
     },
     async loadCurrentCampaign({ commit }, payload)  {
       const response = await axios.get('/loadCurrentCampaign', payload);
@@ -119,15 +135,15 @@ export default new Vuex.Store({
     },
     async AddCampaign({ commit }, payload){
       const response = await axios.post('/addCampaign', payload)
-      commit('setCampaign', response.data);
+      commit('setCampaigns', response.data);
     },
     async updateCampaign({ commit }, payload){
       const response = await axios.post('/updateCampaign', payload)
-      commit('setCampaign', response.data);
+      commit('setCampaigns', response.data);
     },
     async deleteCampaign({ commit }, payload){
       const response = await axios.post('/deleteCampaign', payload)
-      commit('setCampaign', response.data);
+      commit('setCampaigns', response.data);
     },
     async setPc({ commit }, payload){
       commit('setPc', payload);
@@ -208,6 +224,49 @@ export default new Vuex.Store({
     async deleteNpc({ commit }, payload){
       const response = await axios.post('/npcs/deleteNpc', payload)
       commit('setNpcs', response.data);
+    },
+
+    ///locations
+    loadLocations( store ) {
+      axios.get('/locations')
+        .then(response => { 
+        store.commit('setLocations', response.data);
+      });
+    },
+    async setLocation({ commit }, payload){
+      commit('setLocation', payload);
+    },
+    async setLocationNull({ commit }){
+      const response = '';
+      commit('setLocation', response);
+    },
+    async getLocations({ commit }, payload) {
+      const response = await axios.get('/locations', payload);
+      commit('setLocations', response.data);
+    },
+    async addLocation({ commit }, payload){
+      const response = await axios.post('/locations/addLocation', payload)
+      commit('setLocations', response.data);
+    },
+    async addLocationWithImage({ commit }, payload){
+      const response = await axios.post('/locations/addLocationWithImage', payload)
+      commit('setLocations', response.data);
+    },
+    async updateLocation({ commit }, payload){
+      const response = await axios.post('/locations/updateLocation', payload)
+      commit('setLocations', response.data);
+    },
+    async updateLocationImage({ commit }, payload){
+      const response = await axios.post('/locations/updateLocationImage', payload)
+      commit('setLocations', response.data);
+    },
+    async updateLocationWithImage({ commit }, payload){
+      const response = await axios.post('/locations/updateNpcWithImage', payload)
+      commit('setLocations', response.data);
+    },
+    async deleteLocation({ commit }, payload){
+      const response = await axios.post('/locations/deleteLocation', payload)
+      commit('setLocations', response.data);
     }
     
   }

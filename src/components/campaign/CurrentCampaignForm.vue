@@ -1,5 +1,5 @@
 <template>
-<div id="current-campaign-form">
+<div v-if="loadCampaign" id="current-campaign-form" >
     <p v-if="updateMessage" class="update-message">{{updateMessage}}</p>
     <!-- <a v-if="!isEditing" @click="edit"><font-awesome-icon icon="edit"/></a> -->
     <!-- <div v-if="isEditing"> -->
@@ -76,7 +76,7 @@ export default {
 }
 </script>
 <style lang="scss">
-// #current-campaign-form{
-//     text-align: center;
-// }
+#current-campaign-form{
+    text-align: center;
+}
 </style>

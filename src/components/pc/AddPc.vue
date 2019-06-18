@@ -105,7 +105,7 @@
                 }else{
                     this.showForm = true;
                     this.$nextTick(() => {
-                        this.$refs.formTop.scrollIntoView();
+                        this.$refs.formTop.scrollIntoView({behavior: "smooth"});
                     });
                 }
             },
@@ -140,7 +140,7 @@
                                 this.$store.dispatch('addPcWithImage', formData),
                                 this.showForm = false;
                                 this.successMessage =  "Character created!";
-
+                                this.file = null;
                                 setTimeout(() => this.successMessage = null, 3000);
 
                             }catch(err){
@@ -151,6 +151,7 @@
                             this.$store.dispatch('addPc', formData),
                             this.showForm = false;
                             this.successMessage =  "Character created!";
+                            this.file = null;
                             setTimeout(() => this.successMessage = null, 3000);
                         }
                 }

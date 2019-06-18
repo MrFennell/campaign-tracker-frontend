@@ -1,10 +1,14 @@
 <template>
-    <div class="content">
+    <div class="container" id="campaign-container">
         <CurrentCampaign></CurrentCampaign>
-        <p class="tag switch" @click="switchCampaign"><a>Switch Campaign</a></p>
-        <p class="tag new" @click="newCampaign"><a>Start New</a></p>
-        <p class="tag logout" data-cy="router-logout"><a @click="doLogout">Logout</a></p>
         
+        <div id="campaign-options" >
+            <ul>
+                <li><a @click="switchCampaign">Switch Campaign</a></li>
+                <li><a @click="newCampaign" >Start New</a></li>
+                <li><a data-cy="router-logout" @click="doLogout">Logout</a></li>
+            </ul>
+        </div>
         <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
         </div>
@@ -58,5 +62,30 @@ export default {
 
 </script>
 <style lang="scss">
-
+    // #campaign-container{
+    //     width:100%;
+    // }
+    #campaign-options {
+        display:flex;
+        ul{
+            display:flex;
+            justify-content: center;
+            align-items: baseline;
+            list-style: none;
+            flex-grow: 1;
+        }
+        li:hover{
+            background-color: white;
+        }
+         a{
+            display: block;
+            border-radius: 4px 4px 0 0;
+            color: black;
+            padding: 0.5em 1em;
+        }
+    }
+    // .campaign-nav{
+    //     border: 1px solid blue;
+    //     height: 20px;
+    // }
 </style>

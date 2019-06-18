@@ -60,7 +60,6 @@
     </div>
 </template>
 <script>
-// import axios from 'axios';
     export default {
         name: "AddNpc",
         data(){
@@ -86,7 +85,7 @@
                 }else{
                     this.showForm = true;
                     this.$nextTick(() => {
-                        this.$refs.formTop.scrollIntoView();
+                        this.$refs.formTop.scrollIntoView({behavior: "smooth"});
                     });
                 }
             },
@@ -114,6 +113,7 @@
                             try{
                                 this.$store.dispatch('addNpcWithImage', formData),
                                 this.showForm = false;
+                                this.file = null;
                                 this.successMessage =  "Character created!";
                                 this.errors = [];
                                 setTimeout(() => this.successMessage = null, 3000);
@@ -125,6 +125,7 @@
                         else{
                             this.$store.dispatch('addNpc', formData),
                             this.showForm = false;
+                            this.file = null;
                             this.successMessage =  "Character created!";
                             setTimeout(() => this.successMessage = null, 3000);
                         }
