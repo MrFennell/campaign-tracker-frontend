@@ -4,7 +4,6 @@
         <Login></Login>
     </div>
 
-
     <div v-if="isLoggedIn">
         <!-- <div id="sidebar">
             <ul>
@@ -22,18 +21,29 @@
         </div>
 
         <div v-if="campaignIsSet">
-
-            <div class="section">
-                <CampaignContainer></CampaignContainer>
+           <div class="container">
+            <nav id="navigation">
+                <ul>
+                    <li><a @click="scroll('campaign')"> Campaign </a> </li>
+                    <li><a @click="scroll('pcs')"> PCs </a> </li>
+                    <li><a @click="scroll('npcs')">NPCs</a></li>
+                    <li><a @click="scroll('locations')">Locations</a></li>
+                </ul>
+            </nav>
             </div>
-            <div class="section">
-                <PcContainer></PcContainer>
-            </div>
-            <div class="section">
-                <NpcContainer></NpcContainer>
-            </div>
-            <div class="section">
-                <LocationContainer></LocationContainer>
+            <div class="container">
+                <div ref="campaign">
+                    <CampaignContainer></CampaignContainer>
+                </div>
+                <div class="section" ref="pcs">
+                    <PcContainer></PcContainer>
+                </div>
+                <div class="section" ref="npcs">
+                    <NpcContainer></NpcContainer>
+                </div>
+                <div class="section" ref="locations">
+                    <LocationContainer></LocationContainer>
+                </div>
             </div>
         </div>
     </div>
@@ -85,6 +95,11 @@ export default {
             else{
                 this.chooseCampaign = false;
             }
+        },
+        scroll(i){
+                this.$nextTick(() => {
+                this.$refs[i].scrollIntoView({behavior: "smooth"});
+            });
         }
 
     },
@@ -96,9 +111,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-//    #campaign-header{
-//        text-align: center;
-//        margin-top: 15px;
-//    }
+#navigation{
+    max-width:100px;
+    position: fixed;
+    top: 25%;
+    left: 0;
+    z-index: 9999;
+    ul{
+        list-style-type: none;
+        list-style: none;
+    }
+}
 </style>
  
