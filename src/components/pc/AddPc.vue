@@ -18,60 +18,74 @@
                 </ul>
             </p>
             <form @submit.prevent="newPc" enctype="multipart/form-data" >
-                <div class="field">
-                    <label class="label" for="pcName">Name:</label>
-                    <div class="control">
-                        <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
+                <div class="columns is-multiline">
+                    <div class="column is-half">
+                        <div class="field">
+                            <label class="label" for="pcName">Name:</label>
+                            <div class="control">
+                                <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="playerName" class="label" >Player Name:</label>
+                            <div class="control">
+                                <input type="input" class="input" name="playerName" placeholder="Player Name" v-model="playerName">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="pcClass" class="label" >Class:</label>
+                            <div class="control">
+                                <input type="input" class="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-half">
+                        <div class="field">
+                            <label for="pcRace" class="label">Race:</label>
+                            <div class="control">
+                                <input type="input" class="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="pcLevel" class="label">Level:</label>
+                            <div class="control">
+                                <input type="number" class="input" name="pcLevel" placeholder="Level" v-model="pcLevel">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="pcLifestate" class="label">Life State:</label>
+                            <div class="control">
+                                <input type="input" class="input" name="pcLifestate" placeholder="Dead or alive?" v-model="pcLifestate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-half">
+                        <div class="field">
+                            <label for="pcSharedBio" class="label" >Shared Biography:</label>
+                            <textarea  class="textarea"  name="pcSharedBio" placeholder="All players and GMs will see this." v-model="pcSharedBio"></textarea>
+                        </div>
+                    </div>
+                    <div class="column is-half">
+                        <div class="field">
+                            <label for="pcPrivateBio" class="label" >Private Biography:</label>
+                            <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="pcPrivateBio"></textarea>
+                        </div>
+                    </div>
+                    <div class="column is-full">
+                        <div class="field">
+                            <label for="pcDescription" class="label" >Description:</label>
+                            <textarea  class="textarea"  name="pcDescription" placeholder="PC Description" v-model="pcDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="column is-full is-pulled-right">
+                        <div class="field">
+                            <label for="image" class="image" >Image:</label>
+                            <input type="file" class="file"  ref="file" @change="selectFile">
+                        </div>
+                        <input type="submit" class="button is-primary" value="Create">
+                        <input type="submit" class="button" value="Hide" @click="showForm = false">
                     </div>
                 </div>
-                <div class="field">
-                    <label for="playerName" class="label" >Player Name:</label>
-                    <div class="control">
-                        <input type="input" class="input" name="playerName" placeholder="Player Name" v-model="playerName">
-                    </div>
-                </div>
-                <div class="field">
-                    <label for="pcClass" class="label" >Class:</label>
-                    <div class="control">
-                        <input type="input" class="input" name="pcClass" placeholder="PC Class" v-model="pcClass">
-                    </div>
-                </div>
-                <div class="field">
-                    <label for="pcRace" class="label">Race:</label>
-                    <div class="control">
-                        <input type="input" class="input" name="pcRace" placeholder="PC Race" v-model="pcRace">
-                    </div>
-                </div>
-                <div class="field">
-                    <label for="pcLevel" class="label">Level:</label>
-                    <div class="control">
-                        <input type="number" class="input" name="pcLevel" placeholder="Level" v-model="pcLevel">
-                    </div>
-                </div>
-                <div class="field">
-                    <label for="pcLifestate" class="label">Life State:</label>
-                    <div class="control">
-                        <input type="input" class="input" name="pcLifestate" placeholder="Dead or alive?" v-model="pcLifestate">
-                    </div>
-                </div>
-                <div class="field">
-                    <label for="pcDescription" class="label" >Description:</label>
-                    <textarea  class="textarea"  name="pcDescription" placeholder="PC Description" v-model="pcDescription"></textarea>
-                </div>
-                <div class="field">
-                    <label for="pcSharedBio" class="label" >Shared Biography:</label>
-                    <textarea  class="textarea"  name="pcSharedBio" placeholder="All players and GMs will see this." v-model="pcSharedBio"></textarea>
-                </div>
-                <div class="field">
-                    <label for="pcPrivateBio" class="label" >Private Biography:</label>
-                    <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="pcPrivateBio"></textarea>
-                </div>
-                <div class="field">
-                    <label for="image" class="image" >Image:</label>
-                    <input type="file" class="file"  ref="file" @change="selectFile">
-                </div>
-                <input type="submit" class="button is-primary" value="Create">
-                <input type="submit" class="button" value="Hide" @click="showForm = false">
             </form>
         </div>
     </div>
