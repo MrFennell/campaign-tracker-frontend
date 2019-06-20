@@ -22,14 +22,14 @@
 
         <div v-if="campaignIsSet">
            <div class="container">
-            <nav id="navigation">
-                <ul>
-                    <li><a @click="scroll('campaign')"> Campaign </a> </li>
-                    <li><a @click="scroll('pcs')"> PCs </a> </li>
-                    <li><a @click="scroll('npcs')">NPCs</a></li>
-                    <li><a @click="scroll('locations')">Locations</a></li>
-                </ul>
-            </nav>
+                <nav id="navigation">
+                    <ul>
+                        <li><a @click="scroll('campaign')"> Campaign </a> </li>
+                        <li><a @click="scroll('pcs')"> PCs </a> </li>
+                        <li><a @click="scroll('npcs')">NPCs</a></li>
+                        <li><a @click="scroll('locations')">Locations</a></li>
+                    </ul>
+                </nav>
             </div>
             <div class="container">
                 <div ref="campaign">
