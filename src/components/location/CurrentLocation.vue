@@ -4,31 +4,30 @@
                 <a class="delete" @click="hideLocation()"></a>
             </div>
             <div class="columns">
-                
-                    <div class="column is-one-third">
-                        <h2 v-if="loadLocation && loadLocation.name">{{ loadLocation.name }}</h2>
-                        <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
+                <div class="column is-one-third">
+                    <h2 v-if="loadLocation && loadLocation.name">{{ loadLocation.name }}</h2>
+                    <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
-                        <div id="image-container">
-                                <div id="currentImage" class="image is-square">
-                                    <img v-if="loadLocation.imageSrc" :src="loadLocation.imageSrc" />
-                                    <img v-else src='../../assets/images/image-default.png'/>
-                                </div>
-                                <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
-                                    <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
-                                </div>
-
-                            <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
-                            
-                            <div v-if="showChangeImageForm" class="field">
-                                <label for="image" class="image" >Image:</label>
-                                <input type="file" class="file" ref="file" @change="selectNewImage">
-                                <button class="button" @click="updateLocationImage">Update</button>.
-                                <button class="button is-light" @click="hideNewImage()">Cancel</button>
+                    <div id="image-container">
+                            <div id="currentImage" class="image is-square">
+                                <img v-if="loadLocation.imageSrc" :src="loadLocation.imageSrc" />
+                                <img v-else src='../../assets/images/image-default.png'/>
                             </div>
+                            <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
+                                <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
+                            </div>
+
+                        <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
+                        
+                        <div v-if="showChangeImageForm" class="field">
+                            <label for="image" class="image" >Image:</label>
+                            <input type="file" class="file" ref="file" @change="selectNewImage">
+                            <button class="button" @click="updateLocationImage">Update</button>.
+                            <button class="button is-light" @click="hideNewImage()">Cancel</button>
                         </div>
-                        <p>{{updateMessage}}</p>
                     </div>
+                    <p>{{updateMessage}}</p>
+                </div>
 
                 <div class="column is-one-third">
                     <p>Details:</p>

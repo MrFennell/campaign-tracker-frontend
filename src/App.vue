@@ -7,7 +7,7 @@
           </router-link>
           <h1 class="title has-text-centered">Campaign Tracker</h1>
           <p class="p has-text-centered">Plan your games accordingly.</p>
-        </div>
+      </div>
       <div>
         <router-view></router-view>
     </div>
