@@ -43,7 +43,8 @@
         <div class="field-body">
             <div class="field">
                 <div class="control">
-                    <button :disabled="!canRegister" class="button is-primary">Register</button>
+                    <!-- <button :disabled="!canRegister" class="button is-primary">Register</button> -->
+                    <button class="button is-primary">Register</button>
                 </div>
             </div>
         </div>

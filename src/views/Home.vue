@@ -16,8 +16,10 @@
         </div>
 
         <div v-if="!campaignIsSet" >
-            <AddCampaign></AddCampaign>
-            <ListCampaigns></ListCampaigns>
+            <div class="container">
+                <ListCampaigns></ListCampaigns>
+                <AddCampaign></AddCampaign>
+            </div>
         </div>
 
         <div v-if="campaignIsSet">
@@ -85,7 +87,7 @@ export default {
                 password: this.password
             })
 
-            .then(() => this.$router.push('/'))
+            .then(() => this.$router.go(),)
             .catch(error => this.error = error.response.data.message);
         },
         switchCampaign(){

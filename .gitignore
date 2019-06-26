@@ -1,7 +1,9 @@
 .DS_Store
 node_modules
 /dist
-
+npm-debug.log
+.DS_Store
+/*.env
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 

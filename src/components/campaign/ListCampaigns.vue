@@ -16,13 +16,16 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import { mapGetters } from 'vuex'
 export default {
     name: "ListCampaigns",
     computed: {
+        ...mapGetters([
+            'getCampaigns',
+        ]),
         loadCampaigns(){
-            return this.$store.state.campaigns;
-            // return this.$store.getters.hasPlayers;
+            // return this.$store.state.campaigns;
+            return this.$store.getters.getCampaigns;
         }
     },
     data(){
