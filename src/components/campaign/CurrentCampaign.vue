@@ -63,11 +63,6 @@ export default {
 
 </script>
 <style lang="scss">
-   #campaign-header{
-    // display: flex;
-    // align-items: center;
-    // flex-direction: column;
-   }
    #campaign-title{
        margin:auto;
    }

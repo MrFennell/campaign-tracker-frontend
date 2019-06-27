@@ -62,7 +62,10 @@ export default {
     },
     data() {
       return {
+        username: '',
+        password: '',
         error: false,
+        chooseCampaign: ''
         };
     },
     methods: {
