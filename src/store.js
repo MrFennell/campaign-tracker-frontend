@@ -7,7 +7,7 @@ import axios from 'axios'
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    user: '',
     users: [],
     campaign: '',
     campaigns: [],
@@ -87,6 +87,14 @@ export default new Vuex.Store({
       const response = await axios.post('/users/register', payload);
       commit('setUser', response.data);
     },
+    // async login({ commit }, payload) {
+    //   const response = await axios.post('/users/login', payload)
+    //     commit('setUser', response.data);
+    // },
+    logout({ commit }) {
+      return axios.post('/users/logout')
+        .then(() => commit('setUser', ''));
+    },
     login({ commit }, payload) {
       return axios.post('/users/login', payload)
         .then(response => commit('setUser', response.data));
@@ -106,11 +114,8 @@ export default new Vuex.Store({
     dismiss({ commit }) {
       () => commit('setNull', '');
     },
-    logout({ commit }) {
-      return axios.post('/users/logout')
-        .then(() => commit('setUser', null));
-    },
-    loadcurrentuser({ commit }) {
+
+    async loadcurrentuser({ commit }) {
       axios.get('/users/current')
         .then(response => commit('setUser', response.data));
     },

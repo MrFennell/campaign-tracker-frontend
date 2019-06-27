@@ -5,12 +5,6 @@
     </div>
 
     <div v-if="isLoggedIn">
-        <!-- <div id="sidebar">
-            <ul>
-                <li><router-link to="/" exact-active-class="is-active">Campaign</router-link></li>
-                <li><router-link to="ListPcs" exact-active-class="is-active">PCs</router-link></li>
-            </ul>
-        </div> -->
         <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
         </div>
@@ -68,28 +62,10 @@ export default {
     },
     data() {
       return {
-        username: '',
-        password: '',
         error: false,
-        currentCampaign: null,
-        chooseCampaign: null,
-        campaigns: [],
-        campaign: '',
-        pc: '',
-        pcs: [],
-        list: 'full'
         };
     },
     methods: {
-        doLogin() {
-            this.$store.dispatch('login', {
-                username: this.username,
-                password: this.password
-            })
-
-            .then(() => this.$router.go(),)
-            .catch(error => this.error = error.response.data.message);
-        },
         switchCampaign(){
             if (!this.chooseCampaign){
                 this.chooseCampaign = true;

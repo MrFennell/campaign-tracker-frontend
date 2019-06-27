@@ -40,7 +40,7 @@
         </form>
     </div>
 </template>
-</<script>
+<script>
 export default {
     name:'login',
     data(){
@@ -56,8 +56,7 @@ export default {
                 username: this.username,
                 password: this.password
             })
-
-            .then(() => this.$router.push('/'))
+            .then( () => this.$store.dispatch('getCampaigns'))
             .catch(error => this.error = error.response.data.message);
         }
 

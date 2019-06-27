@@ -6,7 +6,7 @@
             <ul>
                 <li><a @click="switchCampaign">Switch Campaign</a></li>
                 <li><a @click="newCampaign" >Start New</a></li>
-                <li><a data-cy="router-logout" @click="doLogout">Logout</a></li>
+                <li><Logout></Logout></li>
             </ul>
         </div>
         <div v-if="chooseCampaign">
@@ -32,6 +32,7 @@ export default {
         ListCampaigns: () => import('@/components/campaign/ListCampaigns'),
         CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
         AddCampaign: () => import('@/components/campaign/AddCampaign'),
+        Logout: () => import('@/components/user/Logout')
     },
     methods: {
         switchCampaign(){
@@ -55,6 +56,7 @@ export default {
         doLogout() {
             if (confirm("Are you sure you want to log out?")){
                 this.$store.dispatch('logout')
+                .then( () => this.$store.dispatch('getCampaigns'))
             }
         }
     }

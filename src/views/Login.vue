@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="doLogin">
+    <form class="container" @submit.prevent="doLogin" >
         <p v-if="error" class="has-text-danger has-text-centered">{{ error }}</p>
         <div class="field is-horizontal">
             <div class="field-label">

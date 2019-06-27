@@ -40,8 +40,10 @@ export default {
         async setCurrentCampaign(campaign){
             await this.$store.dispatch('setCurrentCampaign', campaign)
             .then(
-                    () => this.$router.go(),
-
+                () => this.$store.dispatch("getNpcs"),
+                () => this.$store.dispatch("getPcs"),
+                () => this.$store.dispatch("getLocations")
+                // () => this.$router.go(),
             )
             
         },

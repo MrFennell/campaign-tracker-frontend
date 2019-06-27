@@ -20,20 +20,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 import CurrentCampaignForm from '@/components/campaign/CurrentCampaignForm.vue';
 export default {
     name: "CurrentCampaign",
     components: {CurrentCampaignForm},
     computed: {
-    ...mapGetters([
-        'getCampaignId',
-        'getCampaignById'
-    ]),
-        loadCampaign(){
-            const id = this.$store.getters.getCampaignId;
-            return this.$store.getters.getCampaignById(id);
-        },
+    loadCampaign(){
+        return this.$store.state.campaign;
+    },
     },
     data(){
         return{
