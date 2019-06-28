@@ -3,9 +3,10 @@ node_modules
 /dist
 npm-debug.log
 .DS_Store
-env
+/*.env
 /tests/e2e/videos/
 /tests/e2e/screenshots/
+*.backup.*
 
 # local env files
 .env.local
