@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import axios from 'axios'
-const url  = 'https://master--naughty-kalam-7fefc9.netlify.com/';
+const url  = 'https://campaign-tracker-backend.herokuapp.com';
 const config = {
   headers: {'Access-Control-Allow-Origin': '*'}
 }
