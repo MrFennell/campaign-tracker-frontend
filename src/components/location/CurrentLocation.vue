@@ -39,9 +39,9 @@
                     <p v-else>No description.</p>
 
                 </div>
-                <div class="column is-one-third">
-                    <currentLocationForm></currentLocationForm>
-                </div>
+                    <div class="column is-one-third">
+                        <currentLocationForm></currentLocationForm>
+                    </div>
                 </div>
             </div>
 </template>

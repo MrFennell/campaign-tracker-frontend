@@ -33,6 +33,7 @@
         methods: {
             AddCampaign(){
                 this.$store.dispatch('AddCampaign', {
+                    user: this.$store.state.user,
                     title:this.title,
                     description:this.description,
                     createdBy:this.$store.getters.getUserId
