@@ -1,12 +1,12 @@
 module.exports = {
     devServer: {
       proxy: {
-        '^/campaigntracker.fennellweb.com': {
+        '^/http://campaign-tracker-server.fennellweb.com': {
           target: 'http://localhost:8000',
           ws: true,
           changeOrigin: true,
           pathRewrite: {
-            '/campaigntracker.fennellweb.com': ''
+            '/http://campaign-tracker-server.fennellweb.com': ''
           }
         },
         '/images': {
