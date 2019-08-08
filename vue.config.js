@@ -1,12 +1,12 @@
 module.exports = {
     devServer: {
       proxy: {
-        '^http://campaign-tracker-server.fennellweb.com': {
+        '^https://campaign-tracker-backend-redux.herokuapp.com/': {
           target: 'http://localhost:8000',
           ws: true,
           changeOrigin: true,
           pathRewrite: {
-            'http://campaign-tracker-server.fennellweb.com': ''
+            'https://campaign-tracker-backend-redux.herokuapp.com/': ''
           }
         },
         '/images': {
