@@ -118,7 +118,7 @@ export default {
             this.$store.dispatch('setNpc', npc)
             this.listOptions = false
             this.$nextTick(() => {
-                this.$refs.topCurrentNpc.scrollIntoView({behavior: "smooth"});
+                this.$refs.topCurrentNpc.scrollIntoView({behavior: "smooth", block: "center"});
             });
         }
     }

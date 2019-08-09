@@ -118,9 +118,9 @@
                     this.showForm = false;
                 }else{
                     this.showForm = true;
-                    this.$nextTick(() => {
-                        this.$refs.formTop.scrollIntoView({behavior: "smooth"});
-                    });
+                    // this.$nextTick(() => {
+                    //     this.$refs.formTop.scrollIntoView({behavior: "smooth", block: "end"});
+                    // });
                 }
             },
             selectFile(){

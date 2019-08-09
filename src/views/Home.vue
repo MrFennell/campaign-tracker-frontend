@@ -1,5 +1,28 @@
 <template>
   <div class="home content">
+    
+    <nav   v-if="isLoggedIn" id="navigation" class="navbar is-fixed-top" >
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img  src="@/assets/logo.png" width="28" height="28">
+            </a>
+
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" @click="scrollStart('campaign')"> Campaign </a>
+                <a class="navbar-item"  @click="scrollEnd('pcs')"> PCs </a> 
+                <a  class="navbar-item"  @click="scrollEnd('npcs')">NPCs</a>
+                <a class="navbar-item"  @click="scrollEnd('locations')">Locations</a>
+            </div>
+        </div>
+    </nav>
+    
     <div v-if="!isLoggedIn">
         <Login></Login>
     </div>
@@ -18,14 +41,7 @@
 
         <div v-if="campaignIsSet">
            <div class="container">
-                <nav id="navigation">
-                    <ul>
-                        <li><a @click="scroll('campaign')"> Campaign </a> </li>
-                        <li><a @click="scroll('pcs')"> PCs </a> </li>
-                        <li><a @click="scroll('npcs')">NPCs</a></li>
-                        <li><a @click="scroll('locations')">Locations</a></li>
-                    </ul>
-                </nav>
+                
             </div>
             <div class="container">
                 <div ref="campaign">
@@ -58,7 +74,7 @@ export default {
         NpcContainer: () => import('@/components/npc/NpcContainer'),
         CampaignContainer: () => import('@/components/campaign/CampaignContainer'),
         LocationContainer: () => import('@/components/location/LocationContainer'),
-        Login: () => import('@/components/user/login')
+        Login: () => import('@/components/user/login'),
     },
     data() {
       return {
@@ -77,9 +93,14 @@ export default {
                 this.chooseCampaign = false;
             }
         },
-        scroll(i){
+        scrollStart(i){
                 this.$nextTick(() => {
-                this.$refs[i].scrollIntoView({behavior: "smooth"});
+                this.$refs[i].scrollIntoView({behavior: "smooth", block: "end"});
+            });
+        },
+        scrollEnd(i){
+                this.$nextTick(() => {
+                this.$refs[i].scrollIntoView({behavior: "smooth", block: "start"});
             });
         }
 
@@ -92,16 +113,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-#navigation{
-    max-width:100px;
-    position: fixed;
-    top: 25%;
-    left: 0;
-    z-index: 9999;
-    ul{
-        list-style-type: none;
-        list-style: none;
-    }
-}
+// #navigation{
+//     max-width:100px;
+//     position: fixed;
+//     top: 25%;
+//     left: 0;
+//     z-index: 9999;
+//     ul{
+//         list-style-type: none;
+//         list-style: none;
+//     }
+// }
 </style>
  

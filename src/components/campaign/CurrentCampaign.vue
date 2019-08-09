@@ -63,6 +63,12 @@ export default {
 
 </script>
 <style lang="scss">
+    h2{
+        font-size: 36px;
+    }
+    #campaign-header{
+        margin-top: 2em;
+    }
    #campaign-title{
        margin:auto;
    }
@@ -77,7 +83,7 @@ export default {
        text-align: center;
    }
    #campaign-description{
-       margin-top: 20px;
+       margin-top: 1em;
    }
     #campaign-info:hover{
         #edit-icon{

@@ -34,7 +34,7 @@
 
                     <p v-if="loadLocation && loadLocation.name">Name: {{ loadLocation.name }}</p>
                     <p v-else>error - enter Name</p>
-                    <p v-if="loadLocation && loadLocation.region">Class: {{ loadLocation.region }}</p>
+                    <p v-if="loadLocation && loadLocation.region">Region: {{ loadLocation.region }}</p>
 
                     <p v-else>No description.</p>
 

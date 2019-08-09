@@ -1,5 +1,4 @@
 <template>
-
     <div class="content">   
         <p>Choose a campaign below to load your data.</p>
         <div v-for="campaign in loadCampaigns" v-bind:key="campaign.id">
@@ -37,15 +36,17 @@ export default {
         }
     },
     methods: {
-        async setCurrentCampaign(campaign){
-            await this.$store.dispatch('setCurrentCampaign', campaign)
-            .then(
-                () => this.$store.dispatch("getNpcs"),
-                () => this.$store.dispatch("getPcs"),
-                () => this.$store.dispatch("getLocations")
-                // () => this.$router.go(),
-            )
-            
+       async setCurrentCampaign (campaign) {
+        await this.$store.dispatch('setCurrentCampaign', campaign)
+            .then(() => {
+            return this.$store.dispatch('getPcs')
+            })
+            .then(() => {
+            return this.$store.dispatch('getNpcs')
+            })
+            .then(() => {
+            return this.$store.dispatch('getLocations')
+            })
         },
         async updateCampaign(campaign){
                 await this.$store.dispatch('updateCampaign', campaign)

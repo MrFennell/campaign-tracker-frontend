@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-      <div class='header'>
-          <!-- <NavBar></NavBar> -->
-          <router-link to="/">
+          <div  v-if="!isLoggedIn">
+            
+          
             <img id="logo-img" src="./assets/logo.png" class="image is-128x128" />
-          </router-link>
-          <h1 class="title has-text-centered">Campaign Tracker</h1>
-          <p class="p has-text-centered">Plan your games accordingly.</p>
-      </div>
+            <h1 class="title has-text-centered">Campaign Tracker</h1>
+            <p class="p has-text-centered">Plan your games accordingly.</p>
+          </div>
       <div>
         <router-view></router-view>
     </div>
@@ -15,11 +14,10 @@
 </template>
 
 <script>
-// import NavBar from '@/components/NavBar.vue'
+import { mapGetters } from 'vuex';
 export default {
   name: 'app',
-  // components: { NavBar},
-
+  computed: mapGetters(['isLoggedIn', 'campaignIsSet',]),
   mounted() {
     this.$store.dispatch('loadcurrentuser');
   }
