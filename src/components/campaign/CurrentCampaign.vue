@@ -1,18 +1,20 @@
 <template>
-    <div class="content" id="campaign-header">
-        <div v-if="!isEditing" id="campaign-info">
-            <div id="edit-title">
-                <h2 id="campaign-title">{{ loadCampaign.title }}</h2>
-                <a id="edit-icon"><font-awesome-icon icon="edit" @click="edit()"/></a>
+    <div id="campaign-header">
+        <div id="campaign-header-content">
+            <div v-if="!isEditing" id="campaign-info">
+                <div id="edit-title">
+                    <h1 id="campaign-title">{{ loadCampaign.title }}</h1>
+                    <a id="edit-icon"><font-awesome-icon icon="edit" @click="edit()"/></a>
+                </div>
+                <p id="campaign-description">{{ loadCampaign.description}}</p>
             </div>
-            <p id="campaign-description">{{ loadCampaign.description}}</p>
-        </div>
-        <div v-if="isEditing">
-            <CurrentCampaignForm></CurrentCampaignForm>
-            <div class="level">
-            <a @click="isEditing = false">Quit Editing</a>
+            <div v-if="isEditing">
+                <CurrentCampaignForm></CurrentCampaignForm>
+                <div class="level">
+                <a @click="isEditing = false">Quit Editing</a>
 
-            <input type="button" class="button is-warning" value="Delete" @click="deleteCampaign">
+                <input type="button" class="button is-warning" value="Delete" @click="deleteCampaign">
+                </div>
             </div>
         </div>
     </div>
@@ -64,28 +66,41 @@ export default {
 </script>
 <style lang="scss">
     h2{
-        font-size: 36px;
+    font-size: 36px;
     }
     #campaign-header{
-        margin-top: 2em;
+    // width: 100%;
+    }
+    #campaign-header-content{
+    width: fit-content;
+    margin: auto;
+    margin-top: 3em;
+    position: relative;
     }
    #campaign-title{
+       
        margin:auto;
    }
    #edit-title{
        display:flex;
        align-items: center;
+       width: fit-content;
+       margin: auto;
    }
    #edit-icon{
-       visibility: hidden;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: -2em;    
    }
    #campaign-info{
        text-align: center;
    }
    #campaign-description{
-       margin-top: 1em;
+       margin-top: 4px;
+       font-size: 1.3em;
    }
-    #campaign-info:hover{
+    #campaign-header:hover{
         #edit-icon{
         visibility: visible
         }

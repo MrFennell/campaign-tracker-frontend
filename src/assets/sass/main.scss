@@ -5,11 +5,34 @@
 
 
 $beige-lighter: #EFF0EB;
-
+$light-grey: #B7B8B3;
+$dark-grey: #383935;
+$grey-dark: #383935;
 // $family-sans-serif: "Helvetica", "Arial", sans-serif;
 $body-background-color: $beige-lighter;
-
 
 // $family-sans-serif: "Helvetica", "Arial", sans-serif;
 
 @import "./node_modules/bulma/bulma"; 
+a{
+    color:#383935;
+}
+a:hover{
+   color: #00919F;
+}
+.content h1{
+    font-size: 2.5em;
+}
+.content h2{
+    margin-bottom: 0.1em;
+}
+.content ul{
+    margin: 0;
+}
+.navbar{
+    background-color: $beige-lighter;
+    border-bottom: 1px solid #1c1d16;
+}
+// .card{
+//     background-color:#F8FBEA;
+// }

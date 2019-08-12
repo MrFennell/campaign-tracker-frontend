@@ -46,8 +46,6 @@
                     <p v-if="loadPc && loadPc.pcSharedBio">Shared Bio: {{ loadPc.pcSharedBio }}</p>
                     <p v-if="loadPc && loadPc.pcPrivateBio">Private Bio: {{ loadPc.pcPrivateBio }}</p>
 
-                    <p v-else>No description.</p>
-
                 </div>
                 <div  class="column is-one-third">
                     <CurrentPcForm></CurrentPcForm>

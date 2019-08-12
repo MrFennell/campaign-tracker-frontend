@@ -1,9 +1,16 @@
 <template>
   <div class="home content">
     
-    <nav   v-if="isLoggedIn" id="navigation" class="navbar is-fixed-top" >
+    <div class="container">
+        <div v-if="!isLoggedIn">
+            <Login></Login>
+            <p id="register-link">Don't have an account? Create one <router-link to="/register" data-cy="router-register"> <a>here.</a> </router-link></p>
+        </div>
+    </div>
+
+    <nav v-if="isLoggedIn" id="navigation" class="navbar is-fixed-top" >
         <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
+            <a class="navbar-item" href="#">
                 <img  src="@/assets/logo.png" width="28" height="28">
             </a>
 
@@ -15,18 +22,36 @@
         </div>
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" @click="scrollStart('campaign')"> Campaign </a>
+                <!-- <div class="navbar-item has-dropdown is-hoverable" @click="scrollStart('campaign')">
+                     <a class="navbar-link">Campaigns </a>
+                     <div class="navbar-dropdown">
+                         <a  @click="switchCampaign" class="navbar-item">
+                            Load another Campaign
+                        </a>
+                        <a class="navbar-item">
+                            New Campaign
+                        </a>
+
+                    </div>
+                </div> -->
+                <a class="navbar-item"  @click="scrollStart('campaign')"> Campaigns </a> 
                 <a class="navbar-item"  @click="scrollEnd('pcs')"> PCs </a> 
-                <a  class="navbar-item"  @click="scrollEnd('npcs')">NPCs</a>
+                <a class="navbar-item"  @click="scrollEnd('npcs')">NPCs</a>
                 <a class="navbar-item"  @click="scrollEnd('locations')">Locations</a>
             </div>
+            <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button">
+                        <Logout />
+                    </a>
+                </div>
+            </div>
+            </div>
+
         </div>
     </nav>
     
-    <div v-if="!isLoggedIn">
-        <Login></Login>
-    </div>
-
     <div v-if="isLoggedIn">
         <div v-if="chooseCampaign">
             <ListCampaigns></ListCampaigns>
@@ -40,12 +65,16 @@
         </div>
 
         <div v-if="campaignIsSet">
-           <div class="container">
-                
-            </div>
+        
             <div class="container">
                 <div ref="campaign">
                     <CampaignContainer></CampaignContainer>
+                    <div v-if="chooseCampaign">
+                         <ListCampaigns></ListCampaigns>
+                    </div>
+                    <div v-if="showNewCampaignForm">
+                        <AddCampaign></AddCampaign>
+                    </div>
                 </div>
                 <div class="section" ref="pcs">
                     <PcContainer></PcContainer>
@@ -75,22 +104,34 @@ export default {
         CampaignContainer: () => import('@/components/campaign/CampaignContainer'),
         LocationContainer: () => import('@/components/location/LocationContainer'),
         Login: () => import('@/components/user/login'),
+        Logout: () => import('@/components/user/Logout')
     },
     data() {
       return {
         username: '',
         password: '',
         error: false,
-        chooseCampaign: ''
+        chooseCampaign: false,
+        showNewCampaignForm: false
         };
     },
     methods: {
         switchCampaign(){
             if (!this.chooseCampaign){
                 this.chooseCampaign = true;
+                this.showNewCampaignForm = false;
             }
             else{
                 this.chooseCampaign = false;
+            }
+        },
+        newCampaign(){
+            if (!this.showNewCampaignForm){
+                this.showNewCampaignForm = true;
+                this.chooseCampaign = false;
+            }
+            else{
+                this.showNewCampaignForm = false;
             }
         },
         scrollStart(i){
@@ -113,6 +154,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+#register-link{
+    text-align: center;
+}
+
 // #navigation{
 //     max-width:100px;
 //     position: fixed;
