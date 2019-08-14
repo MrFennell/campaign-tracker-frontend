@@ -1,6 +1,6 @@
 <template>
     <div class="container is-fullhd">
-        <h2>Locations:</h2>
+        <h2 ref="scrollHeader">Locations:</h2>
         <AddLocation></AddLocation>
         <ListLocations ></ListLocations>
     </div>

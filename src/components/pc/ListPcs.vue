@@ -1,5 +1,5 @@
 <template>
-    <div class="content" id="list-pcs-container" ref="topCurrentPc">
+    <div class="content" id="list-pcs-container">
             <div>
                 <CurrentPc/>   
             </div>           
@@ -104,6 +104,7 @@ export default {
             columnSize: 'column is-2',
             showChangeImageButton: false,
             newImage: false,
+            scrollObject: ''
         }
     },
     computed: {
@@ -124,14 +125,18 @@ export default {
             }
         }
     },
+    mounted(){
+        this.scrollObject = this.$parent.$refs.scrollHeader
+    },
     methods: {
         async setPc(pc){
             this.$store.dispatch('setPc', pc)
             this.listOptions = false
             this.showChangeImageButton = false
-             this.isEditing = false,
+            this.isEditing = false,
             this.$nextTick(() => {
-                this.$refs.topCurrentPc.scrollIntoView({behavior: "smooth", block: "center"});
+            this.scrollObject.scrollIntoView({behavior: "smooth", block: "start"});
+
             });
         }
     }

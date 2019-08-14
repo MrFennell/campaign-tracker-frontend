@@ -10,11 +10,13 @@
                 <!-- <li><Logout></Logout></li> -->
             </ul>
         </div>
-        <div v-if="chooseCampaign">
-            <ListCampaigns></ListCampaigns>
-        </div>
-        <div v-if="showNewForm">
-            <AddCampaign></AddCampaign>
+        <div class="">
+            <div v-if="chooseCampaign">
+                <ListCampaigns></ListCampaigns>
+            </div>
+            <div v-if="showNewForm">
+                <AddCampaign></AddCampaign>
+            </div>
         </div>
         
     </div>

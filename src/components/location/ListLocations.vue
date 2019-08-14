@@ -1,5 +1,5 @@
 <template>
-    <div class="content" ref="topCurrentLocation" id="list-locations-container">     
+    <div class="content" id="list-locations-container">     
                 <div >
                     <CurrentLocation/>
                 </div>
@@ -95,7 +95,8 @@ export default {
             sort: 'Location Name',
             listOptions: false,
             sortDirection: 'asc',
-            columnSize: 'column is-2'
+            columnSize: 'column is-2',
+            scrollObject: ''
         }
     },
     computed: {
@@ -113,12 +114,15 @@ export default {
             }
         }
     },
+    mounted(){
+        this.scrollObject = this.$parent.$refs.scrollHeader
+    },
     methods: {
         async setLocation(location){
             this.$store.dispatch('setLocation', location)
             this.listOptions = false
             this.$nextTick(() => {
-                this.$refs.topCurrentLocation.scrollIntoView({behavior: "smooth"});
+                this.scrollObject.scrollIntoView({behavior: "smooth"});
             });
         }
     }

@@ -1,9 +1,12 @@
 <template>
     <div class="container is-fullhd">
-        <h2>Player Characters:</h2>
+        <div>
+            <h2 ref="scrollHeader">Player Characters:</h2>
+        </div>
+         <!-- <CurrentPc></AddPc> -->
         <AddPc></AddPc>
         <div>
-            <ListPcs ></ListPcs>
+            <ListPcs :scrollHeader="this.$refs.pcHeader" ></ListPcs>
         </div>
     </div>
 </template>
@@ -15,8 +18,10 @@ import ListPcs from '@/components/pc/ListPcs.vue';
 // import CurrentPc from '@/components/pc/CurrentPc.vue';
 
 export default {
-    components: {AddPc, 
-    ListPcs, 
+    components: {
+    AddPc, 
+    ListPcs
+    // CurrentPc
     },
     name: "PcContainer",
     data() {

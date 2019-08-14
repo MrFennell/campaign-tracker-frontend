@@ -1,6 +1,6 @@
 <template>
     <div class="container is-fullhd">
-        <h2>Non-Player Characters:</h2>
+        <h2 ref="scrollHeader">Non-Player Characters:</h2>
         <AddNpc></AddNpc>
         <!-- <CurrentNpc></CurrentNpc> -->
 

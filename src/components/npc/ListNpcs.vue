@@ -1,5 +1,5 @@
 <template>
-    <div class="content" ref="topCurrentNpc" id="list-npcs-container">     
+    <div class="content" id="list-npcs-container">     
                 <div >
                     <CurrentNpc/>
                 </div>
@@ -95,7 +95,8 @@ export default {
             sort: 'NPC Name',
             listOptions: false,
             sortDirection: 'asc',
-            columnSize: 'column is-2'
+            columnSize: 'column is-2',
+            scrollObject: ''
         }
     },
     computed: {
@@ -113,12 +114,15 @@ export default {
             }
         }
     },
+    mounted(){
+        this.scrollObject = this.$parent.$refs.scrollHeader
+    },
     methods: {
         async setNpc(npc){
             this.$store.dispatch('setNpc', npc)
             this.listOptions = false
             this.$nextTick(() => {
-                this.$refs.topCurrentNpc.scrollIntoView({behavior: "smooth", block: "center"});
+                this.scrollObject.scrollIntoView({behavior: "smooth", block: "start"});
             });
         }
     }
