@@ -1,22 +1,21 @@
 <template>
         <div v-if="loadNpc">
-            <div v-if="!isEditing">
-            <p class="update-message">{{updateMessage}}</p>
-            <a @click="edit">Edit</a>
-            <p>Details:</p>
-            <p v-if="loadNpc && loadNpc.name">Name: {{ loadNpc.name }}</p>
-            <p v-else>error - enter Name</p>
-            <p v-if="loadNpc && loadNpc.race">Class: {{ loadNpc.race }}</p>
-            <p v-if="loadNpc && loadNpc.profession">Description: {{ loadNpc.profession }}</p>
-            <p v-if="loadNpc && loadNpc.lifeState">Level: {{ loadNpc.lifeState }}</p>
-            <p v-if="loadNpc && loadNpc.description">Life State: {{ loadNpc.description }}</p>
-            <p v-if="loadNpc && loadNpc.sharedBio">Shared Bio: {{ loadNpc.sharedBio }}</p>
-            <p v-if="loadNpc && loadNpc.privateBio">Private Bio: {{ loadNpc.privateBio }}</p>
-
-            <p v-else>No description.</p>
+            <div class="info" v-if="!isEditing">
+                <span class="update-message">{{updateMessage}}</span>
+                <a class="edit-button" @click="edit">Edit</a>
+                <p>Details:</p>
+                <p v-if="loadNpc && loadNpc.name">Name: {{ loadNpc.name }}</p>
+                <p v-else>error - enter Name</p>
+                <p v-if="loadNpc && loadNpc.race">Class: {{ loadNpc.race }}</p>
+                <p v-if="loadNpc && loadNpc.profession">Description: {{ loadNpc.profession }}</p>
+                <p v-if="loadNpc && loadNpc.lifeState">Level: {{ loadNpc.lifeState }}</p>
+                <p v-if="loadNpc && loadNpc.description">Life State: {{ loadNpc.description }}</p>
+                <p v-if="loadNpc && loadNpc.sharedBio">Shared Bio: {{ loadNpc.sharedBio }}</p>
+                <p v-if="loadNpc && loadNpc.privateBio">Private Bio: {{ loadNpc.privateBio }}</p>
+                <p v-else>No description.</p>
             </div>
             <div v-if="isEditing">
-                <a @click="isEditing = false">Quit Editing</a>
+                <a class="edit-button-close" @click="isEditing = false">Quit Editing</a>
                 
                 <p v-if="errors.length">
                     <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>

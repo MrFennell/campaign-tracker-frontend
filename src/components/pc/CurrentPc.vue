@@ -133,9 +133,7 @@ export default {
 </script>
 
 <style lang="scss">
-.edit-button{
-    float: right;
-}
+
 // #currentImage{
 //     max-width:200px;
 // }

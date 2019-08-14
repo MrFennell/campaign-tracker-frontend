@@ -1,8 +1,8 @@
 <template>
     <div v-if="loadLocation">
-        <div v-if="!isEditing">
-            <p class="update-message">{{updateMessage}}</p>
-            <a v-if="!isEditing" @click="edit">Edit</a>
+        <div class="info" v-if="!isEditing">
+            <span class="update-message">{{updateMessage}}</span>
+            <a class="edit-button" v-if="!isEditing" @click="edit">Edit</a>
             <p>Details:</p>
             <p v-if="loadLocation && loadLocation.name">Name: {{ loadLocation.name }}</p>
             <p v-else>error - enter Name</p>
@@ -10,7 +10,7 @@
             <p v-else>No description.</p>
         </div>
         <div v-if="isEditing">
-            <a @click="isEditing = false">Quit Editing</a>
+            <a class="edit-button-close" @click="isEditing = false">Quit Editing</a>
             
             <p v-if="errors.length">
                 <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
