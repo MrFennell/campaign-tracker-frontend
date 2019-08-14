@@ -1,11 +1,25 @@
 <template>
-        <div v-if="loadPc">
+        <div>
+                <div v-if="!isEditing">
+                    <span class="updateMessage">{{updateMessage}}</span>
+                    <div><a class="edit-button" @click="edit">Edit All</a></div>
+                    <p>Details:</p>
+                    <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
+                    <p v-else>error - enter Name</p>
+                    <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
+                    <p v-else>Please enter name of player!</p>
+                    <p v-if="loadPc && loadPc.pcClass">Class: {{ loadPc.pcClass }}</p>
+                    <p v-if="loadPc && loadPc.pcRace">Race: {{loadPc.pcRace}}</p>
+                    <p v-if="loadPc && loadPc.pcDescription">Description: {{ loadPc.pcDescription }}</p>
+                    <p v-if="loadPc && loadPc.pcLevel">Level: {{ loadPc.pcLevel }}</p>
+                    <p v-if="loadPc && loadPc.pcLifestate">Life State: {{ loadPc.pcLifestate }}</p>
+                    <p v-if="loadPc && loadPc.pcSharedBio">Shared Bio: {{ loadPc.pcSharedBio }}</p>
+                    <p v-if="loadPc && loadPc.pcPrivateBio">Private Bio: {{ loadPc.pcPrivateBio }}</p>
 
-            <div class="columns">
-                <p>{{updateMessage}}   </p>
-                <a v-if="!isEditing" @click="edit" >Edit</a>
+                </div>
+                
                 <div v-if="isEditing">
-                    <a @click="isEditing = false">Quit Editing</a>
+                    <div><a class="edit-button" @click="edit">Quit Editing</a></div>
                     <p v-if="errors.length">
                         <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
                         <ul>
@@ -75,7 +89,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
         </div>
 </template>
 
@@ -83,6 +96,9 @@
 import { mapGetters } from 'vuex'
 export default {
     name: "CurrentPcForm",
+    props: 
+        ['scrollTarget']
+    ,
     computed: {
         ...mapGetters([
             'getPcById',
@@ -123,14 +139,12 @@ export default {
                    this.isEditing = false,
                    this.updateMessage = '',
                    this.$store.dispatch('setPcNull', null);  
-                      
                }
             }
             else{
                 this.updateMessage = '',
                 this.$store.dispatch('setPcNull', null);     
             }
-            
         },
         async updatePc(){ 
             if (!this.loadPc.pcName){
@@ -142,7 +156,6 @@ export default {
                     if (this.file){
                         const pcId = this.loadPc.id;
                         const oldImage = this.loadPc.imageSrc;
-
                         formData.append('PcId', pcId);
                         formData.append('oldImage', oldImage);
                         formData.append('file', this.file);
@@ -161,9 +174,7 @@ export default {
                                 this.isEditing = false,
                                 this.updateMessage = '',
                                 this.newImage = false,
-                               
                                 (error) => this.error = error.response.data.error
-
                             )
                         }catch(err){
                             this.updateMessage = "Error updating Image."
@@ -178,8 +189,10 @@ export default {
                     .then(
                         this.isEditing = false,
                         this.updateMessage = "Updated.",
+                        this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                         setTimeout(() => this.updateMessage = null, 3000),
                         (error) => this.error = error.response.data.error
+                        
                     )
                }
             }
@@ -192,7 +205,8 @@ export default {
                     this.isEditing = false,
                     this.updateMessage = '',
                     this.$store.dispatch('setPcNull', null),  
-                    (error) => this.error = error.response.data.error
+                    (error) => this.error = error.response.data.error,
+                    
                 )
            }
            else{

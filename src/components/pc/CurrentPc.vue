@@ -30,25 +30,8 @@
                         <p>{{updateMessage}}</p>
 
                     </div>
-
                 <div class="column is-one-third">
-                    <p>Details:</p>
-
-                    <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
-                    <p v-else>error - enter Name</p>
-                    <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
-                    <p v-else>Please enter name of player!</p>
-                    <p v-if="loadPc && loadPc.pcClass">Class: {{ loadPc.pcClass }}</p>
-                    <p v-if="loadPc && loadPc.pcRace">Race: {{loadPc.pcRace}}</p>
-                    <p v-if="loadPc && loadPc.pcDescription">Description: {{ loadPc.pcDescription }}</p>
-                    <p v-if="loadPc && loadPc.pcLevel">Level: {{ loadPc.pcLevel }}</p>
-                    <p v-if="loadPc && loadPc.pcLifestate">Life State: {{ loadPc.pcLifestate }}</p>
-                    <p v-if="loadPc && loadPc.pcSharedBio">Shared Bio: {{ loadPc.pcSharedBio }}</p>
-                    <p v-if="loadPc && loadPc.pcPrivateBio">Private Bio: {{ loadPc.pcPrivateBio }}</p>
-
-                </div>
-                <div  class="column is-one-third">
-                    <CurrentPcForm></CurrentPcForm>
+                    <currentPcForm v-bind:scrollTarget= "this.scrollTarget"/>
                 </div>
             </div>
         </div>
@@ -61,6 +44,9 @@ import CurrentPcForm from '@/components/pc/CurrentPcForm.vue'
 export default {
     components: {CurrentPcForm},
     name: "CurrentPc",
+    props: 
+        ['scrollTarget']
+    ,
     computed: {
         ...mapGetters([
             'getPcById',
@@ -71,10 +57,12 @@ export default {
             return this.$store.getters.getPcById(id);
         }
     },
+    mounted(){
+        this.scrollHeader = this.$parent.scrollObject
+    },
     data() {
         return {
             file: null,
-            isEditing: false,
             deleteAlert: false,
             updateMessage: '',
             errors: [],
@@ -98,14 +86,6 @@ export default {
             this.showChangeImageForm = false;
             this.file = null;
             this.updateMessage = '';
-        },
-        edit(){
-            if (!this.isEditing){
-                this.isEditing = true;
-            }
-            else{
-                this.isEditing = false;
-            }
         },
         async hidePc(){
             if (this.isEditing){
@@ -153,7 +133,9 @@ export default {
 </script>
 
 <style lang="scss">
-
+.edit-button{
+    float: right;
+}
 // #currentImage{
 //     max-width:200px;
 // }

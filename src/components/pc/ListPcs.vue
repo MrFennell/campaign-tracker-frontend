@@ -1,7 +1,7 @@
 <template>
-    <div class="content" id="list-pcs-container">
+        <div v-if="this.scrollTarget != ''" class="content" id="list-pcs-container"> 
             <div>
-                <CurrentPc/>   
+                <CurrentPc v-bind:scrollTarget= "this.scrollTarget"/>   
             </div>           
 
             <div id="options">
@@ -104,9 +104,11 @@ export default {
             columnSize: 'column is-2',
             showChangeImageButton: false,
             newImage: false,
-            scrollObject: ''
         }
     },
+    props: 
+        ['scrollTarget']
+    ,
     computed: {
         loadPcs(){
             let sortDirection = this.sortDirection;
@@ -125,9 +127,7 @@ export default {
             }
         }
     },
-    mounted(){
-        this.scrollObject = this.$parent.$refs.scrollHeader
-    },
+
     methods: {
         async setPc(pc){
             this.$store.dispatch('setPc', pc)
@@ -135,8 +135,7 @@ export default {
             this.showChangeImageButton = false
             this.isEditing = false,
             this.$nextTick(() => {
-            this.scrollObject.scrollIntoView({behavior: "smooth", block: "start"});
-
+            this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"});
             });
         }
     }

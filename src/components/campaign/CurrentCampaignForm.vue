@@ -13,20 +13,24 @@
             </ul>
         </p>
         <form @submit.prevent="updateCampaign">
-            <div class="field">
-                <label for="title" class="label">Title:</label>
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label for="title" class="label">Title:</label>
+                </div>
                 <div class="control">
                     <input type="input" name="title" class="input" placeholder="Campaign Title" v-model="loadCampaign.title">
                 </div>
             </div>
-            <div class="field">
-                <label for="description" class="label">Description:</label>
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label for="description" class="label">Description:</label>
+                </div>
                 <div class="control">
                     <input type="input" name="description" class="input" placeholder="Campaign Description" v-model="loadCampaign.description">
                 </div>
             </div>
             
-            <input type="submit" value="Update" class="button is-primary">
+            <input type="submit" value="Update" class="button is-primary is-right">
         </form>
     </div>
 </div>

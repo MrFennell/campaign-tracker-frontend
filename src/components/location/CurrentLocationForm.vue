@@ -1,58 +1,61 @@
 <template>
-        <div v-if="loadLocation">
-            <div class="columns">
-                <div>
-                   <p class="update-message">{{updateMessage}}</p>
-                    <a v-if="!isEditing" @click="edit">Edit</a>
-                    <div v-if="isEditing">
-                        <a @click="isEditing = false">Quit Editing</a>
-                        
-                        <p v-if="errors.length">
-                            <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
-                            <ul>
-                                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                            </ul>
-                        </p>
-                        <form @submit.prevent="updateLocation" enctype="multipart/form-data">
-                            <div class="field">
-                                <label class="label" for="name">Name:</label>
-                                <div class="control">
-                                    <input type="input" class="input" name="name" placeholder="Name of the location." v-model="loadLocation.name">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="region" class="label">Region:</label>
-                                <div class="control">
-                                    <input type="input" class="input" name="region" placeholder="Region or area of the location." v-model="loadLocation.region">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="image" class="image" >Image:</label>
-                                <input type="file" class="file"  ref="file" @change="selectFile">
-                            </div>
-
-                            <div class="field is-grouped">
-                                <p class="control">
-                                    <input type="submit" class="button is-primary" value="Update">
-                                </p>
-                                <p class="control">
-                                    <!-- <input type="button" class="button" value="Discard Changes" @click="hideLocation"> -->
-                                </p>
-                                <p class="control">
-                                    <input type="button" class="button is-warning" value="Delete" @click="deleteLocation">
-                                </p>
-                            </div>
-                        </form>
+    <div v-if="loadLocation">
+        <div v-if="!isEditing">
+            <p class="update-message">{{updateMessage}}</p>
+            <a v-if="!isEditing" @click="edit">Edit</a>
+            <p>Details:</p>
+            <p v-if="loadLocation && loadLocation.name">Name: {{ loadLocation.name }}</p>
+            <p v-else>error - enter Name</p>
+            <p v-if="loadLocation && loadLocation.region">Region: {{ loadLocation.region }}</p>
+            <p v-else>No description.</p>
+        </div>
+        <div v-if="isEditing">
+            <a @click="isEditing = false">Quit Editing</a>
+            
+            <p v-if="errors.length">
+                <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
+                <ul>
+                    <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                </ul>
+            </p>
+            <form @submit.prevent="updateLocation" enctype="multipart/form-data">
+                <div class="field">
+                    <label class="label" for="name">Name:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="name" placeholder="Name of the location." v-model="loadLocation.name">
                     </div>
                 </div>
-            </div>
+                <div class="field">
+                    <label for="region" class="label">Region:</label>
+                    <div class="control">
+                        <input type="input" class="input" name="region" placeholder="Region or area of the location." v-model="loadLocation.region">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="image" class="image" >Image:</label>
+                    <input type="file" class="file"  ref="file" @change="selectFile">
+                </div>
+
+                <div class="field is-grouped">
+                    <p class="control">
+                        <input type="submit" class="button is-primary" value="Update">
+                    </p>
+                    <p class="control">
+                        <!-- <input type="button" class="button" value="Discard Changes" @click="hideLocation"> -->
+                    </p>
+                    <p class="control">
+                        <input type="button" class="button is-warning" value="Delete" @click="deleteLocation">
+                    </p>
+                </div>
+            </form>
         </div>
+    </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    name: "CurrentLocation",
+    name: "CurrentLocationForm",
     computed: {
         ...mapGetters([
             'getLocationById',
@@ -63,6 +66,9 @@ export default {
             return this.$store.getters.getLocationById(id);
         }
     },
+    props: 
+        ['scrollTarget']
+    ,
     data() {
         return {
             file: null,
@@ -131,6 +137,8 @@ export default {
                     .then(
                         this.isEditing = false,
                         this.updateMessage = "Updated.",
+                        this.updateMessage = "Updated.",
+                        this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                         setTimeout(() => this.updateMessage = null, 3000),
                         (error) => this.error = error.response.data.error
                     )
@@ -145,6 +153,8 @@ export default {
                     this.isEditing = false,
                     this.updateMessage = '',
                     this.$store.dispatch('setLocationNull', null),  
+                    this.updateMessage = "Updated.",
+                    this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                     (error) => this.error = error.response.data.error
                 )
            }

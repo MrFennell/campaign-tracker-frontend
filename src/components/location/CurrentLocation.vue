@@ -30,18 +30,8 @@
                 </div>
 
                 <div class="column is-one-third">
-                    <p>Details:</p>
-
-                    <p v-if="loadLocation && loadLocation.name">Name: {{ loadLocation.name }}</p>
-                    <p v-else>error - enter Name</p>
-                    <p v-if="loadLocation && loadLocation.region">Region: {{ loadLocation.region }}</p>
-
-                    <p v-else>No description.</p>
-
+                    <currentLocationForm v-bind:scrollTarget= "this.scrollTarget" />
                 </div>
-                    <div class="column is-one-third">
-                        <currentLocationForm></currentLocationForm>
-                    </div>
                 </div>
             </div>
 </template>
@@ -62,6 +52,9 @@ export default {
             return this.$store.getters.getLocationById(id);
         }
     },
+    props: 
+        ['scrollTarget']
+    ,
     data() {
         return {
             file: null,

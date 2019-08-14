@@ -3,8 +3,7 @@
         <h2 ref="scrollHeader">Non-Player Characters:</h2>
         <AddNpc></AddNpc>
         <!-- <CurrentNpc></CurrentNpc> -->
-
-        <ListNpcs ></ListNpcs>
+        <ListNpcs v-bind:scrollTarget= "this.scrollTarget"></ListNpcs>
     </div>
 </template>
 
@@ -20,10 +19,12 @@ export default {
     data() {
         return {
             order: '',
+            scrollTarget: ''
         }
     },
     mounted() {
-        this.$store.dispatch('loadNpcs')
+        this.$store.dispatch('loadNpcs'),
+        this.scrollTarget = this.$refs.scrollHeader
     }
 }
 </script>

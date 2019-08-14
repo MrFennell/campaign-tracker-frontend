@@ -2,7 +2,7 @@
     <div class="container is-fullhd">
         <h2 ref="scrollHeader">Locations:</h2>
         <AddLocation></AddLocation>
-        <ListLocations ></ListLocations>
+        <ListLocations v-bind:scrollTarget= "this.scrollTarget"></ListLocations>
     </div>
 </template>
 
@@ -16,10 +16,12 @@ export default {
     data() {
         return {
             order: '',
+            scrollTarget: ''
         }
     },
     mounted() {
-        this.$store.dispatch('loadLocations')
+        this.$store.dispatch('loadLocations'),
+        this.scrollTarget = this.$refs.scrollHeader
     }
 }
 </script>

@@ -29,25 +29,9 @@
                         </div>
                         <p>{{updateMessage}}</p>
                     </div>
-
-                <div class="column is-one-third">
-                    <p>Details:</p>
-
-                    <p v-if="loadNpc && loadNpc.name">Name: {{ loadNpc.name }}</p>
-                    <p v-else>error - enter Name</p>
-                    <p v-if="loadNpc && loadNpc.race">Class: {{ loadNpc.race }}</p>
-                    <p v-if="loadNpc && loadNpc.profession">Description: {{ loadNpc.profession }}</p>
-                    <p v-if="loadNpc && loadNpc.lifeState">Level: {{ loadNpc.lifeState }}</p>
-                    <p v-if="loadNpc && loadNpc.description">Life State: {{ loadNpc.description }}</p>
-                    <p v-if="loadNpc && loadNpc.sharedBio">Shared Bio: {{ loadNpc.sharedBio }}</p>
-                    <p v-if="loadNpc && loadNpc.privateBio">Private Bio: {{ loadNpc.privateBio }}</p>
-
-                    <p v-else>No description.</p>
-
-                </div>
-                <div class="column is-one-third">
-                    <currentNpcForm></currentNpcForm>
-                </div>
+                    <div class="column is-one-third">
+                        <currentNpcForm></currentNpcForm>
+                    </div>
                 </div>
             </div>
 </template>
@@ -58,6 +42,9 @@ import CurrentNpcForm from '@/components/npc/CurrentNpcForm.vue'
 export default {
     components: {CurrentNpcForm},
     name: "CurrentNpc",
+    props: 
+        ['scrollTarget']
+    ,
     computed: {
         ...mapGetters([
             'getNpcId',
@@ -136,6 +123,9 @@ export default {
                             this.imagePreviewUrl = null,
                             this.showChangeImageForm = false,
                             this.file = null,
+                            this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
+                            setTimeout(() => this.updateMessage = null, 3000),
+                            (error) => this.error = error.response.data.error,
                             (error) => this.error = error.response.data.error
                         )
                 }catch(err){

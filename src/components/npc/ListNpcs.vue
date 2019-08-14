@@ -1,7 +1,7 @@
 <template>
     <div class="content" id="list-npcs-container">     
                 <div >
-                    <CurrentNpc/>
+                    <CurrentNpc v-bind:scrollTarget= "this.scrollTarget"/>
                 </div>
                 <div id="options">
                     <div v-if="!listOptions" class="level-right">
@@ -22,7 +22,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="field">
                                 <label>Sort by: </label>
                                 <div class="control">
@@ -89,6 +88,9 @@ import CurrentNpc from '@/components/npc/CurrentNpc.vue';
 export default {
     name: "ListNpcs",
     components: {CurrentNpc},
+    props: 
+        ['scrollTarget']
+    ,
     data(){
         return{
             selected: 10,
@@ -122,7 +124,7 @@ export default {
             this.$store.dispatch('setNpc', npc)
             this.listOptions = false
             this.$nextTick(() => {
-                this.scrollObject.scrollIntoView({behavior: "smooth", block: "start"});
+                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"});
             });
         }
     }

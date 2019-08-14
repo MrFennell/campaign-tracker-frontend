@@ -5,9 +5,8 @@
         </div>
          <!-- <CurrentPc></AddPc> -->
         <AddPc></AddPc>
-        <div>
-            <ListPcs :scrollHeader="this.$refs.pcHeader" ></ListPcs>
-        </div>
+        <ListPcs v-bind:scrollTarget= "this.scrollTarget"></ListPcs>
+
     </div>
 </template>
 
@@ -27,10 +26,12 @@ export default {
     data() {
         return {
             order: '',
+            scrollTarget: ''
         }
     },
     mounted() {
-        this.$store.dispatch('loadPcs')
+        this.$store.dispatch('loadPcs'),
+        this.scrollTarget = this.$refs.scrollHeader
     }
 }
 </script>
