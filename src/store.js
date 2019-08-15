@@ -10,12 +10,14 @@ export default new Vuex.Store({
     users: [],
     campaign: '',
     campaigns: [],
+    campaignThumbnails: [],
     pcs: [],
     pc: '',
     npcs: [],
     npc: '',
     location: '',
     locations: []
+
   },
   getters: {
     isLoggedIn: state => !!state.user,
@@ -54,6 +56,9 @@ export default new Vuex.Store({
     },
     setCampaigns(state, campaigns){
       state.campaigns = campaigns;
+    },
+    setCampaignThumbnails(state, campaignThumbnails){
+      state.campaignThumbnails = campaignThumbnails;
     },
     setPcs(state, pcs){
       state.pcs = pcs;
@@ -153,10 +158,10 @@ export default new Vuex.Store({
     async setPc({ commit }, payload){
       commit('setPc', payload);
     },
-    // async setPc({ commit }, payload){
-    //   const response = await axios.post('pcs/setPc', payload)
-    //   commit('setPc', response.data);
-    // },
+    async campaignThumbnails({ commit }, payload){
+      const response = await axios.get('/campaignThumbnails', payload)
+      commit('setCampaignThumbnails', response.data);
+    },
     async setPcNull({ commit }){
       const response = '';
       commit('setPc', response);

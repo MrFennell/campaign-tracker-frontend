@@ -1,11 +1,7 @@
 <template>
 <div v-if="loadCampaign" id="current-campaign-form" >
     <p v-if="updateMessage" class="update-message">{{updateMessage}}</p>
-    <!-- <a v-if="!isEditing" @click="edit"><font-awesome-icon icon="edit"/></a> -->
-    <!-- <div v-if="isEditing"> -->
     <div>
-        <!-- <a @click="isEditing = false">Quit Editing</a> -->
-        
         <p v-if="errors.length">
             <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
             <ul>
@@ -82,5 +78,6 @@ export default {
 <style lang="scss">
 #current-campaign-form{
     text-align: center;
+    clear: both;
 }
 </style>

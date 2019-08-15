@@ -73,7 +73,7 @@
                         </div>
                         <div class="card-content">
                             <div class="media-content">
-                                <p class="title is-4">{{ location.name }}</p>
+                                <p class="card-title">{{ location.name }}</p>
                             </div>
                         </div>
                     </div>
@@ -116,9 +116,6 @@ export default {
                  return _.orderBy(locations, [location => location.name.toLowerCase()], sortDirection);
             }
         }
-    },
-    mounted(){
-        this.scrollObject = this.$parent.$refs.scrollHeader
     },
     methods: {
         async setLocation(location){

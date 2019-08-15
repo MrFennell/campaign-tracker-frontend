@@ -33,7 +33,6 @@ a:hover{
     background-color: $beige-lighter;
     border-bottom: 1px solid #1c1d16;
 }
-
 .edit-button{
     float: right;
     display:none;
@@ -45,6 +44,15 @@ a:hover{
     .edit-button{
         display:block;
     }
+}
+.card-title{
+    
+}
+.card-subtitle{
+
+}
+.title:not(:last-child){
+    margin-bottom: 2px;
 }
 // .card{
 //     background-color:#F8FBEA;

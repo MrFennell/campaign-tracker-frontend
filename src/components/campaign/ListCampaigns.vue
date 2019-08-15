@@ -1,16 +1,28 @@
 <template>
     <div class="content">   
         <p>Choose a campaign below to load your data.</p>
-        <div v-for="campaign in loadCampaigns" v-bind:key="campaign.id">
-            <div class="box" id="campaigns">  
-                <h2 class="title" >{{ campaign.title }}</h2>
-                <p class="campaign-description">{{ campaign.description }}</p>
-                <div class="level">
-                    <button class="button" @click="setCurrentCampaign(campaign)">Set to Current</button>
-                    <!-- <p><a  @click="edit">Edit</a></p> -->
+        <div v-for="(campaign) in loadCampaigns" v-bind:key="campaign.id">
+            <div class="box" id="campaigns">
+                <div class="columns is-mobile">
+                    <div class="column is-one-third">
+                        <h2 class="title" >{{ campaign.title }}</h2>
+                        <p class="campaign-description">{{ campaign.title }}</p>
+                        <button class="button" @click="setCurrentCampaign(campaign)">Set to Current</button>
+
+                    </div>
+                    <div class="column">
+                        <div class="campaign-thumbnails">
+                            <div class="campaign-thumbnail" v-for="thumbnail in campaign.thumbnails" v-bind:key="thumbnail">
+                                <!-- <figure class="image is-is-square"> -->
+                                    <img  :src='thumbnail' />
+                                <!-- </figure> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                               
             </div>
-            </div>
+        </div>
     </div>
 </template>
 
@@ -24,7 +36,10 @@ export default {
         ]),
         loadCampaigns(){
             // return this.$store.state.campaigns;
-            return this.$store.getters.getCampaigns;
+            return this.$store.state.campaignThumbnails;
+        },
+        loadPcs(){
+            return this.$store.state.pcs;
         }
     },
     data(){
@@ -66,8 +81,18 @@ export default {
 }
 
 </script>
-// <style lang="scss">
-// #campaigns{
-//     background-color: blue;
-// }
-// </style>
+<style lang="scss">
+.campaign-thumbnails{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: right;
+    height: 100%;
+    overflow: hidden;
+}
+.campaign-thumbnail img{
+    height: 80px;
+    width: 80px;
+//    float: left;
+}
+</style>

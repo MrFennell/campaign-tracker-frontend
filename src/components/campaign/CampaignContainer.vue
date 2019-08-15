@@ -1,7 +1,8 @@
 <template>
     <div class="container" id="campaign-container">
+        <div>
         <CurrentCampaign></CurrentCampaign>
-        
+        </div>
         <div id="campaign-options" >
             <ul>
                 <li><a @click="switchCampaign">Switch</a></li>
@@ -36,6 +37,18 @@ export default {
         CurrentCampaign: () => import('@/components/campaign/CurrentCampaign'),
         AddCampaign: () => import('@/components/campaign/AddCampaign'),
         // Logout: () => import('@/components/user/Logout')
+    },
+    computed: {
+        currentCampaign(){
+            return this.$store.state.campaign;
+        }
+    },
+    watch: {
+        currentCampaign: function(newValue){
+            if(newValue){
+                this.chooseCampaign = false;
+            }
+        }
     },
     methods: {
         switchCampaign(){

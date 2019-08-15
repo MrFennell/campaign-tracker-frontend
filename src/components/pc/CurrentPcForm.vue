@@ -19,7 +19,7 @@
             </div>
             
             <div v-if="isEditing">
-                <div><a class="edit-button" @click="edit">Quit Editing</a></div>
+                <div><a class="edit-button-close" @click="edit">Quit Editing</a></div>
                 <p v-if="errors.length">
                     <i><font-awesome-icon icon="exclamation-triangle" /></i><b>Please correct the following error(s):</b>
                     <ul>

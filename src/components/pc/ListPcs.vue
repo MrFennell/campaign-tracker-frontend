@@ -75,9 +75,9 @@
                             </div>
                             <div class="card-content">
                                 <div class="media-content">
-                                    <p class="title is-4">{{ pc.pcName }}</p>
-                                    <p class="subtitle is-6" v-if="pc.playerName">{{ pc.playerName }}</p>
-                                    <p class="subtitle is-6" v-else >Player Unknown</p>
+                                    <p class="card-title">{{ pc.pcName }}</p>
+                                    <p class="card-subtitle" v-if="pc.playerName">{{ pc.playerName }}</p>
+                                    <p class="card-subtitle" v-else >Player Unknown</p>
                                 </div>
                             </div>
                         </div>

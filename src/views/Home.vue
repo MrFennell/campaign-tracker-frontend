@@ -149,6 +149,7 @@ export default {
     mounted() {
         this.$store.dispatch('loadCampaigns');
         this.$store.dispatch('loadCurrentCampaign');
+        this.$store.dispatch('campaignThumbnails');
     }
 
 }

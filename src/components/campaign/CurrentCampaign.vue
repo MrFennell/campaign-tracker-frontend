@@ -9,12 +9,10 @@
                 <p id="campaign-description">{{ loadCampaign.description}}</p>
             </div>
             <div v-if="isEditing">
+                <a id="quit-editing-campaign" @click="isEditing = false">Quit Editing</a>
                 <CurrentCampaignForm></CurrentCampaignForm>
-                <div class="level">
-                <a @click="isEditing = false">Quit Editing</a>
-
-                <input type="button" class="button is-warning" value="Delete" @click="deleteCampaign">
-                </div>
+                <!-- <input type="button" class="button is-warning" value="Delete" @click="deleteCampaign"> -->
+                <a @click="deleteCampaign" class="level-right" id="delete-campaign">Delete</a>
             </div>
         </div>
     </div>
@@ -81,6 +79,8 @@ export default {
        
        margin:auto;
    }
+   #delete-campaign{
+   }
    #edit-title{
        display:flex;
        align-items: center;
@@ -93,8 +93,13 @@ export default {
     top: 0;
     right: -2em;    
    }
+   #quit-editing-campaign{
+       float:right;
+       clear: both;
+   }
    #campaign-info{
        text-align: center;
+       width: 100%;
    }
    #campaign-description{
        margin-top: 4px;
