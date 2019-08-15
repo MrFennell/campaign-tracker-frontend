@@ -1,63 +1,8 @@
 <template>
     <div class="content" id="list-npcs-container">     
-        <div >
+        <div>
             <CurrentNpc v-bind:scrollTarget= "this.scrollTarget"/>
         </div>
-        <div id="options">
-            <div v-if="!listOptions" class="level-right">
-                <a @click="listOptions = true"><font-awesome-icon icon="cog" /></a> 
-            </div>
-            <div v-if="listOptions" class="level-right">
-                    <div class="field">
-                        <label>Show: </label>
-                        <div class="control">
-                            <div class="select">
-                                <select v-model="selected"  id="list-options" >
-                                    <option disabled value="">Show maximum:</option>
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>100</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label>Sort by: </label>
-                        <div class="control">
-                            <div class="select">
-                                <select v-model="sort" id="list-sort">
-                                    <option disabled value="">Sort by field:</option>
-                                    <option>NPC Name</option>
-                                    <option>Created Date</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <a v-if="sortDirection === 'asc' " @click = "sortDirection = 'desc'" class="icon is-large"><font-awesome-icon icon="sort-up" /></a>
-                        <a v-if="sortDirection === 'desc'" @click = "sortDirection = 'asc'" class="icon is-large"><font-awesome-icon icon="sort-down"  /></a>
-                    </div>
-
-                    <div class="field">
-                        <label>Thumbnails per row: </label>
-                        <div class="control">
-                            <div class="select">
-                                <select v-model="columnSize" id="list-sort">
-                                    <option disabled value="">Thumbnails per row:</option>
-                                    <option value="column is-one-quarter">4</option>
-                                    <option value="column is-one-fifth">5</option>
-                                    <option value="column is-2">6</option>
-                                    <option value="column is-1">12</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                <a @click="listOptions = false"><font-awesome-icon icon="cog" /></a>
-            </div>
-        </div>
-
         <div class="columns is-multiline">
             <div :class="[columnSize]" 
                 v-for="(npc, index) in loadNpcs" 
@@ -89,35 +34,22 @@ export default {
     name: "ListNpcs",
     components: {CurrentNpc},
     props: 
-        ['scrollTarget']
+        ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
     ,
-    data(){
-        return{
-            selected: 10,
-            sort: 'NPC Name',
-            listOptions: false,
-            sortDirection: 'asc',
-            columnSize: 'column is-2',
-            scrollObject: ''
-        }
-    },
     computed: {
         loadNpcs(){
             let sortDirection = this.sortDirection;
             let npcs = this.$store.state.npcs;
-            if (this.sort === 'NPC Name'){
+            if (this.sort === 'name'){
                 return _.orderBy(npcs, [npc => npc.name.toLowerCase()], sortDirection);
             }
-            else if (this.sort === 'Created Date'){
+            else if (this.sort === 'createdDate'){
                 return _.orderBy(npcs, 'createdAt', sortDirection);
             }
             else{
                  return _.orderBy(npcs, [npc => npc.name.toLowerCase()], sortDirection);
             }
         }
-    },
-    mounted(){
-        this.scrollObject = this.$parent.$refs.scrollHeader
     },
     methods: {
         async setNpc(npc){

@@ -1,17 +1,12 @@
 <template>
     <div>
         <p v-if="successMessage">{{successMessage}}</p>    
-        <div v-if="!showForm">
-            <p><a @click="formToggle">Add a new NPC</a></p>
-        </div>
 
-        <div v-if="showForm">
+        <div>
             <p ref="formTop">Create a new Non-Player Character below.</p>
             <div class="is-pulled-right">
-                <a class="delete" @click="showForm = false"></a>
+                <a class="delete" @click="$emit('update:showForm', false)"></a>
             </div>
-            
-
             <p v-if="errors.length">
                 <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
                 <ul>
@@ -53,7 +48,9 @@
                     <label for="image" class="image" >Image:</label>
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
-                <input type="submit" class="button is-primary" value="Create">
+                <input type="submit" class="button is-primary" value="Create" >
+                <input type="submit" class="button" value="Hide" @click="$emit('update:showForm', false)">
+                
                 
             </form>
         </div>
@@ -62,6 +59,9 @@
 <script>
     export default {
         name: "AddNpc",
+        props: 
+        ['showForm','successMessage']
+        ,
         data(){
             return{
                 name: '',
@@ -74,26 +74,14 @@
                 file: null,
                 errors: [],
                 error: '',
-                showForm: false,
-                successMessage: null
             }
         },
         methods: {
-            formToggle(){
-                if (this.showForm === true){
-                    this.showForm = false;
-                }else{
-                    this.showForm = true;
-                    // this.$nextTick(() => {
-                    //     this.$refs.formTop.scrollIntoView({behavior: "smooth"});
-                    // });
-                }
-            },
+
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },
             async newNpc(){ 
-                
                     if (!this.name){
                         this.errors.push('Please enter a name.');
                     }
@@ -112,12 +100,10 @@
                             formData.append('file', this.file);
                             try{
                                 this.$store.dispatch('addNpcWithImage', formData),
-                                this.showForm = false;
                                 this.file = null;
-                                this.successMessage =  "Character created!";
+                                this.$emit('update:successMessage', "Character created!");
+                                this.$emit('update:showForm', false);
                                 this.errors = [];
-                                setTimeout(() => this.successMessage = null, 3000);
-
                             }catch(err){
                                 console.log(err);
                             }
@@ -126,8 +112,8 @@
                             this.$store.dispatch('addNpc', formData),
                             this.showForm = false;
                             this.file = null;
-                            this.successMessage =  "Character created!";
-                            setTimeout(() => this.successMessage = null, 3000);
+                            this.$emit('update:successMessage', "Character created!");
+                            this.$emit('update:showForm', false);
                         }
                 }
             }

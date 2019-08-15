@@ -4,31 +4,29 @@
                 <a class="delete" @click="hidePc()"></a>
             </div>
             <div class="columns">
-             
-                    <div id="image-container" class="column is-one-third">
-                        <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
-                        <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
+                <div id="image-container" class="column is-one-third">
+                    <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
+                    <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
-                        <div id="image-container">
-                            <div id="currentImage" class="image is-square">
-                                <img v-if="loadPc.imageSrc" :src="loadPc.imageSrc" />
-                                <img v-else src='../../assets/images/image-default.png'/>
-                            </div>
-                            <div v-if="imagePreviewUrl" class="image is-4by3">
-                                <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
-                            </div>
-
-                            <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
-                            
-                            <div v-if="showChangeImageForm" class="field">
-                                <label for="image" class="image" >Image:</label>
-                                <input type="file" class="file" ref="file" @change="selectNewImage">
-                                <button class="button" @click="updatePcImage">Update</button>.
-                                <button class="button is-light" @click="hideNewImage()">Cancel</button>
-                            </div>
+                    <div id="image-container">
+                        <div id="currentImage" class="image is-square">
+                            <img v-if="loadPc.imageSrc" :src="loadPc.imageSrc" />
+                            <img v-else src='../../assets/images/image-default.png'/>
                         </div>
-                        <p>{{updateMessage}}</p>
+                        <div v-if="imagePreviewUrl" class="image is-4by3">
+                            <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
+                        </div>
 
+                        <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
+                        
+                        <div v-if="showChangeImageForm" class="field">
+                            <label for="image" class="image" >Image:</label>
+                            <input type="file" class="file" ref="file" @change="selectNewImage">
+                            <button class="button" @click="updatePcImage">Update</button>.
+                            <button class="button is-light" @click="hideNewImage()">Cancel</button>
+                        </div>
+                    </div>
+                    <p>{{updateMessage}}</p>
                     </div>
                 <div class="column is-one-third">
                     <currentPcForm v-bind:scrollTarget= "this.scrollTarget"/>

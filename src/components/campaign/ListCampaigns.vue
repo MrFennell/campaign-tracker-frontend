@@ -1,5 +1,5 @@
 <template>
-    <div class="content">   
+    <div class="campaign-container-content" >   
         <p>Choose a campaign below to load your data.</p>
         <div v-for="(campaign) in loadCampaigns" v-bind:key="campaign.id">
             <div class="box" id="campaigns">
@@ -14,7 +14,8 @@
                         <div class="campaign-thumbnails">
                             <div class="campaign-thumbnail" v-for="thumbnail in campaign.thumbnails" v-bind:key="thumbnail">
                                 <!-- <figure class="image is-is-square"> -->
-                                    <img  :src='thumbnail' />
+                                    <img v-if="thumbnail !== null"  :src='thumbnail' />
+                                    <img v-else src='../../assets/images/thumbnail-default.png'/>
                                 <!-- </figure> -->
                             </div>
                         </div>

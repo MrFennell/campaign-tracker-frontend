@@ -3,23 +3,23 @@
         <div>
         <CurrentCampaign></CurrentCampaign>
         </div>
-        <div id="campaign-options" >
-            <ul>
-                <li><a @click="switchCampaign">Switch</a></li>
-                  |  
-                 <li><a @click="newCampaign" >Start New</a></li>
-                <!-- <li><Logout></Logout></li> -->
-            </ul>
-        </div>
-        <div class="">
-            <div v-if="chooseCampaign">
-                <ListCampaigns></ListCampaigns>
+        <div id="campaign-options">
+            <div id="campaign-options-links" >
+                <ul>
+                    <li><a v-bind:class="{ active: isActive  === 'switchLink'}" @click="switchCampaign">Switch</a></li>
+                    |  
+                    <li><a  v-bind:class="{ active: isActive  === 'startLink'}"  @click="newCampaign" >Start New</a></li>
+                </ul>
             </div>
-            <div v-if="showNewForm">
-                <AddCampaign></AddCampaign>
+            <div id="campaign-options-body">
+                <div v-if="chooseCampaign">
+                    <ListCampaigns></ListCampaigns>
+                </div>
+                <div v-if="showNewForm">
+                    <AddCampaign></AddCampaign>
+                </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
     data(){
         return{
             chooseCampaign: false,
-            showNewForm: false
+            showNewForm: false,
+            isActive: null
         }
     },
     components: {
@@ -55,18 +56,23 @@ export default {
             if (!this.chooseCampaign){
                 this.chooseCampaign = true;
                 this.showNewForm = false;
+                this.isActive = 'switchLink';
+                
             }
             else{
                 this.chooseCampaign = false;
+                this.isActive = null;
             }
         },
         newCampaign(){
             if (!this.showNewForm){
                 this.showNewForm = true;
                 this.chooseCampaign = false;
+                this.isActive = 'startLink';
             }
             else{
                 this.showNewForm = false;
+                this.isActive = null;
             }
         },
         doLogout() {
@@ -80,37 +86,37 @@ export default {
 
 </script>
 <style lang="scss">
-    // #campaign-container{
-    //     width:100%;
-    // }
-    #campaign-options {
+
+#campaign-options-body{
+    padding: 0 1.5rem;
+}
+#campaign-options-links {
+    display:flex;
+    padding: 0 1.5rem;
+    ul{
         display:flex;
-        ul{
-            display:flex;
-            justify-content: center;
-            align-items: baseline;
-            list-style: none;
-            flex-grow: 1;
-        }
-        ul li:first-child{
-            margin-right: 5px;
-        }
-        ul li:nth-child(2){
-            margin-left: 5px;
-        }
-        li:hover{
-            text-decoration: underline;
-        }
-         a{
-            display: block;
-            border-radius: 4px 4px 0 0;
-            color: black;
-            font-size: 0.8em;
-            // padding: 0.5em 1em;
-        }
+        justify-content: center;
+        align-items: baseline;
+        list-style: none;
+        flex-grow: 1;
     }
-    // .campaign-nav{
-    //     border: 1px solid blue;
-    //     height: 20px;
-    // }
+    ul li:first-child{
+        margin-right: 5px;
+    }
+    ul li:nth-child(2){
+        margin-left: 5px;
+    }
+    li:hover{
+        text-decoration: underline;
+    }
+    a{
+        display: block;
+        border-radius: 4px 4px 0 0;
+        color: black;
+        font-size: 0.8em;
+    }
+    .active{
+        text-decoration: underline;
+    }
+}
 </style>

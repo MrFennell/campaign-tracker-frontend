@@ -1,15 +1,10 @@
 <template>
     <div class="container">
-        <p v-if="successMessage">{{successMessage}}</p>    
-        <div v-if="!showForm">
-            <p><a @click.prevent="formToggle">Add a new PC</a></p>
-        </div>
-
-        <div v-if="showForm">
+        <div>
             <p ref="formTop">Add a new player character below.</p >
 
             <div class="is-pulled-right">
-                <a class="delete" @click="showForm = false"></a>
+                <a class="delete" @click="$emit('update:showForm', false)"></a>
             </div>
             <p v-if="errors.length">
                 <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
@@ -83,7 +78,7 @@
                             <input type="file" class="file"  ref="file" @change="selectFile">
                         </div>
                         <input type="submit" class="button is-primary" value="Create">
-                        <input type="submit" class="button" value="Hide" @click="showForm = false">
+                        <input type="submit" class="button" value="Hide" @click="$emit('update:showForm', false)">
                     </div>
                 </div>
             </form>
@@ -92,86 +87,72 @@
 </template>
 <script>
 // import axios from 'axios';
-    export default {
-        name: "AddPc",
-        data(){
-            return{
-                pcName: '',
-                playerName: '',
-                pcClass: '',
-                pcRace: '',
-                pcDescription: '',
-                pcLevel: '',
-                pcLifestate: '',
-                pcSharedBio: '',
-                pcPrivateBio: '',
-                file: null,
-                errors: [],
-                error: '',
-                showForm: false,
-                successMessage: null
-            }
+export default {
+    name: "AddPc",
+    props: 
+        ['showForm','successMessage']
+    ,
+    data(){
+        return{
+            pcName: '',
+            playerName: '',
+            pcClass: '',
+            pcRace: '',
+            pcDescription: '',
+            pcLevel: '',
+            pcLifestate: '',
+            pcSharedBio: '',
+            pcPrivateBio: '',
+            file: null,
+            errors: [],
+            error: '',
+        }
+    },
+    methods: {
+        selectFile(){
+            this.file = this.$refs.file.files[0];
         },
-        methods: {
-            formToggle(){
-                if (this.showForm === true){
-                    this.showForm = false;
-                }else{
-                    this.showForm = true;
-                    // this.$nextTick(() => {
-                    //     this.$refs.formTop.scrollIntoView({behavior: "smooth", block: "end"});
-                    // });
-                }
-            },
-            selectFile(){
-                this.file = this.$refs.file.files[0];
-            },
-            async newPc(){ 
+    async newPc(){
+            if (!this.pcName){
+                this.errors.push('Please enter a name.');
+            }
+            else if (!this.playerName){
+                this.errors.push('Please enter the name of the player.');
+            }
+            else{
+                this.errors = [];                    
+                const formData = new FormData();
+                formData.append("pcName", this.pcName);
+                formData.append("playerName", this.playerName);
+                formData.append("pcClass", this.pcClass);
+                formData.append("pcRace", this.pcRace);
+                formData.append("pcLevel", this.pcLevel);
+                formData.append("pcLifestate", this.pcLifestate);
+                formData.append("pcSharedBio", this.pcSharedBio);
+                formData.append("pcPrivateBio", this.pcPrivateBio);
+                formData.append("pcDescription", this.pcDescription);
                 
-                    if (!this.pcName){
-                        this.errors.push('Please enter a name.');
+                if (this.file){
+                    formData.append('file', this.file);
+                    try{
+                        this.$store.dispatch('addPcWithImage', formData),
+                        this.file = null;
+                        this.$emit('update:successMessage', "Character created!");
+                        this.$emit('update:showForm', false);
+                    }catch(err){
+                        console.log(err);
                     }
-                    else if (!this.playerName){
-                        this.errors.push('Please enter the name of the player.');
-                    }
-                    else{
-
-                        this.errors = [];                    
-                        const formData = new FormData();
-                        formData.append("pcName", this.pcName);
-                        formData.append("playerName", this.playerName);
-                        formData.append("pcClass", this.pcClass);
-                        formData.append("pcRace", this.pcRace);
-                        formData.append("pcLevel", this.pcLevel);
-                        formData.append("pcLifestate", this.pcLifestate);
-                        formData.append("pcSharedBio", this.pcSharedBio);
-                        formData.append("pcPrivateBio", this.pcPrivateBio);
-                        formData.append("pcDescription", this.pcDescription);
-                        
-                        if (this.file){
-                            formData.append('file', this.file);
-                            try{
-                                this.$store.dispatch('addPcWithImage', formData),
-                                this.showForm = false;
-                                this.successMessage =  "Character created!";
-                                this.file = null;
-                                setTimeout(() => this.successMessage = null, 3000);
-
-                            }catch(err){
-                                console.log(err);
-                            }
-                        }
-                        else{
-                            this.$store.dispatch('addPc', formData),
-                            this.showForm = false;
-                            this.successMessage =  "Character created!";
-                            this.file = null;
-                            setTimeout(() => this.successMessage = null, 3000);
-                        }
+                }
+                else{
+                    this.$store.dispatch('addPc', formData),
+                    this.file = null;
+                    this.$emit('update:successMessage', "Character created!");
+                    this.$emit('update:showForm', false);
                 }
             }
         }
     }
+}
 </script>
 
 // <style lang="scss">

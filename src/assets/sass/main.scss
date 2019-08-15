@@ -33,6 +33,12 @@ a:hover{
     background-color: $beige-lighter;
     border-bottom: 1px solid #1c1d16;
 }
+.box{
+    margin-bottom: 2em;
+}
+.section{
+   padding: 2rem 1.5rem;
+}
 .edit-button{
     float: right;
     display:none;
@@ -45,8 +51,24 @@ a:hover{
         display:block;
     }
 }
+#sort-icon{
+    margin-top: 1rem;
+}
 .card-title{
     
+}
+.list-controls{
+    margin-bottom: 1em;
+}
+.list-controls a:first-child{
+    padding-right: .5em;
+    border-right: 1px solid grey;
+}
+.list-controls a:nth-child(2){
+padding-left: .5em;
+}
+.active{
+    text-decoration: underline;
 }
 .card-subtitle{
 
@@ -54,6 +76,11 @@ a:hover{
 .title:not(:last-child){
     margin-bottom: 2px;
 }
-// .card{
-//     background-color:#F8FBEA;
-// }
+.campaign-container-content{
+    // background-color: #d4d4d4; 
+    padding: 2rem;
+    border-radius: 6px;
+    border: 1px solid #d4d4d4; 
+    margin-top: 1em;
+}
+
