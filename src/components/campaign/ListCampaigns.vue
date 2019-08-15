@@ -8,7 +8,6 @@
                         <h2 class="title" >{{ campaign.title }}</h2>
                         <p class="campaign-description">{{ campaign.title }}</p>
                         <button class="button" @click="setCurrentCampaign(campaign)">Set to Current</button>
-
                     </div>
                     <div class="column">
                         <div class="campaign-thumbnails">
@@ -21,7 +20,6 @@
                         </div>
                     </div>
                 </div>
-                               
             </div>
         </div>
     </div>
@@ -46,7 +44,6 @@ export default {
     data(){
         return{
             collapsed: true,
-            isEditing: true,
             title: '',
             description: ''
         }
@@ -65,18 +62,7 @@ export default {
             })
         },
         async updateCampaign(campaign){
-                await this.$store.dispatch('updateCampaign', campaign)
-            // .then(
-            //     () => this.$router.go(),
-            // )
-        },
-        edit(){
-            if (!this.isEditing){
-                this.isEditing = true;
-            }
-            else{
-                this.isEditing = false;
-            }
+            await this.$store.dispatch('updateCampaign', campaign)
         }
     }
 }

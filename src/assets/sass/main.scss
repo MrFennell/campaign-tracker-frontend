@@ -54,9 +54,7 @@ a:hover{
 #sort-icon{
     margin-top: 1rem;
 }
-.card-title{
-    
-}
+
 .list-controls{
     margin-bottom: 1em;
 }
@@ -83,4 +81,19 @@ padding-left: .5em;
     border: 1px solid #d4d4d4; 
     margin-top: 1em;
 }
-
+//forms
+.error-text{
+    display: flex;
+    align-items: center;
+    // div{
+    //     display: flex;
+    // }
+    i{
+        margin-right: 1em;
+    }
+    li{
+        list-style: none;
+    //     // margin-left: 2em;
+    }
+    
+}

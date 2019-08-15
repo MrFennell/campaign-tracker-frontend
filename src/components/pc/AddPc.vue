@@ -1,17 +1,22 @@
 <template>
     <div class="container">
         <div>
-            <p ref="formTop">Add a new player character below.</p >
-
+            <p ref="formTop">Add a new player character below.</p>
             <div class="is-pulled-right">
                 <a class="delete" @click="$emit('update:showForm', false)"></a>
             </div>
-            <p v-if="errors.length">
-                <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
-                <ul>
-                    <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                </ul>
-            </p>
+            <div v-if="errors.length" class="error-text">
+                <div>
+                    <b><i><font-awesome-icon icon="exclamation-triangle" /></i></b>
+                </div>
+                <div>
+                    <b v-if="errors.length > 1"><p>Please correct the following errors:</p></b>
+                    <b v-else><p>Please correct the following error:</p></b>
+                    <ul >
+                        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                    </ul>
+                </div>
+            </div>
             <form @submit.prevent="newPc" enctype="multipart/form-data" >
                 <div class="columns is-multiline">
                     <div class="column is-half">
@@ -90,7 +95,7 @@
 export default {
     name: "AddPc",
     props: 
-        ['showForm','successMessage']
+        ['showForm','successMessage','scrollTarget']
     ,
     data(){
         return{
@@ -112,12 +117,25 @@ export default {
         selectFile(){
             this.file = this.$refs.file.files[0];
         },
+        errorScroll(){
+            this.$nextTick(() => {
+                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"});
+            });
+        },
     async newPc(){
-            if (!this.pcName){
+            this.errors = [];
+            if (!this.pcName && !this.playerName){
                 this.errors.push('Please enter a name.');
+                this.errors.push('Please enter the name of the player.');
+                this.errorScroll();
+            }
+            else if (!this.pcName){
+                this.errors.push('Please enter a name.');
+                this.errorScroll();
             }
             else if (!this.playerName){
                 this.errors.push('Please enter the name of the player.');
+                this.errorScroll();
             }
             else{
                 this.errors = [];                    
@@ -131,7 +149,6 @@ export default {
                 formData.append("pcSharedBio", this.pcSharedBio);
                 formData.append("pcPrivateBio", this.pcPrivateBio);
                 formData.append("pcDescription", this.pcDescription);
-                
                 if (this.file){
                     formData.append('file', this.file);
                     try{

@@ -7,12 +7,18 @@
             <div class="is-pulled-right">
                 <a class="delete" @click="$emit('update:showForm', false)"></a>
             </div>
-            <p v-if="errors.length">
-                <b><i><font-awesome-icon icon="exclamation-triangle" /></i>Please correct the following error(s):</b>
-                <ul>
-                    <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                </ul>
-            </p>
+            <div v-if="errors.length" class="error-text">
+                <div>
+                    <b><i><font-awesome-icon icon="exclamation-triangle" /></i></b>
+                </div>
+                <div>
+                    <b v-if="errors.length > 1"><p>Please correct the following errors:</p></b>
+                    <b v-else><p>Please correct the following error:</p></b>
+                    <ul >
+                        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                    </ul>
+                </div>
+            </div>
             <form @submit.prevent="newNpc" enctype="multipart/form-data">
                 <div class="field">
                     <label class="label" for="name">Name:</label>
@@ -50,8 +56,6 @@
                 </div>
                 <input type="submit" class="button is-primary" value="Create" >
                 <input type="submit" class="button" value="Hide" @click="$emit('update:showForm', false)">
-                
-                
             </form>
         </div>
     </div>
@@ -60,7 +64,7 @@
     export default {
         name: "AddNpc",
         props: 
-        ['showForm','successMessage']
+        ['showForm','successMessage','scrollTarget']
         ,
         data(){
             return{
@@ -77,44 +81,50 @@
             }
         },
         methods: {
-
             selectFile(){
                 this.file = this.$refs.file.files[0];
             },
+            errorScroll(){
+                this.$nextTick(() => {
+                    this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"});
+                });
+            },
             async newNpc(){ 
-                    if (!this.name){
-                        this.errors.push('Please enter a name.');
-                    }
-                    else{
+                this.errors = [];
+                if (!this.name){
+                    this.errors.push('Enter a name.');
+                    this.errorScroll();
+                }
+                else{
 
-                        this.errors = [];                    
-                        const formData = new FormData();
-                        formData.append("name", this.name);
-                        formData.append("race", this.race);
-                        formData.append("profession", this.profession);
-                        formData.append("description", this.lifeState);
-                        formData.append("sharedBio", this.sharedBio);
-                        formData.append("privateBio", this.privateBio);
-                        
-                        if (this.file){
-                            formData.append('file', this.file);
-                            try{
-                                this.$store.dispatch('addNpcWithImage', formData),
-                                this.file = null;
-                                this.$emit('update:successMessage', "Character created!");
-                                this.$emit('update:showForm', false);
-                                this.errors = [];
-                            }catch(err){
-                                console.log(err);
-                            }
-                        }
-                        else{
-                            this.$store.dispatch('addNpc', formData),
-                            this.showForm = false;
+                    this.errors = [];                    
+                    const formData = new FormData();
+                    formData.append("name", this.name);
+                    formData.append("race", this.race);
+                    formData.append("profession", this.profession);
+                    formData.append("description", this.lifeState);
+                    formData.append("sharedBio", this.sharedBio);
+                    formData.append("privateBio", this.privateBio);
+                    
+                    if (this.file){
+                        formData.append('file', this.file);
+                        try{
+                            this.$store.dispatch('addNpcWithImage', formData),
                             this.file = null;
                             this.$emit('update:successMessage', "Character created!");
                             this.$emit('update:showForm', false);
+                            this.errors = [];
+                        }catch(err){
+                            console.log(err);
                         }
+                    }
+                    else{
+                        this.$store.dispatch('addNpc', formData),
+                        this.showForm = false;
+                        this.file = null;
+                        this.$emit('update:successMessage', "Character created!");
+                        this.$emit('update:showForm', false);
+                    }
                 }
             }
         }

@@ -106,6 +106,7 @@ export default {
         },
 
         async updateNpcImage (){
+            this.errors = [];
             const formData = new FormData();
             if (this.file){
                 const npcId = this.loadNpc.id;

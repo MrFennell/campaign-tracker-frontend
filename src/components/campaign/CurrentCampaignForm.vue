@@ -25,7 +25,6 @@
                     <input type="input" name="description" class="input" placeholder="Campaign Description" v-model="loadCampaign.description">
                 </div>
             </div>
-            
             <input type="submit" value="Update" class="button is-primary is-right">
         </form>
     </div>

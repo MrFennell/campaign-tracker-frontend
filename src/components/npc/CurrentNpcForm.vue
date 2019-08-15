@@ -123,6 +123,7 @@ export default {
             }
         },
         async updateNpc(){ 
+            this.errors = [];
             if (!this.loadNpc.name){
                 this.errors.push('Name is required.');
             }else{

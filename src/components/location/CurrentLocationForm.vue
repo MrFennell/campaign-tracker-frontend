@@ -98,7 +98,8 @@ export default {
                 this.isEditing = false;
             }
         },
-        async updateLocation(){ 
+        async updateLocation(){
+            this.errors = [];
             if (!this.loadLocation.name){
                 this.errors.push('Name is required.');
             }else{

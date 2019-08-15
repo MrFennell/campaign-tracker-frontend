@@ -9,6 +9,7 @@
         <AddNpc v-if="showForm"
          v-bind:successMessage.sync="successMessage"
          v-bind:showForm.sync="showForm"
+         v-bind:scrollTarget= "this.scrollTarget"
         ></AddNpc>
         <ListControls 
             v-if="showOptions"

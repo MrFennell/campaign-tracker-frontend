@@ -9,6 +9,7 @@
         <AddPc v-if="showForm"
             v-bind:showForm.sync="showForm"
             v-bind:successMessage.sync="successMessage"
+            v-bind:scrollTarget= "this.scrollTarget"
         ></AddPc>
         <ListControls 
             v-if="showOptions" 

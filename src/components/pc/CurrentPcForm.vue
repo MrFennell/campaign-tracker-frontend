@@ -5,7 +5,7 @@
                 <a class="edit-button" @click="edit">Edit</a>
                 <p>Details:</p>
                 <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
-                <p v-else>error - enter Name</p>
+                <p v-else>No Name</p>
                 <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
                 <p v-else>Please enter name of player!</p>
                 <p v-if="loadPc && loadPc.pcClass">Class: {{ loadPc.pcClass }}</p>
@@ -138,6 +138,7 @@ export default {
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
                    this.updateMessage = '',
+                   this.errors = [];
                    this.$store.dispatch('setPcNull', null);  
                }
             }
@@ -147,6 +148,7 @@ export default {
             }
         },
         async updatePc(){ 
+            this.errors = [];
             if (!this.loadPc.pcName){
                 this.errors.push('Name is required.');
             }else{
@@ -203,6 +205,7 @@ export default {
             this.$store.dispatch('deletePc', this.loadPc)
                 .then(
                     this.isEditing = false,
+                    errors = [],
                     this.updateMessage = '',
                     this.$store.dispatch('setPcNull', null),  
                     (error) => this.error = error.response.data.error,

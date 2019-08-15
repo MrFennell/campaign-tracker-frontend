@@ -8,6 +8,7 @@
         <AddLocation v-if="showForm"
             v-bind:successMessage.sync="successMessage"
             v-bind:showForm.sync="showForm"
+            v-bind:scrollTarget= "this.scrollTarget"
         ></AddLocation>
         <ListControls 
             v-if="showOptions" 

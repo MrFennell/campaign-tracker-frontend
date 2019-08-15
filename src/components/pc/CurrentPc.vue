@@ -90,7 +90,6 @@ export default {
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
                    this.$store.dispatch('setPcNull', null);  
-                      
                }
             }
             else{
@@ -98,6 +97,7 @@ export default {
             }
         },
         async updatePcImage (){
+            errors = [];
             const formData = new FormData();
             if (this.file){
                 const pcId = this.loadPc.id;
