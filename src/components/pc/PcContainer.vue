@@ -7,7 +7,7 @@
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
          <div>
-            <CurrentPc 
+        <CurrentPc 
             v-bind:scrollTarget= "this.scrollTarget"/>   
         </div> 
         <span class="success-message">{{successMessage}}</span>

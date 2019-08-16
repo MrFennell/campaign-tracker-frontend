@@ -1,5 +1,5 @@
 <template>
-        <div>
+        <div v-if="loadPc">
             <div class="info" v-if="!isEditing">
                 <span class="updateMessage">{{updateMessage}}</span>
                 <a class="edit-button" @click="edit">Edit</a>
@@ -29,7 +29,7 @@
                     <div class="field">
                         <label class="label" for="pcName">Name:</label>
                         <div class="control">
-                            <input type="input" class="input" name="pcName"  placeholder="PC Name" v-model="loadPc.pcName" v-on:change="signalChange(this)">
+                            <input type="input" class="input" name="pcName"  placeholder="PC Name" v-model="loadPc.pcName">
                         </div>
                     </div>
                     <div class="field">
@@ -117,7 +117,7 @@ export default {
             errors: [],
             error: '',
             newImage: false,
-            formChange: ''
+            formChange: '',
         }
     },
     methods:{
@@ -176,6 +176,7 @@ export default {
                                 this.isEditing = false,
                                 this.updateMessage = '',
                                 this.newImage = false,
+                                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                                 (error) => this.error = error.response.data.error
                             )
                         }catch(err){
@@ -200,7 +201,6 @@ export default {
             }
         },
         async deletePc(){ 
-
            if  (confirm('Delete PC?')) {
             this.$store.dispatch('deletePc', this.loadPc)
                 .then(
@@ -208,6 +208,7 @@ export default {
                     this.errors = [],
                     this.updateMessage = '',
                     this.$store.dispatch('setPcNull', null),  
+                    this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                     (error) => this.error = error.response.data.error,
                     
                 )

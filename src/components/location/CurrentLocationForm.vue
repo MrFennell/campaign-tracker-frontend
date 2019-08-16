@@ -121,7 +121,7 @@ export default {
                                 this.isEditing = false,
                                 this.updateMessage = '',
                                 this.newImage = false,
-                               
+                                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                                 (error) => this.error = error.response.data.error
 
                             )

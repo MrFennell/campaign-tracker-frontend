@@ -30,7 +30,7 @@
                         <p>{{updateMessage}}</p>
                     </div>
                     <div class="column is-one-third">
-                        <currentNpcForm></currentNpcForm>
+                        <currentNpcForm v-bind:scrollTarget= "this.scrollTarget"></currentNpcForm>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@ export default {
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
                    this.$store.dispatch('setNpcNull', null);  
-                      
+
                }
             }
             else{

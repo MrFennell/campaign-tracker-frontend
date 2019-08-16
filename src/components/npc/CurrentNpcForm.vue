@@ -125,6 +125,7 @@ export default {
         async updateNpc(){ 
             this.errors = [];
             if (!this.loadNpc.name){
+                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                 this.errors.push('Name is required.');
             }else{
                if (this.newImage === true){
@@ -149,7 +150,7 @@ export default {
                                 this.isEditing = false,
                                 this.updateMessage = '',
                                 this.newImage = false,
-                               
+                                 this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                                 (error) => this.error = error.response.data.error
 
                             )
@@ -165,6 +166,7 @@ export default {
                     this.$store.dispatch('updateNpc', this.loadNpc)
                     .then(
                         this.isEditing = false,
+                        this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                         this.updateMessage = "Updated.",
                         setTimeout(() => this.updateMessage = null, 3000),
                         (error) => this.error = error.response.data.error
@@ -180,6 +182,7 @@ export default {
                     this.isEditing = false,
                     this.updateMessage = '',
                     this.$store.dispatch('setNpcNull', null),  
+                    this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                     (error) => this.error = error.response.data.error
                 )
            }
