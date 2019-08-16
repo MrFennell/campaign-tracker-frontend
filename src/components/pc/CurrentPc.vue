@@ -51,12 +51,8 @@ export default {
             'getPcId'
         ]),
         loadPc(){
-            const id = this.$store.getters.getPcId;
-            return this.$store.getters.getPcById(id);
+            return this.$store.state.pc
         }
-    },
-    mounted(){
-        this.scrollHeader = this.$parent.scrollObject
     },
     data() {
         return {
@@ -97,7 +93,7 @@ export default {
             }
         },
         async updatePcImage (){
-            errors = [];
+            this.errors = [];
             const formData = new FormData();
             if (this.file){
                 const pcId = this.loadPc.id;

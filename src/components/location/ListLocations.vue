@@ -1,8 +1,5 @@
 <template>
-    <div  class="content" id="list-locations-container">     
-        <div >
-            <CurrentLocation v-bind:scrollTarget= "this.scrollTarget"/>
-        </div>
+    <div class="content" id="list-locations-container">
         <div class="columns is-multiline">
             <div :class="[columnSize]" 
                 v-for="(location, index) in loadLocations" 
@@ -29,10 +26,8 @@
 
 <script>
 import _ from 'lodash';
-import CurrentLocation from '@/components/location/CurrentLocation.vue';
 export default {
     name: "ListLocations",
-    components: {CurrentLocation},
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
     ,

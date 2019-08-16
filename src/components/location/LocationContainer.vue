@@ -5,6 +5,9 @@
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new Location</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
+        <div >
+            <CurrentLocation v-bind:scrollTarget= "this.scrollTarget"/>
+        </div>
         <AddLocation v-if="showForm"
             v-bind:successMessage.sync="successMessage"
             v-bind:showForm.sync="showForm"
@@ -33,12 +36,14 @@
 import AddLocation from '@/components/location/AddLocation.vue';
 import ListLocations from '@/components/location/ListLocations.vue';
 import ListControls from '@/components/ui/ListControls.vue';
+import CurrentLocation from '@/components/location/CurrentLocation.vue';
 
 export default {
     components: {
     AddLocation,
     ListLocations,
-    ListControls
+    ListControls,
+    CurrentLocation
     },
     name: "LocationContainer",
     data() {

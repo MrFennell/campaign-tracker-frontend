@@ -1,8 +1,5 @@
 <template>
-    <div class="content" id="list-npcs-container">     
-        <div>
-            <CurrentNpc v-bind:scrollTarget= "this.scrollTarget"/>
-        </div>
+    <div class="content" id="list-npcs-container">
         <div class="columns is-multiline">
             <div :class="[columnSize]" 
                 v-for="(npc, index) in loadNpcs" 
@@ -29,10 +26,8 @@
 
 <script>
 import _ from 'lodash';
-import CurrentNpc from '@/components/npc/CurrentNpc.vue';
 export default {
     name: "ListNpcs",
-    components: {CurrentNpc},
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
     ,

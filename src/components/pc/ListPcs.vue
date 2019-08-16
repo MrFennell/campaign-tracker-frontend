@@ -1,8 +1,8 @@
 <template>
     <div v-if="this.scrollTarget != ''" class="content" id="list-pcs-container"> 
-        <div>
+        <!-- <div>
             <CurrentPc v-bind:scrollTarget= "this.scrollTarget"/>   
-        </div>           
+        </div>            -->
         <div class="columns is-multiline">
             <div :class="[columnSize]" 
                 v-for="(pc, index) in loadPcs" 
@@ -32,11 +32,11 @@
 <script>
 
 import _ from 'lodash';
-import CurrentPc from '@/components/pc/CurrentPc.vue';
+// import CurrentPc from '@/components/pc/CurrentPc.vue';
 
 export default {
     name: "ListPcs",
-    components: {CurrentPc},
+    // components: {CurrentPc},
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
     ,

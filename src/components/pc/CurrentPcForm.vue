@@ -15,7 +15,6 @@
                 <p v-if="loadPc && loadPc.pcLifestate">Life State: {{ loadPc.pcLifestate }}</p>
                 <p v-if="loadPc && loadPc.pcSharedBio">Shared Bio: {{ loadPc.pcSharedBio }}</p>
                 <p v-if="loadPc && loadPc.pcPrivateBio">Private Bio: {{ loadPc.pcPrivateBio }}</p>
-
             </div>
             
             <div v-if="isEditing">
@@ -30,7 +29,7 @@
                     <div class="field">
                         <label class="label" for="pcName">Name:</label>
                         <div class="control">
-                            <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="loadPc.pcName">
+                            <input type="input" class="input" name="pcName"  placeholder="PC Name" v-model="loadPc.pcName" v-on:change="signalChange(this)">
                         </div>
                     </div>
                     <div class="field">
@@ -117,7 +116,8 @@ export default {
             updateMessage: '',
             errors: [],
             error: '',
-            newImage: false
+            newImage: false,
+            formChange: ''
         }
     },
     methods:{
@@ -205,7 +205,7 @@ export default {
             this.$store.dispatch('deletePc', this.loadPc)
                 .then(
                     this.isEditing = false,
-                    errors = [],
+                    this.errors = [],
                     this.updateMessage = '',
                     this.$store.dispatch('setPcNull', null),  
                     (error) => this.error = error.response.data.error,

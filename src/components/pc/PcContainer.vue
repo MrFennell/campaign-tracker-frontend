@@ -1,10 +1,15 @@
 <template>
     <div class="container is-fullhd">
         <h2 ref="scrollHeader">Player Characters:</h2>
+       
         <div class="list-controls">
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new PC</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
+         <div>
+            <CurrentPc 
+            v-bind:scrollTarget= "this.scrollTarget"/>   
+        </div> 
         <span class="success-message">{{successMessage}}</span>
         <AddPc v-if="showForm"
             v-bind:showForm.sync="showForm"
@@ -35,14 +40,14 @@
 import AddPc from '@/components/pc/AddPc.vue';
 import ListPcs from '@/components/pc/ListPcs.vue';
 import ListControls from '@/components/ui/ListControls.vue';
-// import CurrentPc from '@/components/pc/CurrentPc.vue';
+import CurrentPc from '@/components/pc/CurrentPc.vue';
 
 export default {
     components: {
     AddPc, 
     ListPcs,
-    ListControls
-    // CurrentPc
+    ListControls,
+    CurrentPc
     },
     name: "PcContainer",
     data() {

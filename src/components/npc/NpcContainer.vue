@@ -5,6 +5,9 @@
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new PC</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
+        <div>
+            <CurrentNpc v-bind:scrollTarget= "this.scrollTarget"/>
+        </div>
          <span class="success-message">{{successMessage}}</span>
         <AddNpc v-if="showForm"
          v-bind:successMessage.sync="successMessage"
@@ -36,13 +39,14 @@
 import AddNpc from '@/components/npc/AddNpc.vue';
 import ListNpcs from '@/components/npc/ListNpcs.vue';
 import ListControls from '@/components/ui/ListControls.vue';
-// import CurrentNpc from '@/components/npc/CurrentNpc.vue';
+import CurrentNpc from '@/components/npc/CurrentNpc.vue';
 
 export default {
     components: {
     AddNpc,  
     ListNpcs,
-    ListControls
+    ListControls,
+    CurrentNpc
     },
     name: "NpcContainer",
     data() {
