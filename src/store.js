@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-
+axios.defaults.baseURL = process.env.VUE_APP_URL;
 import axios from 'axios'
 export default new Vuex.Store({
   state: {
@@ -84,27 +84,27 @@ export default new Vuex.Store({
   },
   actions: {
     async getUsers({ commit }) {
-      const response = await axios.get(process.env.VUE_APP_URL+'/users');
+      const response = await axios.get('/users');
       commit('setUsers', response.data);
     },
     async register({ commit }, payload) {
-      const response = await axios.post(process.env.VUE_APP_URL+'/users/register', payload);
+      const response = await axios.post('users/register', payload);
       commit('setUser', response.data);
     },
     // async login({ commit }, payload) {
-    //   const response = await axios.post(process.env.VUE_APP_URL+'/users/login', payload)
+    //   const response = await axios.post('users/login', payload)
     //     commit('setUser', response.data);
     // },
     logout({ commit }) {
-      return axios.post(process.env.VUE_APP_URL+'/users/logout')
+      return axios.post('users/logout')
         .then(() => commit('setUser', ''));
     },
     login({ commit }, payload) {
-      return axios.post(process.env.VUE_APP_URL+'/users/login', payload)
+      return axios.post('users/login', payload)
         .then(response => commit('setUser', response.data));
     },
     async setCurrentCampaign({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/setCurrentCampaign', payload);
+      const response = await axios.post('setCurrentCampaign', payload);
         commit('setCampaign', response.data);
     },
     async setCampaignNull({ commit }){
@@ -112,7 +112,7 @@ export default new Vuex.Store({
       commit('setCampaignNull', response);
     },
     async loadCurrentCampaign({ commit }, payload)  {
-      const response = await axios.get(process.env.VUE_APP_URL+'/loadCurrentCampaign', payload);
+      const response = await axios.get('/loadCurrentCampaign', payload);
        commit('setCampaign', response.data);
     },
     dismiss({ commit }) {
@@ -120,7 +120,7 @@ export default new Vuex.Store({
     },
 
     async loadcurrentuser({ commit }) {
-      axios.get(process.env.VUE_APP_URL+'/users/current')
+      axios.get('/users/current')
         .then(response => commit('setUser', response.data));
     },
     loadCampaign({ commit }, payload) {
@@ -128,38 +128,38 @@ export default new Vuex.Store({
         .then(response => commit('setCampaign', response.data));
     },
     loadCampaigns( store ) {
-      axios.get(process.env.VUE_APP_URL+'/campaigns')
+      axios.get('/campaigns')
         .then(response => { 
         store.commit('setCampaigns', response.data);
       });
     },
     loadPcs( store ) {
-      axios.get(process.env.VUE_APP_URL+'/pcs')
+      axios.get('/pcs')
         .then(response => { 
         store.commit('setPcs', response.data);
       });
     },
     getCampaigns( {commit} , payload) {
-      axios.get(process.env.VUE_APP_URL+'/campaigns', payload)
+      axios.get('/campaigns', payload)
         .then(response => commit('setCampaigns', response.data));
     },
     async AddCampaign({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/addCampaign', payload)
+      const response = await axios.post('addCampaign', payload)
       commit('setCampaigns', response.data);
     },
     async updateCampaign({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/updateCampaign', payload)
+      const response = await axios.post('updateCampaign', payload)
       commit('setCampaigns', response.data);
     },
     async deleteCampaign({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/deleteCampaign', payload)
+      const response = await axios.post('deleteCampaign', payload)
       commit('setCampaigns', response.data);
     },
     async setPc({ commit }, payload){
       commit('setPc', payload);
     },
     async campaignThumbnails({ commit }, payload){
-      const response = await axios.get(process.env.VUE_APP_URL+'/campaignThumbnails', payload)
+      const response = await axios.get('/campaignThumbnails', payload)
       commit('setCampaignThumbnails', response.data);
     },
     async setPcNull({ commit }){
@@ -167,35 +167,35 @@ export default new Vuex.Store({
       commit('setPc', response);
     },
     async getPcs({ commit }, payload) {
-      const response = await axios.get(process.env.VUE_APP_URL+'/pcs', payload);
+      const response = await axios.get('/pcs', payload);
       commit('setPcs', response.data);
     },
     async addPc({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/pcs/addPc', payload)
+      const response = await axios.post('pcs/addPc', payload)
       commit('setPcs', response.data);
     },
     async addPcWithImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/pcs/addPcWithImage', payload)
+      const response = await axios.post('pcs/addPcWithImage', payload)
       commit('setPcs', response.data);
     },
     async updatePc({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/pcs/updatePc', payload)
+      const response = await axios.post('pcs/updatePc', payload)
       commit('setPcs', response.data);
     },
     async updatePcImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/pcs/updatePcImage', payload)
+      const response = await axios.post('pcs/updatePcImage', payload)
       commit('setPcs', response.data);
     },
     async updatePcWithImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/pcs/updatePcWithImage', payload)
+      const response = await axios.post('pcs/updatePcWithImage', payload)
       commit('setPcs', response.data);
     },
     async deletePc({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/pcs/deletePc', payload)
+      const response = await axios.post('pcs/deletePc', payload)
       commit('setPcs', response.data);
     },
     loadNpcs( store ) {
-      axios.get(process.env.VUE_APP_URL+'/npcs')
+      axios.get('/npcs')
         .then(response => { 
         store.commit('setNpcs', response.data);
       });
@@ -208,37 +208,37 @@ export default new Vuex.Store({
       commit('setNpc', response);
     },
     async getNpcs({ commit }, payload) {
-      const response = await axios.get(process.env.VUE_APP_URL+'/npcs', payload);
+      const response = await axios.get('/npcs', payload);
       commit('setNpcs', response.data);
     },
     async addNpc({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/npcs/addNpc', payload)
+      const response = await axios.post('npcs/addNpc', payload)
       commit('setNpcs', response.data);
     },
     async addNpcWithImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/npcs/addNpcWithImage', payload)
+      const response = await axios.post('npcs/addNpcWithImage', payload)
       commit('setNpcs', response.data);
     },
     async updateNpc({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/npcs/updateNpc', payload)
+      const response = await axios.post('npcs/updateNpc', payload)
       commit('setNpcs', response.data);
     },
     async updateNpcImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/npcs/updateNpcImage', payload)
+      const response = await axios.post('npcs/updateNpcImage', payload)
       commit('setNpcs', response.data);
     },
     async updateNpcWithImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/npcs/updateNpcWithImage', payload)
+      const response = await axios.post('npcs/updateNpcWithImage', payload)
       commit('setNpcs', response.data);
     },
     async deleteNpc({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/npcs/deleteNpc', payload)
+      const response = await axios.post('npcs/deleteNpc', payload)
       commit('setNpcs', response.data);
     },
 
     ///locations
     loadLocations( store ) {
-      axios.get(process.env.VUE_APP_URL+'/locations')
+      axios.get('/locations')
         .then(response => { 
         store.commit('setLocations', response.data);
       });
@@ -251,31 +251,31 @@ export default new Vuex.Store({
       commit('setLocation', response);
     },
     async getLocations({ commit }, payload) {
-      const response = await axios.get(process.env.VUE_APP_URL+'/locations', payload);
+      const response = await axios.get('/locations', payload);
       commit('setLocations', response.data);
     },
     async addLocation({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/locations/addLocation', payload)
+      const response = await axios.post('locations/addLocation', payload)
       commit('setLocations', response.data);
     },
     async addLocationWithImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/locations/addLocationWithImage', payload)
+      const response = await axios.post('locations/addLocationWithImage', payload)
       commit('setLocations', response.data);
     },
     async updateLocation({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/locations/updateLocation', payload)
+      const response = await axios.post('locations/updateLocation', payload)
       commit('setLocations', response.data);
     },
     async updateLocationImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/locations/updateLocationImage', payload)
+      const response = await axios.post('locations/updateLocationImage', payload)
       commit('setLocations', response.data);
     },
     async updateLocationWithImage({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/locations/updateNpcWithImage', payload)
+      const response = await axios.post('locations/updateNpcWithImage', payload)
       commit('setLocations', response.data);
     },
     async deleteLocation({ commit }, payload){
-      const response = await axios.post(process.env.VUE_APP_URL+'/locations/deleteLocation', payload)
+      const response = await axios.post('locations/deleteLocation', payload)
       commit('setLocations', response.data);
     }
     
