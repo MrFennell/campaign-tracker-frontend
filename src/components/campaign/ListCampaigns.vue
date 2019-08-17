@@ -41,6 +41,17 @@ export default {
             return this.$store.state.pcs;
         }
     },
+    watch: {
+        loadPcs: function (newValue){
+            if(newValue){
+                this.$store.dispatch('campaignThumbnails')
+                this.loadCampaigns = this.$store.state.campaignThumbnails;
+            }
+        }
+    },
+    mounted() {
+        this.$store.dispatch('campaignThumbnails')
+    },
     data(){
         return{
             collapsed: true,

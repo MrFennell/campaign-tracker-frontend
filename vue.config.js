@@ -1,12 +1,12 @@
 // module.exports = {
 //     devServer: {
 //       proxy: {
-//         '^campaign-tracker-server.fennellweb.com': {
+//         '^api': {
 //           target: 'http://localhost:8000',
 //           ws: true,
 //           changeOrigin: true,
 //           pathRewrite: {
-//             'campaign-tracker-server.fennellweb.com': ''
+//             'api': ''
 //           }
 //         },
 //         '/images': {
