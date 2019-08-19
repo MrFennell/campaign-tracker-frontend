@@ -1,29 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
-import axios from 'axios'
-// const headers = {'X-Requested-With': 'XMLHttpRequest'}
-// const config = {
-//   headers: {'Access-Control-Allow-Origin': '*'}
-// }
+axios.defaults.baseURL = process.env.VUE_APP_URL;
+
 export default new Vuex.Store({
   state: {
     user: '',
     users: [],
     campaign: '',
     campaigns: [],
+    campaignThumbnails: [],
     pcs: [],
     pc: '',
     npcs: [],
     npc: '',
     location: '',
     locations: []
+
   },
   getters: {
     isLoggedIn: state => !!state.user,
-    getUserId: (state) => { return state.user.id},
+    getUserId: (state) => { return state.user.id}, 
     getCampaigns:(state) => {return state.campaigns},
     getCampaignId:(state) => { return state.campaign.id },
     getCampaignById: (state) => (id) =>{ 
@@ -59,6 +59,9 @@ export default new Vuex.Store({
     setCampaigns(state, campaigns){
       state.campaigns = campaigns;
     },
+    setCampaignThumbnails(state, campaignThumbnails){
+      state.campaignThumbnails = campaignThumbnails;
+    },
     setPcs(state, pcs){
       state.pcs = pcs;
     },
@@ -83,27 +86,27 @@ export default new Vuex.Store({
   },
   actions: {
     async getUsers({ commit }) {
-      const response = await axios.get('https://campaigntracker-server.webfennell.com/users');
+      const response = await axios.get('/users');
       commit('setUsers', response.data);
     },
     async register({ commit }, payload) {
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/users/register', payload);
+      const response = await axios.post('users/register', payload);
       commit('setUser', response.data);
     },
     // async login({ commit }, payload) {
-    //   const response = await axios.post('/users/login', payload)
+    //   const response = await axios.post('users/login', payload)
     //     commit('setUser', response.data);
     // },
     logout({ commit }) {
-      return axios.post('https://campaigntracker-server.webfennell.com/users/logout')
+      return axios.post('users/logout')
         .then(() => commit('setUser', ''));
     },
     login({ commit }, payload) {
-      return axios.post('https://campaigntracker-server.webfennell.com/users/login', payload)
+      return axios.post('users/login', payload)
         .then(response => commit('setUser', response.data));
     },
     async setCurrentCampaign({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/setCurrentCampaign', payload);
+      const response = await axios.post('setCurrentCampaign', payload);
         commit('setCampaign', response.data);
     },
     async setCampaignNull({ commit }){
@@ -111,7 +114,7 @@ export default new Vuex.Store({
       commit('setCampaignNull', response);
     },
     async loadCurrentCampaign({ commit }, payload)  {
-      const response = await axios.get('https://campaigntracker-server.webfennell.com/loadCurrentCampaign', payload);
+      const response = await axios.get('/loadCurrentCampaign', payload);
        commit('setCampaign', response.data);
     },
     dismiss({ commit }) {
@@ -119,82 +122,82 @@ export default new Vuex.Store({
     },
 
     async loadcurrentuser({ commit }) {
-      axios.get('https://campaigntracker-server.webfennell.com/users/current')
+      axios.get('/users/current')
         .then(response => commit('setUser', response.data));
     },
     loadCampaign({ commit }, payload) {
-      axios.get(process.env.VUE_APP_BASEURL+`/campaigns/${payload}`)
+      axios.get(`/campaigns/${payload}`)
         .then(response => commit('setCampaign', response.data));
     },
     loadCampaigns( store ) {
-      axios.get('https://campaigntracker-server.webfennell.com/campaigns')
+      axios.get('/campaigns')
         .then(response => { 
         store.commit('setCampaigns', response.data);
       });
     },
     loadPcs( store ) {
-      axios.get('https://campaigntracker-server.webfennell.com/pcs')
+      axios.get('/pcs')
         .then(response => { 
         store.commit('setPcs', response.data);
       });
     },
     getCampaigns( {commit} , payload) {
-      axios.get('https://campaigntracker-server.webfennell.com/campaigns', payload)
+      axios.get('/campaigns', payload)
         .then(response => commit('setCampaigns', response.data));
     },
     async AddCampaign({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/addCampaign', payload)
+      const response = await axios.post('addCampaign', payload)
       commit('setCampaigns', response.data);
     },
     async updateCampaign({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/updateCampaign', payload)
+      const response = await axios.post('updateCampaign', payload)
       commit('setCampaigns', response.data);
     },
     async deleteCampaign({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/deleteCampaign', payload)
+      const response = await axios.post('deleteCampaign', payload)
       commit('setCampaigns', response.data);
     },
     async setPc({ commit }, payload){
       commit('setPc', payload);
     },
-    // async setPc({ commit }, payload){
-    //   const response = await axios.post('/pcs/setPc', payload)
-    //   commit('setPc', response.data);
-    // },
+    async campaignThumbnails({ commit }, payload){
+      const response = await axios.get('/campaignThumbnails', payload)
+      commit('setCampaignThumbnails', response.data);
+    },
     async setPcNull({ commit }){
       const response = '';
       commit('setPc', response);
     },
     async getPcs({ commit }, payload) {
-      const response = await axios.get('https://campaigntracker-server.webfennell.com/pcs', payload);
+      const response = await axios.get('/pcs', payload);
       commit('setPcs', response.data);
     },
     async addPc({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/pcs/addPc', payload)
+      const response = await axios.post('pcs/addPc', payload)
       commit('setPcs', response.data);
     },
     async addPcWithImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/pcs/addPcWithImage', payload)
+      const response = await axios.post('pcs/addPcWithImage', payload)
       commit('setPcs', response.data);
     },
     async updatePc({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/pcs/updatePc', payload)
+      const response = await axios.post('pcs/updatePc', payload)
       commit('setPcs', response.data);
     },
     async updatePcImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/pcs/updatePcImage', payload)
+      const response = await axios.post('pcs/updatePcImage', payload)
       commit('setPcs', response.data);
     },
     async updatePcWithImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/pcs/updatePcWithImage', payload)
+      const response = await axios.post('pcs/updatePcWithImage', payload)
       commit('setPcs', response.data);
     },
     async deletePc({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/pcs/deletePc', payload)
+      const response = await axios.post('pcs/deletePc', payload)
       commit('setPcs', response.data);
     },
     loadNpcs( store ) {
-      axios.get('https://campaigntracker-server.webfennell.com/npcs')
+      axios.get('/npcs')
         .then(response => { 
         store.commit('setNpcs', response.data);
       });
@@ -207,37 +210,37 @@ export default new Vuex.Store({
       commit('setNpc', response);
     },
     async getNpcs({ commit }, payload) {
-      const response = await axios.get('https://campaigntracker-server.webfennell.com/npcs', payload);
+      const response = await axios.get('/npcs', payload);
       commit('setNpcs', response.data);
     },
     async addNpc({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/npcs/addNpc', payload)
+      const response = await axios.post('npcs/addNpc', payload)
       commit('setNpcs', response.data);
     },
     async addNpcWithImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/npcs/addNpcWithImage', payload)
+      const response = await axios.post('npcs/addNpcWithImage', payload)
       commit('setNpcs', response.data);
     },
     async updateNpc({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/npcs/updateNpc', payload)
+      const response = await axios.post('npcs/updateNpc', payload)
       commit('setNpcs', response.data);
     },
     async updateNpcImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/npcs/updateNpcImage', payload)
+      const response = await axios.post('npcs/updateNpcImage', payload)
       commit('setNpcs', response.data);
     },
     async updateNpcWithImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/npcs/updateNpcWithImage', payload)
+      const response = await axios.post('npcs/updateNpcWithImage', payload)
       commit('setNpcs', response.data);
     },
     async deleteNpc({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/npcs/deleteNpc', payload)
+      const response = await axios.post('npcs/deleteNpc', payload)
       commit('setNpcs', response.data);
     },
 
     ///locations
     loadLocations( store ) {
-      axios.get('https://campaigntracker-server.webfennell.com/locations')
+      axios.get('/locations')
         .then(response => { 
         store.commit('setLocations', response.data);
       });
@@ -250,31 +253,31 @@ export default new Vuex.Store({
       commit('setLocation', response);
     },
     async getLocations({ commit }, payload) {
-      const response = await axios.get('https://campaigntracker-server.webfennell.com/locations', payload);
+      const response = await axios.get('/locations', payload);
       commit('setLocations', response.data);
     },
     async addLocation({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/locations/addLocation', payload)
+      const response = await axios.post('locations/addLocation', payload)
       commit('setLocations', response.data);
     },
     async addLocationWithImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/locations/addLocationWithImage', payload)
+      const response = await axios.post('locations/addLocationWithImage', payload)
       commit('setLocations', response.data);
     },
     async updateLocation({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/locations/updateLocation', payload)
+      const response = await axios.post('locations/updateLocation', payload)
       commit('setLocations', response.data);
     },
     async updateLocationImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/locations/updateLocationImage', payload)
+      const response = await axios.post('locations/updateLocationImage', payload)
       commit('setLocations', response.data);
     },
     async updateLocationWithImage({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/locations/updateNpcWithImage', payload)
+      const response = await axios.post('locations/updateNpcWithImage', payload)
       commit('setLocations', response.data);
     },
     async deleteLocation({ commit }, payload){
-      const response = await axios.post('https://campaigntracker-server.webfennell.com/locations/deleteLocation', payload)
+      const response = await axios.post('locations/deleteLocation', payload)
       commit('setLocations', response.data);
     }
     
