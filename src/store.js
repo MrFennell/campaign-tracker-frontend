@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
+
 axios.defaults.baseURL = process.env.VUE_APP_URL;
-import axios from 'axios'
+
 export default new Vuex.Store({
   state: {
     user: '',
@@ -21,7 +23,7 @@ export default new Vuex.Store({
   },
   getters: {
     isLoggedIn: state => !!state.user,
-    getUserId: (state) => { return state.user.id},
+    getUserId: (state) => { return state.user.id}, 
     getCampaigns:(state) => {return state.campaigns},
     getCampaignId:(state) => { return state.campaign.id },
     getCampaignById: (state) => (id) =>{ 
