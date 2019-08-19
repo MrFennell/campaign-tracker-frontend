@@ -86,7 +86,7 @@ export default new Vuex.Store({
   },
   actions: {
     async getUsers({ commit }) {
-      const response = await axios.get('/api//users');
+      const response = await axios.get('/api/users');
       commit('setUsers', response.data);
     },
     async register({ commit }, payload) {
@@ -114,7 +114,7 @@ export default new Vuex.Store({
       commit('setCampaignNull', response);
     },
     async loadCurrentCampaign({ commit }, payload)  {
-      const response = await axios.get('/api//loadCurrentCampaign', payload);
+      const response = await axios.get('/api/loadCurrentCampaign', payload);
        commit('setCampaign', response.data);
     },
     dismiss({ commit }) {
@@ -122,7 +122,7 @@ export default new Vuex.Store({
     },
 
     async loadcurrentuser({ commit }) {
-      axios.get('/api//users/current')
+      axios.get('/api/users/current')
         .then(response => commit('setUser', response.data));
     },
     loadCampaign({ commit }, payload) {
@@ -130,19 +130,19 @@ export default new Vuex.Store({
         .then(response => commit('setCampaign', response.data));
     },
     loadCampaigns( store ) {
-      axios.get('/api//campaigns')
+      axios.get('/api/campaigns')
         .then(response => { 
         store.commit('setCampaigns', response.data);
       });
     },
     loadPcs( store ) {
-      axios.get('/api//pcs')
+      axios.get('/api/pcs')
         .then(response => { 
         store.commit('setPcs', response.data);
       });
     },
     getCampaigns( {commit} , payload) {
-      axios.get('/api//campaigns', payload)
+      axios.get('/api/campaigns', payload)
         .then(response => commit('setCampaigns', response.data));
     },
     async AddCampaign({ commit }, payload){
@@ -161,7 +161,7 @@ export default new Vuex.Store({
       commit('setPc', payload);
     },
     async campaignThumbnails({ commit }, payload){
-      const response = await axios.get('/api//campaignThumbnails', payload)
+      const response = await axios.get('/api/campaignThumbnails', payload)
       commit('setCampaignThumbnails', response.data);
     },
     async setPcNull({ commit }){
@@ -169,7 +169,7 @@ export default new Vuex.Store({
       commit('setPc', response);
     },
     async getPcs({ commit }, payload) {
-      const response = await axios.get('/api//pcs', payload);
+      const response = await axios.get('/api/pcs', payload);
       commit('setPcs', response.data);
     },
     async addPc({ commit }, payload){
@@ -197,7 +197,7 @@ export default new Vuex.Store({
       commit('setPcs', response.data);
     },
     loadNpcs( store ) {
-      axios.get('/api//npcs')
+      axios.get('/api/npcs')
         .then(response => { 
         store.commit('setNpcs', response.data);
       });
@@ -210,7 +210,7 @@ export default new Vuex.Store({
       commit('setNpc', response);
     },
     async getNpcs({ commit }, payload) {
-      const response = await axios.get('/api//npcs', payload);
+      const response = await axios.get('/api/npcs', payload);
       commit('setNpcs', response.data);
     },
     async addNpc({ commit }, payload){
@@ -240,7 +240,7 @@ export default new Vuex.Store({
 
     ///locations
     loadLocations( store ) {
-      axios.get('/api//locations')
+      axios.get('/api/locations')
         .then(response => { 
         store.commit('setLocations', response.data);
       });
@@ -253,7 +253,7 @@ export default new Vuex.Store({
       commit('setLocation', response);
     },
     async getLocations({ commit }, payload) {
-      const response = await axios.get('/api//locations', payload);
+      const response = await axios.get('/api/locations', payload);
       commit('setLocations', response.data);
     },
     async addLocation({ commit }, payload){
