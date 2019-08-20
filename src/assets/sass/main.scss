@@ -39,6 +39,7 @@ a:hover{
 .section{
    padding: 2rem 1.5rem;
 }
+
 .edit-button{
     float: right;
     display:none;
@@ -74,16 +75,42 @@ padding-left: .5em;
 .title:not(:last-child){
     margin-bottom: 2px;
 }
-.campaign-container-content{
+.add-form-container{
     // background-color: #d4d4d4; 
-    padding: 2rem;
+    
+}
+//content
+.info{
+    line-height: 1em;
+    .textarea{
+      min-height: 2em;  
+    }
+}
+//forms
+
+//add el forms
+.add-form-container{
+    padding: 1.5rem 2rem;
     border-radius: 6px;
     border: 1px solid #d4d4d4; 
     margin-top: 1em;
+    .add-form-header{
+        p{
+            float: left;
+            margin-bottom: .5rem ;
+        }
+        a{
+            float: right;
+        }
+    }
+    form{
+        clear: both;
+    }
 }
-//forms
+
 .error-text{
     display: flex;
+    clear:both;
     align-items: center;
     // div{
     //     display: flex;

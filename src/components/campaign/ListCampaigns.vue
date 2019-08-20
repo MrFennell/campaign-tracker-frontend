@@ -1,5 +1,5 @@
 <template>
-    <div class="campaign-container-content" >   
+    <div class="container-content" >   
         <p>Choose a campaign below to load your data.</p>
         <div v-for="(campaign) in loadCampaigns" v-bind:key="campaign.id">
             <div class="box" id="campaigns">

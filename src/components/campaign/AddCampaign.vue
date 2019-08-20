@@ -1,5 +1,5 @@
 <template>
-    <div class="campaign-container-content">
+    <div class="container-content">
     <p>Start a new Campaign</p>
     
     <form @submit.prevent="AddCampaign">

@@ -1,10 +1,11 @@
 <template>
     <div class="container">
-        <div>
-            <p ref="formTop">Add a new player character below.</p>
-            <div class="is-pulled-right">
+        <div class="add-form-container">
+            <div ref="formTop" class="add-form-header">
+                <p>Add a new player character below.</p>
                 <a class="delete" @click="$emit('update:showForm', false)"></a>
             </div>
+            
             <div v-if="errors.length" class="error-text">
                 <div>
                     <b><i><font-awesome-icon icon="exclamation-triangle" /></i></b>

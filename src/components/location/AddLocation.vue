@@ -2,11 +2,13 @@
     <div>
         <p v-if="successMessage">{{successMessage}}</p>    
 
-        <div>
-            <p ref="formTop">Create a new Non-Player Character below.</p>
-            <div class="is-pulled-right">
+        <div class="add-form-container">
+            
+            <div ref="formTop" class="add-form-header">
+                <p>Create a new location below.</p>
                 <a class="delete" @click="$emit('update:showForm', false)"></a>
             </div>
+            
             <div v-if="errors.length" class="error-text">
                 <div>
                     <b><i><font-awesome-icon icon="exclamation-triangle" /></i></b>
