@@ -1,8 +1,5 @@
 <template>
     <div v-if="this.scrollTarget != ''" class="content" id="list-pcs-container"> 
-        <!-- <div>
-            <CurrentPc v-bind:scrollTarget= "this.scrollTarget"/>   
-        </div>            -->
         <div class="columns is-multiline">
             <div :class="[columnSize]" 
                 v-for="(pc, index) in loadPcs" 
@@ -11,7 +8,7 @@
                     <div class="card-hover">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img v-if="pc.imageSrc" :src="pc.imageSrc" />
+                                <img v-if="pc.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/'+pc.imageSrc" />
                                 <img v-else src='../../assets/images/thumbnail-default.png'/>
                             </figure>
                         </div>
@@ -32,11 +29,8 @@
 <script>
 
 import _ from 'lodash';
-// import CurrentPc from '@/components/pc/CurrentPc.vue';
-
 export default {
     name: "ListPcs",
-    // components: {CurrentPc},
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
     ,

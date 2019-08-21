@@ -98,7 +98,6 @@
                     this.errorScroll();
                 }
                 else{
-
                     this.errors = [];                    
                     const formData = new FormData();
                     formData.append("name", this.name);
@@ -107,25 +106,17 @@
                     formData.append("description", this.lifeState);
                     formData.append("sharedBio", this.sharedBio);
                     formData.append("privateBio", this.privateBio);
-                    
                     if (this.file){
                         formData.append('file', this.file);
-                        try{
-                            this.$store.dispatch('addNpcWithImage', formData),
-                            this.file = null;
-                            this.$emit('update:successMessage', "Character created!");
-                            this.$emit('update:showForm', false);
-                            this.errors = [];
-                        }catch(err){
-                            console.log(err);
-                        }
                     }
-                    else{
+                    try{
                         this.$store.dispatch('addNpc', formData),
-                        this.showForm = false;
                         this.file = null;
                         this.$emit('update:successMessage', "Character created!");
                         this.$emit('update:showForm', false);
+                        this.errors = [];
+                    }catch(err){
+                        console.log(err);
                     }
                 }
             }

@@ -1,16 +1,16 @@
 <template>
-        <div v-if="loadLocation" class="box">
+        <div v-if="location" class="box">
             <div class="is-pulled-right">
                 <a class="delete" @click="hideLocation()"></a>
             </div>
             <div class="columns">
                 <div class="column is-one-third">
-                    <h2 v-if="loadLocation && loadLocation.name">{{ loadLocation.name }}</h2>
+                    <h2 v-if="location && location.name">{{ location.name }}</h2>
                     <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
                     <div id="image-container">
                             <div id="currentImage" class="image is-square">
-                                <img v-if="loadLocation.imageSrc" :src="loadLocation.imageSrc" />
+                                <img v-if="location.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/locations/'+location.imageSrc" />
                                 <img v-else src='../../assets/images/image-default.png'/>
                             </div>
                             <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
@@ -47,7 +47,7 @@ export default {
             'getLocationId',
             'getLocationById'
         ]),
-        loadLocation(){
+        location(){
             const id = this.$store.getters.getLocationId;
             return this.$store.getters.getLocationById(id);
         }
@@ -96,20 +96,18 @@ export default {
                if (confirm("Discard changes to Player Character?")){
                    this.isEditing = false,
                    this.$store.dispatch('setLocationNull', null);  
-                      
                }
             }
             else{
                 this.$store.dispatch('setLocationNull', null);     
             }
-            
         },
 
         async updateLocationImage (){
             const formData = new FormData();
             if (this.file){
-                const locationId = this.loadLocation.id;
-                const oldImage = this.loadLocation.imageSrc;
+                const locationId = this.location.id;
+                const oldImage = this.location.imageSrc;
                 if(oldImage != null){
                     formData.append('oldImage', oldImage);
                 }

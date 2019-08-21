@@ -54,7 +54,7 @@ export default {
         return {
             order: '',
             scrollTarget: '',
-            selected: 10,
+            selected: 20,
             sort: 'name',
             listOptions: false,
             sortDirection: 'asc',

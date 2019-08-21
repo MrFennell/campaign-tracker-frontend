@@ -10,7 +10,7 @@
 
                     <div id="image-container">
                         <div id="currentImage" class="image is-square">
-                            <img v-if="loadPc.imageSrc" :src="loadPc.imageSrc" />
+                            <img v-if="loadPc.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/'+loadPc.imageSrc"  />
                             <img v-else src='../../assets/images/image-default.png'/>
                         </div>
                         <div v-if="imagePreviewUrl" class="image is-4by3">
@@ -51,7 +51,8 @@ export default {
             'getPcId'
         ]),
         loadPc(){
-            return this.$store.state.pc
+            const id = this.$store.getters.getPcId;
+            return this.$store.getters.getPcById(id);
         }
     },
     data() {

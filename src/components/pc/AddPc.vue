@@ -123,7 +123,7 @@ export default {
                 this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"});
             });
         },
-    async newPc(){
+        async newPc(){
             this.errors = [];
             if (!this.pcName && !this.playerName){
                 this.errors.push('Please enter a name.');
@@ -152,20 +152,14 @@ export default {
                 formData.append("pcDescription", this.pcDescription);
                 if (this.file){
                     formData.append('file', this.file);
-                    try{
-                        this.$store.dispatch('addPcWithImage', formData),
-                        this.file = null;
-                        this.$emit('update:successMessage', "Character created!");
-                        this.$emit('update:showForm', false);
-                    }catch(err){
-                        console.log(err);
-                    }
                 }
-                else{
+                try{
                     this.$store.dispatch('addPc', formData),
                     this.file = null;
                     this.$emit('update:successMessage', "Character created!");
                     this.$emit('update:showForm', false);
+                }catch(err){
+                    console.log(err);
                 }
             }
         }

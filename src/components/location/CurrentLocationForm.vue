@@ -87,8 +87,6 @@ export default {
         selectFile(){
             this.file = this.$refs.file.files[0];
             this.newImage = true;
-            const file = this.$refs.file.files[0];
-            this.url = URL.createObjectURL(file);
         },
         edit(){
             if (!this.isEditing){
@@ -103,47 +101,31 @@ export default {
             if (!this.loadLocation.name){
                 this.errors.push('Name is required.');
             }else{
-               if (this.newImage === true){
-                    const formData = new FormData();
-
-                    if (this.file){
-                        const locationId = this.loadLocation.id;
-                        const oldImage = this.loadLocation.imageSrc;
-
-                        formData.append('LocationId', locationId);
-                        formData.append('oldImage', oldImage);
-                        formData.append('file', this.file);
-                        formData.append("name", this.loadLocation.name);
-                        formData.append("region", this.loadLocation.region);
-                        try{
-                            this.$store.dispatch('updateLocationWithImage', formData)
-                            .then(
-                                this.isEditing = false,
-                                this.updateMessage = '',
-                                this.newImage = false,
-                                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
-                                (error) => this.error = error.response.data.error
-
-                            )
-                        }catch(err){
-                            this.updateMessage = "Error updating Image."
-                            console.log(err);
-                        }
-                    }else{
-                        this.updateMessage = "No change to image."
-                    }
-               }
-               else{
-                    this.$store.dispatch('updateLocation', this.loadLocation)
+                const formData = new FormData();
+                const locationId = this.loadLocation.id;
+                const oldImage = this.loadLocation.imageSrc;
+                formData.append('locationId', locationId);
+                formData.append('oldImage', oldImage);
+                formData.append("name", this.loadLocation.name);
+                formData.append("region", this.loadLocation.region);
+                if (this.file){
+                    formData.append('file', this.file);
+                }
+                try{
+                    this.$store.dispatch('updateLocation', formData)
                     .then(
                         this.isEditing = false,
-                        this.updateMessage = "Updated.",
-                        this.updateMessage = "Updated.",
+                        this.updateMessage = '',
+                        this.newImage = false,
                         this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
-                        setTimeout(() => this.updateMessage = null, 3000),
                         (error) => this.error = error.response.data.error
+
                     )
-               }
+                }catch(err){
+                    this.updateMessage = "Error updating Image."
+                    console.log(err);
+                }
+
             }
         },
         async deleteLocation(){ 

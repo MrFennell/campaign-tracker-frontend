@@ -13,7 +13,7 @@
                         <div class="campaign-thumbnails">
                             <div class="campaign-thumbnail" v-for="thumbnail in campaign.thumbnails" v-bind:key="thumbnail">
                                 <!-- <figure class="image is-is-square"> -->
-                                    <img v-if="thumbnail !== null"  :src='thumbnail' />
+                                    <img v-if="thumbnail !== '' && thumbnail !== null"  :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/' + thumbnail" />
                                     <img v-else src='../../assets/images/thumbnail-default.png'/>
                                 <!-- </figure> -->
                             </div>

@@ -8,11 +8,11 @@
                 <p v-else>error - enter Name</p>
                 <p v-if="loadNpc && loadNpc.race">Class: {{ loadNpc.race }}</p>
                 <p v-if="loadNpc && loadNpc.profession">Description: {{ loadNpc.profession }}</p>
-                <p v-if="loadNpc && loadNpc.lifeState">Level: {{ loadNpc.lifeState }}</p>
-                <p v-if="loadNpc && loadNpc.description">Life State: {{ loadNpc.description }}</p>
+                <p v-if="loadNpc && loadNpc.lifeState">Life State: {{ loadNpc.lifeState }}</p>
+                <p v-if="loadNpc && loadNpc.description">Description: {{ loadNpc.description }}</p>
                 <p v-if="loadNpc && loadNpc.sharedBio">Shared Bio: {{ loadNpc.sharedBio }}</p>
                 <p v-if="loadNpc && loadNpc.privateBio">Private Bio: {{ loadNpc.privateBio }}</p>
-                <p v-else>No description.</p>
+                
             </div>
             <div v-if="isEditing">
                 <a class="edit-button-close" @click="isEditing = false">Quit Editing</a>
@@ -128,52 +128,38 @@ export default {
                 this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                 this.errors.push('Name is required.');
             }else{
-               if (this.newImage === true){
-                    const formData = new FormData();
-
-                    if (this.file){
-                        const npcId = this.loadNpc.id;
-                        const oldImage = this.loadNpc.imageSrc;
-
-                        formData.append('NpcId', npcId);
-                        formData.append('oldImage', oldImage);
-                        formData.append('file', this.file);
-                        formData.append("name", this.loadNpc.name);
-                        formData.append("race", this.loadNpc.race);
-                        formData.append("profession", this.loadNpc.profession);
-                        formData.append("description", this.loadNpc.lifeState);
-                        formData.append("sharedBio", this.loadNpc.sharedBio);
-                        formData.append("privateBio", this.loadNpc.privateBio);
-                        try{
-                            this.$store.dispatch('updateNpcWithImage', formData)
-                            .then(
-                                this.isEditing = false,
-                                this.updateMessage = '',
-                                this.newImage = false,
-                                 this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
-                                (error) => this.error = error.response.data.error
-
-                            )
-                        }catch(err){
-                            this.updateMessage = "Error updating Image."
-                            console.log(err);
-                        }
-                    }else{
-                        this.updateMessage = "No change to image."
-                    }
-               }
-               else{
-                    this.$store.dispatch('updateNpc', this.loadNpc)
+            const formData = new FormData();
+                const npcId = this.loadNpc.id;
+                const oldImage = this.loadNpc.imageSrc;
+                formData.append('npcId', npcId);
+                formData.append('oldImage', oldImage);
+                formData.append("name", this.loadNpc.name);
+                formData.append("race", this.loadNpc.race);
+                formData.append("profession", this.loadNpc.profession);
+                formData.append("description", this.loadNpc.description);
+                formData.append("lifestate", this.loadNpc.lifestate);
+                formData.append("sharedBio", this.loadNpc.sharedBio);
+                formData.append("privateBio", this.loadNpc.privateBio);
+                if (this.file){
+                    formData.append('file', this.file);
+                }
+                try{
+                    this.$store.dispatch('updateNpc', formData)
                     .then(
                         this.isEditing = false,
-                        this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
-                        this.updateMessage = "Updated.",
-                        setTimeout(() => this.updateMessage = null, 3000),
+                        this.updateMessage = '',
+                        this.newImage = false,
+                            this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
                         (error) => this.error = error.response.data.error
                     )
-               }
+                }catch(err){
+                    this.updateMessage = "Error updating Image."
+                    console.log(err);
+                }
+                    
             }
         },
+        
         async deleteNpc(){ 
 
            if  (confirm('Delete PC?')) {

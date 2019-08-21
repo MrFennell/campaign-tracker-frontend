@@ -2,7 +2,7 @@
     <div class="container is-fullhd">
         <h2 ref="scrollHeader">Non-Player Characters:</h2>
         <div class="list-controls">
-            <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new PC</a>
+            <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new NPC</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
         <div>

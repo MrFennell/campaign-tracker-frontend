@@ -8,7 +8,7 @@
                     <div class="card-hover">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img v-if="location.imageSrc" :src="location.imageSrc" />
+                                <img v-if="location.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/locations/'+location.imageSrc" />
                                 <img v-else src='../../assets/images/thumbnail-default.png'/>
                             </figure>
                         </div>

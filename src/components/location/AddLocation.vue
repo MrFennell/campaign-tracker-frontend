@@ -70,35 +70,29 @@ export default {
             });
         },
         async newLocation(){ 
-                this.errors = [];
-                if (!this.name){
-                    this.errors.push('Enter a name for the location.');
-                    this.errorScroll();
-                }
-                else{
-                    this.errors = [];                    
-                    const formData = new FormData();
-                    formData.append("name", this.name);
-                    formData.append("region", this.race);
-                    
-                    if (this.file){
-                        formData.append('file', this.file);
-                        try{
-                            this.$store.dispatch('addLocationWithImage', formData),
-                            this.file = null;
-                            this.errors = [];
-                            this.$emit('update:successMessage', "Location created!");
-                            this.$emit('update:showForm', false);
-                        }catch(err){
-                            console.log(err);
-                        }
-                    }
-                    else{
+            this.errors = [];
+            if (!this.name){
+                this.errors.push('Enter a name for the location.');
+                this.errorScroll();
+            }
+            else{
+                this.errors = [];            
+                const formData = new FormData();
+                formData.append("name", this.name);
+                formData.append("region", this.race);
+                
+                if (this.file){
+                    formData.append('file', this.file);
+                    try{
                         this.$store.dispatch('addLocation', formData),
                         this.file = null;
+                        this.errors = [];
                         this.$emit('update:successMessage', "Location created!");
                         this.$emit('update:showForm', false);
+                    }catch(err){
+                        console.log(err);
                     }
+                }
             }
         }
     }

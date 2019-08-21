@@ -74,6 +74,10 @@
                         <label for="pcPrivateBio" class="label" >Private Biography:</label>
                         <textarea  class="textarea"  name="pcPrivateBio" placeholder="Biography that will only be shared between the GM and the player." v-model="loadPc.pcPrivateBio"></textarea>
                     </div>
+                    <div class="field">
+                        <label for="image" class="image" >Image:</label>
+                        <input type="file" class="file"  ref="file" @change="selectFile">
+                    </div>
                     <div class="field is-grouped">
                         <p class="control">
                             <input type="submit" class="button is-primary" value="Update">
@@ -152,52 +156,40 @@ export default {
             if (!this.loadPc.pcName){
                 this.errors.push('Name is required.');
             }else{
-               if (this.newImage === true){
-                    const formData = new FormData();
+                const formData = new FormData();
+                const pcId = this.loadPc.id;
+                const oldImage = this.loadPc.imageSrc;
+                formData.append('pcId', pcId);
+                formData.append('oldImage', oldImage);
+                formData.append('file', this.file);
+                formData.append("pcName", this.loadPc.pcName);
+                formData.append("playerName", this.loadPc.playerName);
+                formData.append("pcClass", this.loadPc.pcClass);
+                formData.append("pcRace", this.loadPc.pcRace);
+                formData.append("pcLevel", this.loadPc.pcLevel);
+                formData.append("pcLifestate", this.loadPc.pcLifestate);
+                formData.append("pcSharedBio", this.loadPc.pcSharedBio);
+                formData.append("pcPrivateBio", this.loadPc.pcPrivateBio);
+                formData.append("pcDescription", this.loadPc.pcDescription);
 
-                    if (this.file){
-                        const pcId = this.loadPc.id;
-                        const oldImage = this.loadPc.imageSrc;
-                        formData.append('PcId', pcId);
-                        formData.append('oldImage', oldImage);
-                        formData.append('file', this.file);
-                        formData.append("pcName", this.loadPc.pcName);
-                        formData.append("playerName", this.loadPc.playerName);
-                        formData.append("pcClass", this.loadPc.pcClass);
-                        formData.append("pcRace", this.loadPc.pcRace);
-                        formData.append("pcLevel", this.loadPc.pcLevel);
-                        formData.append("pcLifestate", this.loadPc.pcLifestate);
-                        formData.append("pcSharedBio", this.loadPc.pcSharedBio);
-                        formData.append("pcPrivateBio", this.loadPc.pcPrivateBio);
-                        formData.append("pcDescription", this.loadPc.pcDescription);
-                        try{
-                            this.$store.dispatch('updatePcWithImage', formData)
-                            .then(
-                                this.isEditing = false,
-                                this.updateMessage = '',
-                                this.newImage = false,
-                                this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
-                                (error) => this.error = error.response.data.error
-                            )
-                        }catch(err){
-                            this.updateMessage = "Error updating Image."
-                            console.log(err);
-                        }
-                    }else{
-                        this.updateMessage = "No change to image."
-                    }
-               }
-               else{
-                    this.$store.dispatch('updatePc', this.loadPc)
+                if (this.file){
+                    formData.append('file', this.file);
+                }
+                try{
+                    this.$store.dispatch('updatePc', formData)
                     .then(
                         this.isEditing = false,
-                        this.updateMessage = "Updated.",
+                        this.updateMessage = '',
+                        this.newImage = false,
+                        this.file = null,
                         this.scrollTarget.scrollIntoView({behavior: "smooth", block: "start"}),
-                        setTimeout(() => this.updateMessage = null, 3000),
                         (error) => this.error = error.response.data.error
-                        
                     )
-               }
+                }catch(err){
+                    this.updateMessage = "Error updating Image."
+                    console.log(err);
+                }
+
             }
         },
         async deletePc(){ 

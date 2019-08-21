@@ -1,39 +1,38 @@
 <template>
-        <div v-if="loadNpc" class="box">
-            <div class="is-pulled-right">
-                <a class="delete" @click="hideNpc()"></a>
-            </div>
-            <div class="columns">
-                
-                    <div class="column is-one-third">
-                        <h2 v-if="loadNpc && loadNpc.name">{{ loadNpc.name }}</h2>
-                        <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
+    <div v-if="loadNpc" class="box">
+        <div class="is-pulled-right">
+            <a class="delete" @click="hideNpc()"></a>
+        </div>
+        <div class="columns">
+                <div class="column is-one-third">
+                    <h2 v-if="loadNpc && loadNpc.name">{{ loadNpc.name }}</h2>
+                    <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
-                        <div id="image-container">
-                                <div id="currentImage" class="image is-square">
-                                    <img v-if="loadNpc.imageSrc" :src="loadNpc.imageSrc" />
-                                    <img v-else src='../../assets/images/image-default.png'/>
-                                </div>
-                                <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
-                                    <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
-                                </div>
-
-                            <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
-                            
-                            <div v-if="showChangeImageForm" class="field">
-                                <label for="image" class="image" >Image:</label>
-                                <input type="file" class="file" ref="file" @change="selectNewImage">
-                                <button class="button" @click="updateNpcImage">Update</button>.
-                                <button class="button is-light" @click="hideNewImage()">Cancel</button>
+                    <div id="image-container">
+                            <div id="currentImage" class="image is-square">
+                                <img v-if="loadNpc.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/npcs/'+loadNpc.imageSrc" />
+                                <img v-else src='../../assets/images/image-default.png'/>
                             </div>
+                            <div v-if="imagePreviewUrl" id="currentImage" class="image is-4by3">
+                                <img v-if="imagePreviewUrl" :src="imagePreviewUrl" />
+                            </div>
+
+                        <a v-if="!showChangeImageForm" @click="showChangeImageForm = true">Change image</a>
+                        
+                        <div v-if="showChangeImageForm" class="field">
+                            <label for="image" class="image" >Image:</label>
+                            <input type="file" class="file" ref="file" @change="selectNewImage">
+                            <button class="button" @click="updateNpcImage">Update</button>.
+                            <button class="button is-light" @click="hideNewImage()">Cancel</button>
                         </div>
-                        <p>{{updateMessage}}</p>
                     </div>
-                    <div class="column is-one-third">
-                        <currentNpcForm v-bind:scrollTarget= "this.scrollTarget"></currentNpcForm>
-                    </div>
+                    <p>{{updateMessage}}</p>
+                </div>
+                <div class="column is-one-third">
+                    <currentNpcForm v-bind:scrollTarget= "this.scrollTarget"></currentNpcForm>
                 </div>
             </div>
+        </div>
 </template>
 
 <script>
@@ -102,9 +101,7 @@ export default {
             else{
                 this.$store.dispatch('setNpcNull', null);     
             }
-            
         },
-
         async updateNpcImage (){
             this.errors = [];
             const formData = new FormData();
@@ -114,7 +111,7 @@ export default {
                 if(oldImage != null){
                     formData.append('oldImage', oldImage);
                 }
-                formData.append('NpcId', npcId);
+                formData.append('npcId', npcId);
                 formData.append('file', this.file);
                 try{
                     this.$store.dispatch('updateNpcImage', formData)
