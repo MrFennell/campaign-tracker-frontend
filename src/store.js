@@ -176,20 +176,12 @@ export default new Vuex.Store({
       const response = await axios.post('/api/pcs/addPc', payload)
       commit('setPcs', response.data);
     },
-    async addPcWithImage({ commit }, payload){
-      const response = await axios.post('/api/pcs/addPcWithImage', payload)
-      commit('setPcs', response.data);
-    },
     async updatePc({ commit }, payload){
       const response = await axios.post('/api/pcs/updatePc', payload)
       commit('setPcs', response.data);
     },
     async updatePcImage({ commit }, payload){
       const response = await axios.post('/api/pcs/updatePcImage', payload)
-      commit('setPcs', response.data);
-    },
-    async updatePcWithImage({ commit }, payload){
-      const response = await axios.post('/api/pcs/updatePcWithImage', payload)
       commit('setPcs', response.data);
     },
     async deletePc({ commit }, payload){
@@ -217,20 +209,12 @@ export default new Vuex.Store({
       const response = await axios.post('/api/npcs/addNpc', payload)
       commit('setNpcs', response.data);
     },
-    async addNpcWithImage({ commit }, payload){
-      const response = await axios.post('/api/npcs/addNpcWithImage', payload)
-      commit('setNpcs', response.data);
-    },
     async updateNpc({ commit }, payload){
       const response = await axios.post('/api/npcs/updateNpc', payload)
       commit('setNpcs', response.data);
     },
     async updateNpcImage({ commit }, payload){
       const response = await axios.post('/api/npcs/updateNpcImage', payload)
-      commit('setNpcs', response.data);
-    },
-    async updateNpcWithImage({ commit }, payload){
-      const response = await axios.post('/api/npcs/updateNpcWithImage', payload)
       commit('setNpcs', response.data);
     },
     async deleteNpc({ commit }, payload){
@@ -260,10 +244,6 @@ export default new Vuex.Store({
       const response = await axios.post('/api/locations/addLocation', payload)
       commit('setLocations', response.data);
     },
-    async addLocationWithImage({ commit }, payload){
-      const response = await axios.post('/api/locations/addLocationWithImage', payload)
-      commit('setLocations', response.data);
-    },
     async updateLocation({ commit }, payload){
       const response = await axios.post('/api/locations/updateLocation', payload)
       commit('setLocations', response.data);
@@ -272,14 +252,9 @@ export default new Vuex.Store({
       const response = await axios.post('/api/locations/updateLocationImage', payload)
       commit('setLocations', response.data);
     },
-    async updateLocationWithImage({ commit }, payload){
-      const response = await axios.post('/api/locations/updateNpcWithImage', payload)
-      commit('setLocations', response.data);
-    },
     async deleteLocation({ commit }, payload){
       const response = await axios.post('/api/locations/deleteLocation', payload)
       commit('setLocations', response.data);
     }
-    
   }
 })

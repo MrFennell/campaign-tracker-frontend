@@ -1,6 +1,6 @@
 <template>
     <div class="content" id="list-locations-container">
-        <div class="columns is-multiline">
+        <!-- <div class="columns is-multiline">
             <div :class="[columnSize]" 
                 v-for="(location, index) in loadLocations" 
                 v-bind:key="location.id">
@@ -20,7 +20,19 @@
                     </div>
                 </div>
             </div> 
-        </div> 
+        </div>  -->
+        <div class="columns is-multiline">
+            <ListItem 
+                v-for="(location, index) in loadLocations"
+                v-bind:item = "location"
+                v-bind:index="index"
+                v-bind:key="location.id"
+                v-bind:selected="selected"
+                v-bind:columnSize="columnSize"
+                v-bind:imageFolder="'locations'"
+                v-on:setListItem="setLocation(location)"
+            > </ListItem>
+        </div>
     </div>
 </template>
 
@@ -30,7 +42,9 @@ export default {
     name: "ListLocations",
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
-    ,
+    ,components: {
+        ListItem: () => import('@/components/ui/list/ListItem.vue'),
+    },
     computed: {
         loadLocations(){
             let sortDirection = this.sortDirection;

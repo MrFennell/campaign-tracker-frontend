@@ -1,28 +1,17 @@
 <template>
     <div v-if="this.scrollTarget != ''" class="content" id="list-pcs-container"> 
         <div class="columns is-multiline">
-            <div :class="[columnSize]" 
-                v-for="(pc, index) in loadPcs" 
-                v-bind:key="pc.id">
-                <div v-if="index <= selected-1" class="card" @click="setPc(pc)">
-                    <div class="card-hover">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img v-if="pc.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/'+pc.imageSrc" />
-                                <img v-else src='../../assets/images/thumbnail-default.png'/>
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media-content">
-                                <p class="card-title">{{ pc.pcName }}</p>
-                                <p class="card-subtitle" v-if="pc.playerName">{{ pc.playerName }}</p>
-                                <p class="card-subtitle" v-else >Player Unknown</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div> 
+            <ListItem 
+                v-for="(pc, index) in loadPcs"
+                v-bind:item = "pc"
+                v-bind:index="index"
+                v-bind:key="pc.id"
+                v-bind:selected="selected"
+                v-bind:columnSize="columnSize"
+                v-bind:imageFolder="'pcs'"
+                v-on:setListItem="setPc(pc)"
+            > </ListItem>
+        </div>
     </div>
 </template>
 
@@ -33,7 +22,9 @@ export default {
     name: "ListPcs",
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
-    ,
+    ,components: {
+        ListItem: () => import('@/components/ui/list/ListItem.vue'),
+    },
     computed: {
         loadPcs(){
             let sortDirection = this.sortDirection;

@@ -1,26 +1,17 @@
 <template>
     <div class="content" id="list-npcs-container">
         <div class="columns is-multiline">
-            <div :class="[columnSize]" 
-                v-for="(npc, index) in loadNpcs" 
-                v-bind:key="npc.id">
-                <div v-if="index <= selected-1" class="card" @click="setNpc(npc)">
-                    <div class="card-hover">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img v-if="npc.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/npcs/'+npc.imageSrc" />
-                                <img v-else src='../../assets/images/thumbnail-default.png'/>
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media-content">
-                                <p class="card-title">{{ npc.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div> 
+            <ListItem 
+                v-for="(npc, index) in loadNpcs"
+                v-bind:item = "npc"
+                v-bind:index="index"
+                v-bind:key="npc.id"
+                v-bind:selected="selected"
+                v-bind:columnSize="columnSize"
+                v-bind:imageFolder="'npcs'"
+                v-on:setListItem="setNpc(npc)"
+            > </ListItem>
+        </div>
     </div>
 </template>
 
@@ -31,6 +22,9 @@ export default {
     props: 
         ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
     ,
+    components: {
+        ListItem: () => import('@/components/ui/list/ListItem.vue'),
+    },
     computed: {
         loadNpcs(){
             let sortDirection = this.sortDirection;

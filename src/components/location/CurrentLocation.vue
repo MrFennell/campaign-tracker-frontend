@@ -111,7 +111,7 @@ export default {
                 if(oldImage != null){
                     formData.append('oldImage', oldImage);
                 }
-                formData.append('LocationId', locationId);
+                formData.append('locationId', locationId);
                 formData.append('file', this.file);
                 try{
                     this.$store.dispatch('updateLocationImage', formData)
