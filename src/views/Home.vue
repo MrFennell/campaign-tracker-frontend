@@ -14,13 +14,14 @@
                 <img  src="@/assets/logo.png" width="28" height="28">
             </a>
 
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a role="button" class="navbar-burger burger" @click="showNav = !showNav"  aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             </a>
         </div>
-        <div class="navbar-menu">
+        <div class="navbar-menu"  :class="{'is-active':showNav}">
             <div class="navbar-start">
                 <!-- <div class="navbar-item has-dropdown is-hoverable" @click="scrollStart('campaign')">
                      <a class="navbar-link">Campaigns </a>
@@ -65,7 +66,6 @@
         </div>
 
         <div v-if="campaignIsSet">
-        
             <div class="container">
                 <div ref="campaign">
                     <CampaignContainer></CampaignContainer>
@@ -112,7 +112,8 @@ export default {
         password: '',
         error: false,
         chooseCampaign: false,
-        showNewCampaignForm: false
+        showNewCampaignForm: false,
+        showNav: false
         };
     },
     methods: {
@@ -135,16 +136,17 @@ export default {
             }
         },
         scrollStart(i){
+                this.showNav = false,
                 this.$nextTick(() => {
                 this.$refs[i].scrollIntoView({behavior: "smooth", block: "end"});
             });
         },
         scrollEnd(i){
+                this.showNav = false,
                 this.$nextTick(() => {
                 this.$refs[i].scrollIntoView({behavior: "smooth", block: "start"});
             });
         }
-
     },
     mounted() {
         this.$store.dispatch('loadCampaigns');
