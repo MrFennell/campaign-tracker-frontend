@@ -18,7 +18,7 @@ export default new Vuex.Store({
     npcs: [],
     npc: '',
     location: '',
-    locations: []
+    locations: [],
 
   },
   getters: {

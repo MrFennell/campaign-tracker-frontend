@@ -1,26 +1,5 @@
 <template>
     <div class="content" id="list-locations-container">
-        <!-- <div class="columns is-multiline">
-            <div :class="[columnSize]" 
-                v-for="(location, index) in loadLocations" 
-                v-bind:key="location.id">
-                <div v-if="index <= selected-1" class="card" @click="setLocation(location)">
-                    <div class="card-hover">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img v-if="location.imageSrc" :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/locations/'+location.imageSrc" />
-                                <img v-else src='../../assets/images/thumbnail-default.png'/>
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media-content">
-                                <p class="card-title">{{ location.name }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>  -->
         <div class="columns is-multiline">
             <ListItem 
                 v-for="(location, index) in loadLocations"

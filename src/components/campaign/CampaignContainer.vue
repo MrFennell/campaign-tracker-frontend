@@ -16,7 +16,9 @@
                     <ListCampaigns></ListCampaigns>
                 </div>
                 <div v-if="showNewForm">
-                    <AddCampaign ></AddCampaign>
+                    <AddCampaign 
+                    
+                    ></AddCampaign>
                 </div>
             </div>
         </div>

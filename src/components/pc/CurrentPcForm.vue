@@ -3,7 +3,7 @@
             <div class="info" v-if="!isEditing">
                 <span class="updateMessage">{{updateMessage}}</span>
                 <a class="edit-button" @click="edit">Edit</a>
-                <p>Details:</p>
+                <h4>Details:</h4>
                 <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
                 <p v-else>No Name</p>
                 <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>

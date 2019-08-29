@@ -31,6 +31,9 @@
                 <div class="column is-one-third">
                     <currentPcForm v-bind:scrollTarget= "this.scrollTarget"/>
                 </div>
+                <div class="column is-one-third">
+                    <CurrentPcRelationships/>
+                </div>
             </div>
         </div>
 </template>
@@ -38,9 +41,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import CurrentPcForm from '@/components/pc/CurrentPcForm.vue'
-
+import CurrentPcRelationships from '@/components/pc/CurrentPcRelationships.vue'
 export default {
-    components: {CurrentPcForm},
+    components: {CurrentPcForm, CurrentPcRelationships},
     name: "CurrentPc",
     props: 
         ['scrollTarget']
@@ -53,6 +56,9 @@ export default {
         loadPc(){
             const id = this.$store.getters.getPcId;
             return this.$store.getters.getPcById(id);
+        },
+        npcs(){
+            return this.$store.state.npcs
         }
     },
     data() {
@@ -64,7 +70,8 @@ export default {
             error: '',
             defaultThumbnail: "src='./assets/logo.png'",
             showChangeImageForm: false,
-            imagePreviewUrl: null
+            imagePreviewUrl: null,
+            selected:null
         }
     },
 
