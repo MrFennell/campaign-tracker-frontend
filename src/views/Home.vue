@@ -152,6 +152,7 @@ export default {
         this.$store.dispatch('loadCampaigns');
         this.$store.dispatch('loadCurrentCampaign');
         this.$store.dispatch('campaignThumbnails');
+        this.$store.dispatch('loadRelationships');
     }
 
 }

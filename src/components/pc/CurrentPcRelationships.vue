@@ -2,9 +2,15 @@
 <div>
     <h4>Relationships</h4>
     <div class="relationships">
-        <p>Pcs</p>
+        <p>PCs</p>
+        <div class="relationship__list">
+            <div v-for="pc in pcRelationships" v-bind:key="pc.id">
+                {{pc.Relationship}} {{pc.PcName2}}
+                <a @click="deleteRelationship(pc.id)">delete</a>
+            </div>
+        </div>
         <div class="relationships__npcs">
-            <form class='add_relationship' @submit.prevent="addPcNpcRelationship">
+            <form class='add_relationship' @submit.prevent="addPcPcRelationship">
                 <div class="field is-horizontal">
                     <div class="control">
                         <input v-model="pcRelationship" class="input is-small" type="input" name="npc-relationship" placeholder="Relationship" >
@@ -25,12 +31,12 @@
     <div class="relationships">
         <p>NPCs</p>
         <div class="relationship__list">
-            <div v-for="npc in npcRelationshipList" v-bind:key="npc.id">
+            <div v-for="npc in npcRelationships" v-bind:key="npc.id">
                 {{npc.Relationship}} {{npc.NpcName}}
-                <a @click="deletePcNpcRelationship(npc.id)">delete</a>
+                <a @click="deleteRelationship(npc.id)">delete</a>
             </div>
         </div>
-        
+
         <div class="relationships__npcs">
             <form class='add_relationship' @submit.prevent="addPcNpcRelationship">
                 <div class="field is-horizontal">
@@ -52,8 +58,14 @@
     </div>
     <div class="relationships">
         <p>Locations</p>
+        <div class="relationship__list">
+            <div v-for="location in locationRelationships" v-bind:key="location.id">
+                {{location.Relationship}} {{location.LocationName}}
+                <a @click="deleteRelationship(location.id)">delete</a>
+            </div>
+        </div>
         <div class="relationships__npcs">
-            <form class='add_relationship' @submit.prevent="addPcNpcRelationship">
+            <form class='add_relationship' @submit.prevent="addPcLocationRelationship">
                 <div class="field is-horizontal">
                     <div class="control">
                         <input v-model="locationRelationship" class="input is-small" type="input" name="npc-relationship" placeholder="Relationship" >
@@ -76,72 +88,81 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import axios from 'axios'
 export default {
     name: "CurrentPcRelationships",
     computed: {
-        currentPc(){
+        current(){
             return this.$store.state.pc
         },
         pcs(){
-            return this.$store.state.pcs
+            return this.$store.state.pcs.filter(pcs => pcs.id !== this.current.id)
         },
         npcs(){
             return this.$store.state.npcs
         },
         locations(){
             return this.$store.state.locations
+        },
+        relationships(){
+            return this.$store.state.relationships.filter(relationships => relationships.PcId === this.current.id)
+        },
+        pcRelationships(){
+            return this.relationships.filter(relationships => relationships.PcId2 !== null)
+        },
+        npcRelationships(){
+            return this.relationships.filter(relationships => relationships.NpcId !== null)
+        },
+        locationRelationships(){
+            return this.relationships.filter(relationships => relationships.LocationId !== null)
         }
+        
     },
-
-
     data() {
         return {
-            // currentPc:'',
             selectedPc:'',
             selectedNpc:'',
             selectedLocation:'',
             pcRelationship: null,
             npcRelationship:null,
             locationRelationship: null,
-            pcRelationshipList: null,
-            npcRelationshipList: null,
-
-        }
-    },
-    watch: {
-        currentPc: function(newValue){
-            this.npcRelationshipList = null;
-            this.getNpcRelationshipList()
         }
     },
     methods:{
-        async getNpcRelationshipList(){
-            const list = await axios.post('/api/relationships/getPcNpcRelationship',{
-                    pcId:this.currentPc.id,
-                })
-            this.npcRelationshipList = list.data
+        addPcPcRelationship(){
+            this.$store.dispatch('addPcPcRelationship', {
+                pcId:this.current.id,
+                pcName:this.current.pcName,
+                pcId2:this.selectedPc.id,
+                pcName2:this.selectedPc.pcName,
+                relationship:this.pcRelationship
+            })
+            this.selectedPc = null;
         },
-
-        async addPcNpcRelationship(){
-            const response = await axios.post('/api/relationships/addPcNpcRelationship', {
-                pcId:this.currentPc.id,
-                pcName:this.currentPc.pcName,
+        addPcNpcRelationship(){
+            this.$store.dispatch('addPcNpcRelationship', {
+                pcId:this.current.id,
+                pcName:this.current.pcName,
                 npcId:this.selectedNpc.id,
                 npcName:this.selectedNpc.name,
                 relationship:this.npcRelationship
             })
             this.selectedNpc = null;
-            this.npcRelationship = null;
-            this.npcRelationshipList = response.data;
         },
-        async deletePcNpcRelationship(id){
-            const response = await axios.post('/api/relationships/deletePcNpcRelationship', {
-                pcId:this.currentPc.id,
+        addPcLocationRelationship(){
+            this.$store.dispatch('addPcLocationRelationship', {
+                pcId:this.current.id,
+                pcName:this.current.pcName,
+                locationId:this.selectedLocation.id,
+                locationName:this.selectedLocation.name,
+                relationship:this.locationRelationship
+            })
+            this.selectedLocation = null;
+        },
+        deleteRelationship(id){
+            this.$store.dispatch('deleteRelationship', {
                 relationshipId:id
             })
-            this.npcRelationshipList = response.data;
         }
     }
 }

@@ -26,9 +26,9 @@ export default {
     name: "CurrentCampaign",
     components: {CurrentCampaignForm},
     computed: {
-    loadCampaign(){
-        return this.$store.state.campaign;
-    },
+        loadCampaign(){
+            return this.$store.state.campaign;
+        },
     },
     data(){
         return{

@@ -19,7 +19,7 @@ export default new Vuex.Store({
     npc: '',
     location: '',
     locations: [],
-
+    relationships: []
   },
   getters: {
     isLoggedIn: state => !!state.user,
@@ -77,8 +77,12 @@ export default new Vuex.Store({
     setLocations(state, locations){
       state.locations = locations;
     },
+    
     setLocation(state, location) {
       state.location = location;
+    },
+    setRelationships(state, relationships){
+      state.relationships = relationships;
     },
     setNull(state, payload){
       state.payload = payload
@@ -135,6 +139,7 @@ export default new Vuex.Store({
         store.commit('setCampaigns', response.data);
       });
     },
+    /////////////pcs
     loadPcs( store ) {
       axios.get('/api/pcs')
         .then(response => { 
@@ -255,6 +260,29 @@ export default new Vuex.Store({
     async deleteLocation({ commit }, payload){
       const response = await axios.post('/api/locations/deleteLocation', payload)
       commit('setLocations', response.data);
+    },
+    //////////Relationships
+    loadRelationships( store ) {
+      axios.get('/api/relationships')
+        .then(response => { 
+        store.commit('setRelationships', response.data);
+      })
+    },
+    async deleteRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/deleteRelationship', payload)
+      commit('setRelationships', response.data);
+    },
+    async addPcPcRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/addPcPcRelationship', payload)
+      commit('setRelationships', response.data);
+    },
+    async addPcNpcRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/addPcNpcRelationship', payload)
+      commit('setRelationships', response.data);
+    },
+    async addPcLocationRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/addPcLocationRelationship', payload)
+      commit('setRelationships', response.data);
     }
   }
 })
