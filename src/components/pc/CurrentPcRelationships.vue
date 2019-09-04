@@ -3,10 +3,20 @@
     <h4>Relationships</h4>
     <div class="relationships">
         <p>PCs</p>
-        <div class="relationship__list">
+        <!-- <div class="relationship__list">
             <div v-for="pc in pcRelationships" v-bind:key="pc.id">
                 {{pc.Relationship}} {{pc.PcName2}}
                 <a @click="deleteRelationship(pc.id)">delete</a>
+            </div>
+        </div> -->
+        <div class="relationship__list">
+            <div v-for="pc in pcRelationships" v-bind:key="pc.id">
+                <div v-if="pc.PcId === current.id && pc.PcId2 !==null">{{pc.Relationship}} {{pc.PcName2}}
+                    <a @click="deleteRelationship(pc.id)">delete</a>
+                </div>
+                <div v-if="pc.PcId2 === current.id && pc.PcId !==null">{{pc.Relationship}} {{pc.PcName}}
+                    <a @click="deleteRelationship(pc.id)">delete</a>
+                </div>
             </div>
         </div>
         <div class="relationships__npcs">
@@ -32,8 +42,9 @@
         <p>NPCs</p>
         <div class="relationship__list">
             <div v-for="npc in npcRelationships" v-bind:key="npc.id">
-                {{npc.Relationship}} {{npc.NpcName}}
-                <a @click="deleteRelationship(npc.id)">delete</a>
+                <div v-if="npc.PcId === current.id && npc.NpcId !==null">{{npc.Relationship}} {{npc.NpcName}}
+                    <a @click="deleteRelationship(npc.id)">delete</a>
+                </div>
             </div>
         </div>
 
@@ -60,8 +71,9 @@
         <p>Locations</p>
         <div class="relationship__list">
             <div v-for="location in locationRelationships" v-bind:key="location.id">
-                {{location.Relationship}} {{location.LocationName}}
-                <a @click="deleteRelationship(location.id)">delete</a>
+               <div v-if="location.PcId === current.id && location.LocationId !== null">{{location.Relationship}} {{location.LocationName}}
+                    <a @click="deleteRelationship(location.id)">delete</a>
+               </div>
             </div>
         </div>
         <div class="relationships__npcs">
@@ -88,10 +100,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapGetters } from 'vuex'
+// import axios from 'axios'
 export default {
     name: "CurrentPcRelationships",
     computed: {
+        ...mapGetters([
+            'PcRelationships',
+            'NpcRelationships',
+            'LocationRelationships'
+        ]),
         current(){
             return this.$store.state.pc
         },
@@ -104,17 +122,17 @@ export default {
         locations(){
             return this.$store.state.locations
         },
-        relationships(){
-            return this.$store.state.relationships.filter(relationships => relationships.PcId === this.current.id)
-        },
         pcRelationships(){
-            return this.relationships.filter(relationships => relationships.PcId2 !== null)
+            return this.$store.getters.PcRelationships.filter(relationships => 
+            relationships.PcId === this.current.id || relationships.PcId2 === this.current.id)
         },
         npcRelationships(){
-            return this.relationships.filter(relationships => relationships.NpcId !== null)
+            return this.$store.getters.NpcRelationships.filter(relationships => 
+            relationships.NpcId !== null && relationships.PcId === this.current.id)
         },
         locationRelationships(){
-            return this.relationships.filter(relationships => relationships.LocationId !== null)
+            return this.$store.getters.LocationRelationships.filter(relationships => 
+            relationships.LocationId !== null && relationships.PcId === this.current.id)
         }
         
     },
@@ -128,36 +146,43 @@ export default {
             locationRelationship: null,
         }
     },
+    watch: {
+        current: function(){
+            this.selectedPc = '';
+            this.selectedNpc = '';
+            this.selectedLocation = '';
+            this.pcRelationship = null;
+            this.npcRelationship = null;
+            this.locationRelationship = null;
+        }
+    },
     methods:{
         addPcPcRelationship(){
             this.$store.dispatch('addPcPcRelationship', {
                 pcId:this.current.id,
-                pcName:this.current.pcName,
                 pcId2:this.selectedPc.id,
-                pcName2:this.selectedPc.pcName,
                 relationship:this.pcRelationship
             })
             this.selectedPc = null;
+            this.pcRelationship = null;
         },
         addPcNpcRelationship(){
             this.$store.dispatch('addPcNpcRelationship', {
                 pcId:this.current.id,
-                pcName:this.current.pcName,
                 npcId:this.selectedNpc.id,
-                npcName:this.selectedNpc.name,
                 relationship:this.npcRelationship
             })
             this.selectedNpc = null;
+            this.npcRelationship = null;
         },
         addPcLocationRelationship(){
             this.$store.dispatch('addPcLocationRelationship', {
                 pcId:this.current.id,
-                pcName:this.current.pcName,
                 locationId:this.selectedLocation.id,
-                locationName:this.selectedLocation.name,
                 relationship:this.locationRelationship
             })
             this.selectedLocation = null;
+            this.locationRelationship = null;
         },
         deleteRelationship(id){
             this.$store.dispatch('deleteRelationship', {

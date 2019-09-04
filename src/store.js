@@ -42,8 +42,128 @@ export default new Vuex.Store({
       return state.locations.find(location => location.id === id); 
     },
     campaignIsSet: state => !!state.campaign,
-    userName: (state) => {return state.user.username}
+    userName: (state) => {return state.user.username},
+    
+    PcRelationships:state =>{
+      const relationships = state.relationships;
+      const rArray = []
 
+      const PcRelationshipsBoth = relationships.filter(relationships => relationships.PcId !== null && relationships.PcId2 !== null)
+      for(let i = 0; i< PcRelationshipsBoth.length; i++){
+        let currentR = PcRelationshipsBoth[i];
+        let pcLookup = state.pcs.find(pc => pc.id === currentR.PcId)
+        if(pcLookup){
+          currentR.PcName = pcLookup['pcName'];
+        }
+        let pcLookup2 = state.pcs.find(pc => pc.id === currentR.PcId2)
+        if(pcLookup2){
+          currentR.PcName2 = pcLookup2['pcName'];
+        }
+        rArray.push(currentR)
+      }
+
+      const PcRelationships1= relationships.filter(relationships => relationships.PcId !== null && relationships.PcId2 === null)
+      for(let i = 0; i< PcRelationships1.length; i++){
+        let currentR = PcRelationships1[i];
+        let pcLookup = state.pcs.find(pc => pc.id === currentR.PcId)
+        if(pcLookup){
+          currentR.PcName = pcLookup['pcName'];
+        }
+        rArray.push(currentR)
+      }
+
+      const PcRelationships2= relationships.filter(relationships => relationships.PcId === null && relationships.PcId2 !== null)
+      for(let i = 0; i< PcRelationships2.length; i++){
+        let currentR = PcRelationships2[i];
+        let pcLookup = state.pcs.find(pc => pc.id === currentR.PcId)
+        if(pcLookup){
+          currentR.PcName = pcLookup['pcName'];
+        }
+        rArray.push(currentR)
+      }
+      return rArray;
+    },
+
+    NpcRelationships:state =>{
+      const relationships = state.relationships;
+      const rArray = []
+      
+      const NpcRelationshipsBoth = relationships.filter(relationships => relationships.NpcId !== null && relationships.NpcId2 !== null)
+      for(let i = 0; i < NpcRelationshipsBoth.length; i++){
+        let currentR = NpcRelationshipsBoth[i];
+        let lookup = state.npcs.find(npc => npc.id === currentR.NpcId)
+        if(lookup){
+          currentR.NpcName = lookup['name'];
+        }
+        let lookup2 = state.npcs.find(npc => npc.id === currentR.NpcId2)
+        if(lookup2){
+          currentR.NpcName2 = lookup2['name'];
+        }
+        rArray.push(currentR)
+      }
+      
+      const NpcRelationships1 = relationships.filter(relationships => relationships.NpcId !== null && relationships.NpcId2 === null)
+      for(let i = 0; i < NpcRelationships1.length; i++){
+        let currentR = NpcRelationships1[i];
+        let lookup = state.npcs.find(npc => npc.id === currentR.NpcId)
+        if(lookup){
+          currentR.NpcName = lookup['name'];
+        }
+        rArray.push(currentR)
+      }
+
+      const NpcRelationships2 = relationships.filter(relationships => relationships.NpcId === null && relationships.NpcId2 !== null)
+      for(let i = 0; i < NpcRelationships2.length; i++){
+        let currentR = NpcRelationships2[i];
+        let lookup = state.npcs.find(npc => npc.id === currentR.NpcId2)
+        if(lookup){
+          currentR.NpcName2 = lookup['name'];
+        }
+        rArray.push(currentR)
+      }
+     
+      return rArray;
+    },
+    LocationRelationships:state =>{
+      const relationships = state.relationships;
+      const rArray = []
+      
+      const LocationRelationshipsBoth = relationships.filter(relationships => relationships.LocationId !== null && relationships.LocationId2 !== null)
+      for(let i = 0; i < LocationRelationshipsBoth.length; i++){
+        let currentR = LocationRelationshipsBoth[i];
+        let lookup = state.locations.find(location => location.id === currentR.LocationId)
+        if(lookup){
+          currentR.LocationName = lookup['name'];
+        }
+        let lookup2 = state.locations.find(location => location.id === currentR.LocationId2)
+        if(lookup2){
+          currentR.LocationName2 = lookup2['name'];
+        }
+        rArray.push(currentR)
+      }
+      
+      const LocationRelationships1 = relationships.filter(relationships => relationships.LocationId !== null && relationships.LocationId2 === null)
+      for(let i = 0; i < LocationRelationships1.length; i++){
+        let currentR = LocationRelationships1[i];
+        let lookup = state.locations.find(location => location.id === currentR.LocationId)
+        if(lookup){
+          currentR.LocationName = lookup['name'];
+        }
+        rArray.push(currentR)
+      }
+
+      const LocationRelationships2 = relationships.filter(relationships => relationships.LocationId === null && relationships.LocationId2 !== null)
+      for(let i = 0; i < LocationRelationships2.length; i++){
+        let currentR = LocationRelationships2[i];
+        let lookup = state.locations.find(location => location.id === currentR.LocationId2)
+        if(lookup){
+          currentR.LocationName2 = lookup['name'];
+        }
+        rArray.push(currentR)
+      }
+     
+      return rArray;
+    }
   },
   mutations: 
     {
