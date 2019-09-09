@@ -403,6 +403,14 @@ export default new Vuex.Store({
     async addPcLocationRelationship({ commit }, payload){
       const response = await axios.post('/api/relationships/addPcLocationRelationship', payload)
       commit('setRelationships', response.data);
+    },
+    async addNpcNpcRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/addNpcNpcRelationship', payload)
+      commit('setRelationships', response.data);
+    },
+    async addNpcLocationRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/addNpcLocationRelationship', payload)
+      commit('setRelationships', response.data);
     }
   }
 })

@@ -31,6 +31,9 @@
                 <div class="column is-one-third">
                     <currentNpcForm v-bind:scrollTarget= "this.scrollTarget"></currentNpcForm>
                 </div>
+                <div class="column is-one-third">
+                    <CurrentNpcRelationships/>
+                </div>
             </div>
         </div>
 </template>
@@ -38,8 +41,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import CurrentNpcForm from '@/components/npc/CurrentNpcForm.vue'
+import CurrentNpcRelationships from '@/components/npc/CurrentNpcRelationships.vue'
+
 export default {
-    components: {CurrentNpcForm},
+    components: {CurrentNpcForm , CurrentNpcRelationships},
     name: "CurrentNpc",
     props: 
         ['scrollTarget']
