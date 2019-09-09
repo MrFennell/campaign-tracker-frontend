@@ -3,12 +3,6 @@
     <h4>Relationships</h4>
     <div class="relationships">
         <p>PCs</p>
-        <!-- <div class="relationship__list">
-            <div v-for="pc in pcRelationships" v-bind:key="pc.id">
-                {{pc.Relationship}} {{pc.PcName2}}
-                <a @click="deleteRelationship(pc.id)">delete</a>
-            </div>
-        </div> -->
         <div class="relationship__list">
             <div v-for="pc in pcRelationships" v-bind:key="pc.id">
                 <div v-if="pc.PcId === current.id && pc.PcId2 !==null">{{pc.Relationship}} {{pc.PcName2}}
@@ -19,23 +13,13 @@
                 </div>
             </div>
         </div>
-        <div class="relationships__npcs">
-            <form class='add_relationship' @submit.prevent="addPcPcRelationship">
-                <div class="field is-horizontal">
-                    <div class="control">
-                        <input v-model="pcRelationship" class="input is-small" type="input" name="npc-relationship" placeholder="Relationship" >
-                    </div>
-                    <div class="select is-small">
-                        <select v-model="selectedPc">
-                            <option disabled value="">PC</option>
-                            <option v-for="pc in pcs" v-bind:value="pc" v-bind:key="pc.id">
-                                {{pc.pcName}}
-                            </option>
-                        </select>
-                    </div>
-                    <input type="submit" value="add" class="button is-small">
-                </div>
-            </form>
+        <div class="relationships__pcs">
+            <CreateRelationship
+                v-on:sendrelationship="addPcPcRelationship"
+                v-bind:parentModel="this.current"
+                v-bind:selectList="this.pcs"
+                defaultListItem="PC"
+            />
         </div>
     </div>
     <div class="relationships">
@@ -47,24 +31,13 @@
                 </div>
             </div>
         </div>
-
         <div class="relationships__npcs">
-            <form class='add_relationship' @submit.prevent="addPcNpcRelationship">
-                <div class="field is-horizontal">
-                    <div class="control">
-                        <input v-model="npcRelationship" class="input is-small" type="input" name="npc-relationship" placeholder="Relationship" >
-                    </div>
-                    <div class="select is-small">
-                        <select v-model="selectedNpc">
-                            <option disabled value="">NPC</option>
-                            <option v-for="npc in npcs" v-bind:value="npc" v-bind:key="npc.id">
-                                {{npc.name}}
-                            </option>
-                        </select>
-                    </div>
-                    <input type="submit" value="add" class="button is-small">
-                </div>
-            </form>
+           <CreateRelationship
+                v-on:sendrelationship="addPcNpcRelationship"
+                v-bind:parentModel="this.current"
+                v-bind:selectList="this.npcs"
+                defaultListItem="NPC"
+            />
         </div>
     </div>
     <div class="relationships">
@@ -76,23 +49,14 @@
                </div>
             </div>
         </div>
+
         <div class="relationships__npcs">
-            <form class='add_relationship' @submit.prevent="addPcLocationRelationship">
-                <div class="field is-horizontal">
-                    <div class="control">
-                        <input v-model="locationRelationship" class="input is-small" type="input" name="npc-relationship" placeholder="Relationship" >
-                    </div>
-                    <div class="select is-small">
-                        <select v-model="selectedLocation">
-                            <option disabled value="">Location</option>
-                            <option v-for="location in locations" v-bind:value="location" v-bind:key="location.id">
-                                {{location.name}}
-                            </option>
-                        </select>
-                    </div>
-                    <input type="submit" value="add" class="button is-small">
-                </div>
-            </form>
+            <CreateRelationship
+                v-on:sendrelationship="addPcLocationRelationship"
+                v-bind:parentModel="this.current"
+                v-bind:selectList="this.locations"
+                defaultListItem="Location"
+            />
         </div>
     </div>
 
@@ -100,10 +64,11 @@
 </template>
 
 <script>
+import CreateRelationship from '@/components/ui/relationships/CreateRelationship.vue'
 import { mapGetters } from 'vuex'
-// import axios from 'axios'
 export default {
     name: "CurrentPcRelationships",
+    components: {CreateRelationship},
     computed: {
         ...mapGetters([
             'PcRelationships',
@@ -136,53 +101,27 @@ export default {
         }
         
     },
-    data() {
-        return {
-            selectedPc:'',
-            selectedNpc:'',
-            selectedLocation:'',
-            pcRelationship: null,
-            npcRelationship:null,
-            locationRelationship: null,
-        }
-    },
-    watch: {
-        current: function(){
-            this.selectedPc = '';
-            this.selectedNpc = '';
-            this.selectedLocation = '';
-            this.pcRelationship = null;
-            this.npcRelationship = null;
-            this.locationRelationship = null;
-        }
-    },
     methods:{
-        addPcPcRelationship(){
+        addPcPcRelationship(relationship, target){
             this.$store.dispatch('addPcPcRelationship', {
                 pcId:this.current.id,
-                pcId2:this.selectedPc.id,
-                relationship:this.pcRelationship
+                pcId2:target.id,
+                relationship:relationship
             })
-            this.selectedPc = null;
-            this.pcRelationship = null;
         },
-        addPcNpcRelationship(){
+        addPcNpcRelationship(relationship, target){
             this.$store.dispatch('addPcNpcRelationship', {
                 pcId:this.current.id,
-                npcId:this.selectedNpc.id,
-                relationship:this.npcRelationship
+                npcId:target.id,
+                relationship:relationship
             })
-            this.selectedNpc = null;
-            this.npcRelationship = null;
         },
-        addPcLocationRelationship(){
+        addPcLocationRelationship(relationship, target){
             this.$store.dispatch('addPcLocationRelationship', {
                 pcId:this.current.id,
-                locationId:this.selectedLocation.id,
-                relationship:this.locationRelationship
+                locationId:target.id,
+                relationship:relationship
             })
-            this.selectedLocation = null;
-            this.locationRelationship = null;
         },
         deleteRelationship(id){
             this.$store.dispatch('deleteRelationship', {
