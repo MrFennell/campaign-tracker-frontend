@@ -25,7 +25,7 @@
                 <div class="field">
                     <label class="label" for="name">Name:</label>
                     <div class="control">
-                        <input type="input" class="input" name="pcName" placeholder="NPC Name" v-model="name">
+                        <input type="input" class="input" name="name" placeholder="NPC Name" v-model="name">
                     </div>
                 </div>
                 <div class="field">

@@ -5,7 +5,7 @@
             </div>
             <div class="columns">
                 <div id="image-container" class="column is-one-third">
-                    <h2 v-if="loadPc && loadPc.pcName">{{ loadPc.pcName }}</h2>
+                    <h2 v-if="loadPc && loadPc.name">{{ loadPc.name }}</h2>
                     <h2 v-else><i><font-awesome-icon icon="exclamation-triangle" /></i>error</h2>
 
                     <div id="image-container">

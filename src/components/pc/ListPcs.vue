@@ -30,7 +30,7 @@ export default {
             let sortDirection = this.sortDirection;
             let pcs = this.$store.state.pcs;
             if (this.sort === 'name'){
-                return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
+                return _.orderBy(pcs, [pc => pc.name.toLowerCase()], sortDirection);
             }
             else if (this.sort === 'playerName'){
                 return _.orderBy(pcs, [pc => pc.playerName.toLowerCase()], sortDirection);
@@ -39,7 +39,7 @@ export default {
                 return _.orderBy(pcs, 'createdAt', sortDirection);
             }
             else{
-                 return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
+                 return _.orderBy(pcs, [pc => pc.name.toLowerCase()], sortDirection);
             }
         }
     },

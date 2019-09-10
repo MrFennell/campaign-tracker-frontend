@@ -15,7 +15,7 @@
                         </div>
                         <div class="card-content">
                             <div class="media-content">
-                                <p class="card-title">{{ pc.pcName }}</p>
+                                <p class="card-title">{{ pc.name }}</p>
                                 <p class="card-subtitle" v-if="pc.playerName">{{ pc.playerName }}</p>
                                 <p class="card-subtitle" v-else >Player Unknown</p>
                             </div>
@@ -53,15 +53,10 @@ export default {
     computed: {
         loadPcs(){
             let sortDirection = this.sortDirection;
-
-            // listItem = this.listItem;
-            
             const items = this.items;
-            console.log('items:'+items);
             let pcs = this.$store.state.pcs;
-             console.log('pcs:'+pcs);
             if (this.sort === 'PC Name'){
-                return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
+                return _.orderBy(pcs, [pc => pc.name.toLowerCase()], sortDirection);
             }
             else if (this.sort === 'Player Name'){
                 return _.orderBy(pcs, [pc => pc.playerName.toLowerCase()], sortDirection);
@@ -70,7 +65,7 @@ export default {
                 return _.orderBy(pcs, 'createdAt', sortDirection);
             }
             else{
-                 return _.orderBy(pcs, [pc => pc.pcName.toLowerCase()], sortDirection);
+                 return _.orderBy(pcs, [pc => pc.name.toLowerCase()], sortDirection);
             }
         }
     },

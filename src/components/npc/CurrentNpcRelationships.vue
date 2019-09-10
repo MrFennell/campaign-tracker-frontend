@@ -5,7 +5,7 @@
         <p>PCs</p>
         <div class="relationship__list">
             <div v-for="pc in pcRelationships" v-bind:key="pc.id">
-                <div v-if="pc.NpcId === current.id && pc.PcId !==null">{{pc.Relationship}} {{pc.PcName}}
+                <div v-if="pc.NpcId === current.id && pc.PcId !==null">{{pc.relationship}} {{pc.PcName}}
                     <a @click="deleteRelationship(pc.id)">delete</a>
                 </div>
             </div>
@@ -23,10 +23,10 @@
         <p>NPCs</p>
         <div class="relationship__list">
             <div v-for="npc in npcRelationships" v-bind:key="npc.id">
-                <div v-if="npc.NpcId === current.id && npc.NpcId2 !==null">{{npc.Relationship}} {{npc.NpcName2}}
+                <div v-if="npc.NpcId === current.id && npc.NpcId2 !==null">{{npc.relationship}} {{npc.NpcName2}}
                     <a @click="deleteRelationship(npc.id)">delete</a>
                 </div>
-                <div v-if="npc.NpcId2 === current.id && npc.NpcId !==null">{{npc.Relationship}} {{npc.NpcName}}
+                <div v-if="npc.NpcId2 === current.id && npc.NpcId !==null">{{npc.relationship}} {{npc.NpcName}}
                     <a @click="deleteRelationship(npc.id)">delete</a>
                 </div>
             </div>
@@ -44,7 +44,7 @@
         <p>Locations</p>
         <div class="relationship__list">
             <div v-for="location in locationRelationships" v-bind:key="location.id">
-               <div v-if="location.NpcId === current.id && location.LocationId !== null">{{location.Relationship}} {{location.LocationName}}
+               <div v-if="location.NpcId === current.id && location.LocationId !== null">{{location.relationship}} {{location.LocationName}}
                     <a @click="deleteRelationship(location.id)">delete</a>
                </div>
             </div>
@@ -79,10 +79,10 @@ export default {
             return this.$store.state.npc
         },
         pcs(){
-            return this.$store.state.pcs.filter(pcs => pcs.id !== this.current.id)
+            return this.$store.state.pcs
         },
         npcs(){
-            return this.$store.state.npcs
+            return this.$store.state.npcs.filter(npcs => npcs.id !== this.current.id)
         },
         locations(){
             return this.$store.state.locations
@@ -99,7 +99,6 @@ export default {
             return this.$store.getters.LocationRelationships.filter((relationships => 
             relationships.LocationId !== null && relationships.NpcId === this.current.id))
         }
-        
     },
     methods:{
         addNpcNpcRelationship(relationship, target){

@@ -12,7 +12,6 @@
                     <option disabled value="">{{this.defaultListItem}}</option>
                     <option v-for="item in selectList" v-bind:value="item" v-bind:key="item.id">
                         <span v-if="item.name">{{item.name}}</span>
-                        <span v-if="item.pcName">{{item.pcName}}</span> 
                     </option>
                 </select>
             </div>

@@ -32,15 +32,19 @@
                 <div class="column is-one-third">
                     <currentLocationForm v-bind:scrollTarget= "this.scrollTarget" />
                 </div>
+                <div class="column is-one-third">
+                    <CurrentLocationRelationships/>
                 </div>
             </div>
+        </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import CurrentLocationForm from '@/components/location/CurrentLocationForm.vue'
+import CurrentLocationRelationships from '@/components/location/CurrentLocationRelationships.vue'
 export default {
-    components: {CurrentLocationForm},
+    components: {CurrentLocationForm, CurrentLocationRelationships},
     name: "CurrentLocation",
     computed: {
         ...mapGetters([

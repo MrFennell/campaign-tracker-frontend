@@ -1,7 +1,6 @@
 <template>
     <div class="container is-fullhd">
         <h2 ref="scrollHeader">Player Characters:</h2>
-       
         <div class="list-controls">
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new PC</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
@@ -36,7 +35,6 @@
 </template>
 
 <script>
-// import _ from 'lodash';
 import AddPc from '@/components/pc/AddPc.vue';
 import ListPcs from '@/components/pc/ListPcs.vue';
 import ListControls from '@/components/ui/ListControls.vue';

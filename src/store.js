@@ -53,11 +53,11 @@ export default new Vuex.Store({
         let currentR = PcRelationshipsBoth[i];
         let pcLookup = state.pcs.find(pc => pc.id === currentR.PcId)
         if(pcLookup){
-          currentR.PcName = pcLookup['pcName'];
+          currentR.PcName = pcLookup['name'];
         }
         let pcLookup2 = state.pcs.find(pc => pc.id === currentR.PcId2)
         if(pcLookup2){
-          currentR.PcName2 = pcLookup2['pcName'];
+          currentR.PcName2 = pcLookup2['name'];
         }
         rArray.push(currentR)
       }
@@ -67,7 +67,7 @@ export default new Vuex.Store({
         let currentR = PcRelationships1[i];
         let pcLookup = state.pcs.find(pc => pc.id === currentR.PcId)
         if(pcLookup){
-          currentR.PcName = pcLookup['pcName'];
+          currentR.PcName = pcLookup['name'];
         }
         rArray.push(currentR)
       }
@@ -77,7 +77,7 @@ export default new Vuex.Store({
         let currentR = PcRelationships2[i];
         let pcLookup = state.pcs.find(pc => pc.id === currentR.PcId)
         if(pcLookup){
-          currentR.PcName = pcLookup['pcName'];
+          currentR.PcName = pcLookup['name'];
         }
         rArray.push(currentR)
       }
@@ -410,6 +410,10 @@ export default new Vuex.Store({
     },
     async addNpcLocationRelationship({ commit }, payload){
       const response = await axios.post('/api/relationships/addNpcLocationRelationship', payload)
+      commit('setRelationships', response.data);
+    },
+    async addLocationLocationRelationship({ commit }, payload){
+      const response = await axios.post('/api/relationships/addLocationLocationRelationship', payload)
       commit('setRelationships', response.data);
     }
   }

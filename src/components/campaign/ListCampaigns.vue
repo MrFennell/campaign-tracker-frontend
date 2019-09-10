@@ -34,7 +34,6 @@ export default {
             'getCampaigns',
         ]),
         loadCampaigns(){
-            // return this.$store.state.campaigns;
             return this.$store.state.campaignThumbnails;
         },
         loadPcs(){
