@@ -3,7 +3,7 @@
         <div class="info" v-if="!isEditing">
             <span class="update-message">{{updateMessage}}</span>
             <a class="edit-button" v-if="!isEditing" @click="edit">Edit</a>
-            <p>Details:</p>
+            <h4>Details:</h4>
             <p v-if="loadLocation && loadLocation.name">Name: {{ loadLocation.name }}</p>
             <p v-else>error - enter Name</p>
             <p v-if="loadLocation && loadLocation.region">Region: {{ loadLocation.region }}</p>

@@ -4,7 +4,7 @@
                 <span class="updateMessage">{{updateMessage}}</span>
                 <a class="edit-button" @click="edit">Edit</a>
                 <h4>Details:</h4>
-                <p v-if="loadPc && loadPc.pcName">Name: {{ loadPc.pcName }}</p>
+                <p v-if="loadPc && loadPc.name">Name: {{ loadPc.name }}</p>
                 <p v-else>No Name</p>
                 <p v-if="loadPc && loadPc.playerName">Played by: {{ loadPc.playerName }}</p>
                 <p v-else>Please enter name of player!</p>
@@ -27,9 +27,9 @@
                 </p>
                 <form @submit.prevent="updatePc" enctype="multipart/form-data">
                     <div class="field">
-                        <label class="label" for="pcName">Name:</label>
+                        <label class="label" for="name">Name:</label>
                         <div class="control">
-                            <input type="input" class="input" name="pcName"  placeholder="PC Name" v-model="loadPc.pcName">
+                            <input type="input" class="input" name="name"  placeholder="PC Name" v-model="loadPc.name">
                         </div>
                     </div>
                     <div class="field">
@@ -153,7 +153,7 @@ export default {
         },
         async updatePc(){ 
             this.errors = [];
-            if (!this.loadPc.pcName){
+            if (!this.loadPc.name){
                 this.errors.push('Name is required.');
             }else{
                 const formData = new FormData();
@@ -162,7 +162,7 @@ export default {
                 formData.append('pcId', pcId);
                 formData.append('oldImage', oldImage);
                 formData.append('file', this.file);
-                formData.append("pcName", this.loadPc.pcName);
+                formData.append("name", this.loadPc.name);
                 formData.append("playerName", this.loadPc.playerName);
                 formData.append("pcClass", this.loadPc.pcClass);
                 formData.append("pcRace", this.loadPc.pcRace);

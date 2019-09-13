@@ -3,7 +3,7 @@
             <div class="info" v-if="!isEditing">
                 <span class="update-message">{{updateMessage}}</span>
                 <a class="edit-button" @click="edit">Edit</a>
-                <p>Details:</p>
+                <h4>Details:</h4>
                 <p v-if="loadNpc && loadNpc.name">Name: {{ loadNpc.name }}</p>
                 <p v-else>error - enter Name</p>
                 <p v-if="loadNpc && loadNpc.race">Class: {{ loadNpc.race }}</p>
@@ -12,7 +12,6 @@
                 <p v-if="loadNpc && loadNpc.description">Description: {{ loadNpc.description }}</p>
                 <p v-if="loadNpc && loadNpc.sharedBio">Shared Bio: {{ loadNpc.sharedBio }}</p>
                 <p v-if="loadNpc && loadNpc.privateBio">Private Bio: {{ loadNpc.privateBio }}</p>
-                
             </div>
             <div v-if="isEditing">
                 <a class="edit-button-close" @click="isEditing = false">Quit Editing</a>

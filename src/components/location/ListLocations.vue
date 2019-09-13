@@ -19,9 +19,13 @@
 import _ from 'lodash';
 export default {
     name: "ListLocations",
-    props: 
-        ['scrollTarget', 'selected', 'sort', 'sortDirection','columnSize']
-    ,components: {
+    props:
+        ['scrollTarget', 
+        'selected', 
+        'sort', 
+        'sortDirection',
+        'columnSize'],
+    components: {
         ListItem: () => import('@/components/ui/list/ListItem.vue'),
     },
     computed: {

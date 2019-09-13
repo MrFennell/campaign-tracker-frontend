@@ -6,7 +6,7 @@
         <div class="relationship__list">
             <div v-for="pc in pcRelationships" v-bind:key="pc.id">
                 <div v-if="pc.LocationId === current.id && pc.PcId !==null">{{pc.PcName}} {{pc.relationship}} {{current.name}}.
-                    <a @click="deleteRelationship(pc.id)">delete</a>
+                    <a class="relationship-delete" @click="deleteRelationship(pc.id)">delete</a>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="relationship__list">
             <div v-for="npc in npcRelationships" v-bind:key="npc.id">
                 <div v-if="npc.LocationId === current.id && npc.NpcId !==null"> {{npc.NpcName}} {{npc.relationship}} {{current.name}}.
-                    <a @click="deleteRelationship(npc.id)">delete</a>
+                    <a class="relationship-delete" @click="deleteRelationship(npc.id)">delete</a>
                 </div>
             </div>
         </div>
@@ -42,10 +42,10 @@
         <div class="relationship__list">
             <div v-for="location in locationRelationships" v-bind:key="location.id">
                <div v-if="location.LocationId === current.id && location.LocationId2 !== null">{{location.relationship}} {{location.LocationName2}}
-                    <a @click="deleteRelationship(location.id)">delete</a>
+                    <a class="relationship-delete" @click="deleteRelationship(location.id)">delete</a>
                </div>
                <div v-if="location.LocationId2 === current.id && location.LocationId !== null">{{location.relationship}} {{location.LocationName}}
-                    <a @click="deleteRelationship(location.id)">delete</a>
+                    <a class="relationship-delete" @click="deleteRelationship(location.id)">delete</a>
                </div>
             </div>
         </div>
