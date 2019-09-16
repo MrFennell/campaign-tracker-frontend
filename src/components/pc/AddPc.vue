@@ -3,7 +3,7 @@
         <div class="add-form-container">
             <div ref="formTop" class="add-form-header">
                 <p>Add a new player character below.</p>
-                <a class="delete" @click="$emit('update:showForm', false)"></a>
+                <a class="delete" @click="$emit('hideForm')"></a>
             </div>
             
             <div v-if="errors.length" class="error-text">
@@ -84,7 +84,7 @@
                             <input type="file" class="file"  ref="file" @change="selectFile">
                         </div>
                         <input type="submit" class="button is-primary" value="Create">
-                        <input type="submit" class="button" value="Hide" @click="$emit('update:showForm', false)">
+                        <input type="submit" class="button" value="Hide" @click="$emit('hideForm')">
                     </div>
                 </div>
             </form>
@@ -157,7 +157,7 @@ export default {
                     this.$store.dispatch('addPc', formData),
                     this.file = null;
                     this.$emit('update:successMessage', "Character created!");
-                    this.$emit('update:showForm', false);
+                    this.$emit('hideForm');
                 }catch(err){
                     console.log(err);
                 }

@@ -6,7 +6,7 @@
             
             <div ref="formTop" class="add-form-header">
                 <p>Create a new location below.</p>
-                <a class="delete" @click="$emit('update:showForm', false)"></a>
+                <a class="delete" @click="$emit('hideForm')"></a>
             </div>
             
             <div v-if="errors.length" class="error-text">
@@ -39,7 +39,7 @@
                     <input type="file" class="file"  ref="file" @change="selectFile">
                 </div>
                 <input type="submit" class="button is-primary" value="Create">
-                <input type="submit" class="button" value="Hide" @click="$emit('update:showForm', false)">
+                <input type="submit" class="button" value="Hide" @click="$emit('hideForm')">
                 
             </form>
         </div>
@@ -88,7 +88,7 @@ export default {
                         this.file = null;
                         this.errors = [];
                         this.$emit('update:successMessage', "Location created!");
-                        this.$emit('update:showForm', false);
+                        this.$emit('hideForm');
                     }catch(err){
                         console.log(err);
                     }

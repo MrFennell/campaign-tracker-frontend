@@ -5,12 +5,10 @@
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new Location</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
-        <div >
-            <CurrentLocation v-bind:scrollTarget= "this.scrollTarget"/>
-        </div>
+        
         <AddLocation v-if="showForm"
             v-bind:successMessage.sync="successMessage"
-            v-bind:showForm.sync="showForm"
+            v-on:hideForm="formToggle"
             v-bind:scrollTarget= "this.scrollTarget"
         ></AddLocation>
         <ListControls 
@@ -22,6 +20,9 @@
             v-bind:columnSize.sync="columnSize"
             v-bind:sortDirection.sync="sortDirection"
         />
+        <div >
+            <CurrentLocation v-bind:scrollTarget= "this.scrollTarget"/>
+        </div>
         <ListLocations 
             v-bind:scrollTarget= "this.scrollTarget"
             v-bind:selected = "this.selected"

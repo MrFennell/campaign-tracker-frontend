@@ -5,13 +5,10 @@
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new PC</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
-         <div>
-        <CurrentPc 
-            v-bind:scrollTarget= "this.scrollTarget"/>   
-        </div> 
+        
         <span class="success-message">{{successMessage}}</span>
         <AddPc v-if="showForm"
-            v-bind:showForm.sync="showForm"
+            v-on:hideForm="formToggle"
             v-bind:successMessage.sync="successMessage"
             v-bind:scrollTarget= "this.scrollTarget"
         ></AddPc>
@@ -24,6 +21,11 @@
             v-bind:columnSize.sync="columnSize"
             v-bind:sortDirection.sync="sortDirection"
         />
+        <div>
+            <CurrentPc 
+            v-bind:scrollTarget= "this.scrollTarget"
+            />   
+        </div> 
         <ListPcs 
             v-bind:scrollTarget= "this.scrollTarget"
             v-bind:selected = "this.selected"

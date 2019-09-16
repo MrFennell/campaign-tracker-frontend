@@ -5,14 +5,12 @@
             <a @click.prevent="formToggle" v-bind:class="{ active: isActive  === 'new'}">Add a new NPC</a>
             <a @click.prevent="optionsToggle" v-bind:class="{ active: isActive  === 'sort'}">Sort</a>
         </div>
-        <div>
-            <CurrentNpc v-bind:scrollTarget= "this.scrollTarget"/>
-        </div>
-         <span class="success-message">{{successMessage}}</span>
+        
+        <span class="success-message">{{successMessage}}</span>
         <AddNpc v-if="showForm"
-         v-bind:successMessage.sync="successMessage"
-         v-bind:showForm.sync="showForm"
-         v-bind:scrollTarget= "this.scrollTarget"
+            v-bind:successMessage.sync="successMessage"
+            v-on:hideForm="formToggle"
+            v-bind:scrollTarget= "this.scrollTarget"
         ></AddNpc>
         <ListControls 
             v-if="showOptions"
@@ -23,7 +21,9 @@
             v-bind:columnSize.sync="columnSize"
             v-bind:sortDirection.sync="sortDirection"
         />
-        <!-- <CurrentNpc></CurrentNpc> -->
+        <div>
+            <CurrentNpc v-bind:scrollTarget= "this.scrollTarget"/>
+        </div>
         <ListNpcs 
             v-bind:scrollTarget= "this.scrollTarget"
             v-bind:selected = "this.selected"
@@ -70,6 +70,7 @@ export default {
                 setTimeout(() => this.successMessage = null, 3000);
             }
         }
+        
     },
      methods: {
         formToggle(){
@@ -89,7 +90,7 @@ export default {
             }else{
                 this.showOptions = true;
                 this.showForm = false;
-               this.isActive = 'sort';
+                this.isActive = 'sort';
             }
         }
     },
