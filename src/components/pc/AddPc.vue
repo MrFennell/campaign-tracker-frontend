@@ -22,9 +22,9 @@
                 <div class="columns is-multiline">
                     <div class="column is-half">
                         <div class="field">
-                            <label class="label" for="pcName">Name:</label>
+                            <label class="label" for="name">Name:</label>
                             <div class="control">
-                                <input type="input" class="input" name="pcName" placeholder="PC Name" v-model="pcName">
+                                <input type="input" class="input" name="name" placeholder="PC Name" v-model="name">
                             </div>
                         </div>
                         <div class="field">
@@ -100,7 +100,7 @@ export default {
     ,
     data(){
         return{
-            pcName: '',
+            name: '',
             playerName: '',
             pcClass: '',
             pcRace: '',
@@ -125,12 +125,12 @@ export default {
         },
         async newPc(){
             this.errors = [];
-            if (!this.pcName && !this.playerName){
+            if (!this.name && !this.playerName){
                 this.errors.push('Please enter a name.');
                 this.errors.push('Please enter the name of the player.');
                 this.errorScroll();
             }
-            else if (!this.pcName){
+            else if (!this.name){
                 this.errors.push('Please enter a name.');
                 this.errorScroll();
             }
@@ -141,7 +141,7 @@ export default {
             else{
                 this.errors = [];                    
                 const formData = new FormData();
-                formData.append("pcName", this.pcName);
+                formData.append("name", this.name);
                 formData.append("playerName", this.playerName);
                 formData.append("pcClass", this.pcClass);
                 formData.append("pcRace", this.pcRace);

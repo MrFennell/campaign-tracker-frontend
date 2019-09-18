@@ -1,5 +1,5 @@
 <template>
-    <div v-if="this.scrollTarget != ''" class="content" id="list-pcs-container"> 
+    <div class="content" id="list-pcs-container"> 
         <div class="columns is-multiline">
             <ListItem 
                 v-for="(pc, index) in loadPcs"
@@ -29,6 +29,7 @@ export default {
         loadPcs(){
             let sortDirection = this.sortDirection;
             let pcs = this.$store.state.pcs;
+            
             if (this.sort === 'name'){
                 return _.orderBy(pcs, [pc => pc.name.toLowerCase()], sortDirection);
             }
