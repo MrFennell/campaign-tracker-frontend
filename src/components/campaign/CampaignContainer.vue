@@ -1,7 +1,7 @@
 <template>
     <div class="container" id="campaign-container">
         <div>
-        <CurrentCampaign></CurrentCampaign>
+            <CurrentCampaign></CurrentCampaign>
         </div>
         <div id="campaign-options">
             <div id="campaign-options-links" >
@@ -17,7 +17,7 @@
                 </div>
                 <div v-if="showNewForm">
                     <AddCampaign 
-                    
+                     v-on:newCampaign="switchCampaign"
                     ></AddCampaign>
                 </div>
             </div>

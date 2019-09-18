@@ -60,6 +60,7 @@
 
         <div v-if="!campaignIsSet" >
             <div class="container">
+                <div id="no-campaign-set-header"></div>
                 <ListCampaigns></ListCampaigns>
                 <AddCampaign></AddCampaign>
             </div>
@@ -161,7 +162,9 @@ export default {
 #register-link{
     text-align: center;
 }
-
+#no-campaign-set-header{
+    padding-top: 80px;
+}
 // #navigation{
 //     max-width:100px;
 //     position: fixed;

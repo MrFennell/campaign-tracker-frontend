@@ -11,7 +11,7 @@
                     </div>
                     <div class="column">
                         <div class="campaign-thumbnails">
-                            <div class="campaign-thumbnail" v-for="thumbnail in campaign.thumbnails" v-bind:key="thumbnail">
+                            <div class="campaign-thumbnail" v-for="thumbnail in campaign.thumbnails" v-bind:key="thumbnail.id">
                                 <!-- <figure class="image is-is-square"> -->
                                     <img v-if="thumbnail !== '' && thumbnail !== null"  :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/' + thumbnail" />
                                     <img v-else src='../../assets/images/thumbnail-default.png'/>

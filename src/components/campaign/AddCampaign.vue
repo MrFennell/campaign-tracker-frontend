@@ -38,7 +38,7 @@
                     description:this.description,
                     createdBy:this.$store.getters.getUserId
                 })
-                    .then(() => this.$router.push('/'))
+                     this.$emit('newCampaign')
                     .catch(error => this.error = error.response.data.message);
                 }
 
