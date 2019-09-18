@@ -19,7 +19,6 @@
                 <div class="media-content">
                     <p v-if="item.name" class="card-title">{{ item.name }}</p>
                     <p v-if="item.playerName" class="card-subtitle">{{ item.playerName }}</p>
-                    <p class="card-subtitle" v-else >Player Unknown</p>
                 </div>
             </div>
         </div>
