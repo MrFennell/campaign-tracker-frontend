@@ -26,6 +26,7 @@ export default {
         ListItem: () => import('@/components/ui/list/ListItem.vue'),
     },
     computed: {
+
         loadNpcs(){
             let sortDirection = this.sortDirection;
             let npcs = this.$store.state.npcs;

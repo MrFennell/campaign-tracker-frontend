@@ -59,8 +59,5 @@ export default {
     margin: 0;
     padding: 0;
 }
-option{
-    max-width: 80px;
-}
 
 </style>

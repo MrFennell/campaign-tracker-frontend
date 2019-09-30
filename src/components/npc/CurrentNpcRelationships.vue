@@ -67,7 +67,7 @@
 import CreateRelationship from '@/components/ui/relationships/CreateRelationship.vue'
 import { mapGetters } from 'vuex'
 export default {
-    name: "CurrentPcRelationships",
+    name: "CurrentNpcRelationships",
     components: {CreateRelationship},
     computed: {
         ...mapGetters([
@@ -111,7 +111,7 @@ export default {
         addPcNpcRelationship(relationship, target){
             this.$store.dispatch('addPcNpcRelationship', {
                 npcId:this.current.id,
-                npcId2:target.id,
+                pcId:target.id,
                 relationship:relationship
             })
         },
