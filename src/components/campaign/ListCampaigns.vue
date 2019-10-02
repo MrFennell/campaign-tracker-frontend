@@ -4,18 +4,23 @@
         <div v-for="(campaign) in loadCampaigns" v-bind:key="campaign.id">
             <div class="box" id="campaigns">
                 <div class="columns is-mobile">
-                    <div class="column is-one-third">
+                    <!-- <div class="column is-one-third">
                         <h2 class="title" >{{ campaign.title }}</h2>
-                        <p class="campaign-description">{{ campaign.title }}</p>
+                        <p class="campaign-description">{{ campaign.description }}</p>
                         <button class="button" @click="setCurrentCampaign(campaign)">Set to Current</button>
+                    </div> -->
+                    <div class="column is-one-third">
+                        <CampaignHeader 
+                            v-bind:title="campaign.title"
+                            v-bind:description="campaign.description"
+                        ></CampaignHeader>
+                        <button v-if="currentCampaignId !== campaign.id" class="button" @click="setCurrentCampaign(campaign)">Set to Current</button>
                     </div>
                     <div class="column">
                         <div class="campaign-thumbnails">
                             <div class="campaign-thumbnail" v-for="thumbnail in campaign.thumbnails" v-bind:key="thumbnail.id">
-                                <!-- <figure class="image is-is-square"> -->
-                                    <img v-if="thumbnail !== '' && thumbnail !== null"  :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/' + thumbnail" />
-                                    <img v-else src='../../assets/images/thumbnail-default.png'/>
-                                <!-- </figure> -->
+                                <img v-if="thumbnail !== '' && thumbnail !== null"  :src="'https://campaign-tracker.s3.us-east-2.amazonaws.com/pcs/' + thumbnail" />
+                                <img v-else src='../../assets/images/thumbnail-default.png'/>
                             </div>
                         </div>
                     </div>
@@ -29,6 +34,9 @@
 import { mapGetters } from 'vuex'
 export default {
     name: "ListCampaigns",
+    components: {
+        CampaignHeader: () => import('@/components/campaign/campaign-list/CampaignHeader.vue'),
+    },
     computed: {
         ...mapGetters([
             'getCampaigns',
@@ -38,6 +46,9 @@ export default {
         },
         loadPcs(){
             return this.$store.state.pcs;
+        },
+        currentCampaignId(){
+            return this.$store.state.campaign.id;
         }
     },
     watch: {
@@ -53,9 +64,8 @@ export default {
     },
     data(){
         return{
-            collapsed: true,
-            title: '',
-            description: ''
+            collapsed: true
+          
         }
     },
     methods: {
