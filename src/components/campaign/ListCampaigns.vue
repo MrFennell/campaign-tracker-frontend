@@ -12,7 +12,12 @@
                     <div class="column is-one-third">
                         <CampaignHeader 
                             v-bind:title="campaign.title"
-                            v-bind:description="campaign.description"
+                            v-bind:description="campaign.description" 
+                            v-bind:id="campaign.id"
+                            v-bind:role="campaign.Role"
+                            v-on:updateData="updateCampaign"
+                            v-on:deleteCampaignInList="deleteCampaign"
+
                         ></CampaignHeader>
                         <button v-if="currentCampaignId !== campaign.id" class="button" @click="setCurrentCampaign(campaign)">Set to Current</button>
                     </div>
@@ -81,9 +86,34 @@ export default {
             return this.$store.dispatch('getLocations')
             })
         },
-        async updateCampaign(campaign){
-            await this.$store.dispatch('updateCampaign', campaign)
+        async updateCampaign(id, title, desc){
+
+            let updatePackage = {};
+            updatePackage.id = id;
+            updatePackage.title = title;
+            updatePackage.description = desc;
+            await this.$store.dispatch('updateCampaign', updatePackage)
+            .then(() => {
+                this.$store.dispatch('campaignThumbnails')
+            })
+        },
+        async deleteCampaign(id, title){ 
+           if  (confirm('Delete campaign '+title+'?')) {
+            let deletedCampaign = {}
+            deletedCampaign.id = id;
+            this.$store.dispatch('deleteCampaign', deletedCampaign)
+                .then(
+                    this.$store.dispatch('campaignThumbnails'),
+                    (error) => this.error = error.response.data.error
+                )
+           }
+           else{
+            this.updateMessage = "Delete cancelled."
+           }
         }
+        // async updateCampaign(campaign){
+        //     await this.$store.dispatch('updateCampaign', campaign)
+        // }
     }
 }
 

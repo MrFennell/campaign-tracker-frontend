@@ -10,7 +10,7 @@
                     
         </div>
     </div>
-    <form v-if="isEditing" @submit.prevent="updateCampaign">
+    <form v-if="isEditing" @submit.prevent="sendUpdate">
         <div class="field is-horizontal">
             <div class="field-label is-small">
                 <label for="title" class="label">Title:</label>
@@ -19,7 +19,7 @@
                 <div class="field">
                     <div class="control ">
                     
-                    <input type="input" name="title" @change="setEdit()" class="input" placeholder="Campaign Title" v-model="newTitle">
+                    <input type="input" name="title" class="input" placeholder="Campaign Title" v-model="newTitle">
                     </div>
                 </div>
             </div>
@@ -31,14 +31,15 @@
             <div class="field-body">
                 <div class="field">
                     <div class="control ">
-                        <input type="input" name="description" class="input" @change="setEdit()" placeholder="Campaign Description" v-model="newDescription">
+                        <input type="input" name="description" class="input" placeholder="Campaign Description" v-model="newDescription">
                     </div>
                 </div>
             </div>
         </div>
         <div class="buttons">
-            <input type="submit" value="Update" class="button is-primary ">
+            <input type="submit" value="Update" @click="sendUpdate()" class="button is-primary ">
             <input type="button"  @click="edit()" value="Cancel" class="button ">
+            <a @click="deleteCampaign()">Delete</a>
         </div>
     </form>
 </div>
@@ -46,19 +47,21 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 export default {
     name: "CampaignHeader",
     props: 
-        ['title',
-        'description']
+        [
+        'title',
+        'description',
+        'id',
+        'role'
+        ]
     ,
     data(){
         return{
             isEditing: false,
             newTitle: this.title,
             newDescription: this.description,
-            edits: false
         }
     },
     computed:{
@@ -84,21 +87,27 @@ export default {
                 }
             }
         },
-        setEdit(){
-            this.edits = true;
+        sendUpdate(){
+            this.isEditing = false;
+            this.$emit('updateData', this.id, this.newTitle, this.newDescription)
+            
         },
         async deleteCampaign(){ 
-           if  (confirm('Delete campaign?')) {
-            this.$store.dispatch('deleteCampaign', this.loadCampaign)
-                .then(
-                    () => this.$router.go(),
-                    (error) => this.error = error.response.data.error
-                )
-           }
-           else{
-            this.updateMessage = "Delete cancelled."
-           }
+            this.isEditing = false;
+            this.$emit('deleteCampaignInList', this.id, this.title)
         }
+        // async deleteCampaign(){ 
+        //    if  (confirm('Delete campaign?')) {
+        //     this.$store.dispatch('deleteCampaign', this.loadCampaign)
+        //         .then(
+        //             () => this.$router.go(),
+        //             (error) => this.error = error.response.data.error
+        //         )
+        //    }
+        //    else{
+        //     this.updateMessage = "Delete cancelled."
+        //    }
+        // }
     }
 }
 
