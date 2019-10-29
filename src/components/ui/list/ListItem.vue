@@ -52,6 +52,7 @@ export default {
         opacity: 0.7;
         cursor: pointer;
     }
+
     #options{
         min-height: 40px;
     }
